@@ -1,0 +1,229 @@
+{
+  "name": "react-starter-boilerplate",
+  "version": "2.3.1",
+  "description": "A starter boilerplate for an universal web application with the best development experience and best practices.",
+  "main": "index.js",
+  "engines": {
+    "node": ">=6.0",
+    "npm": ">=3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snphq/react-starter-boilerplate"
+  },
+  "keywords": [
+    "starter",
+    "boilerpate",
+    "universal",
+    "react",
+    "redux",
+    "react router v4",
+    "express",
+    "webpack v3",
+    "es6",
+    "code splitting",
+    "hot reloading",
+    "babel",
+    "styled components",
+    "performance optimizing"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn mock:manifest && yarn copy:favicon && better-npm-run start",
+    "start:spa": "yarn mock:manifest && yarn copy:favicon && better-npm-run start:spa",
+    "start:production": "yarn build:production && better-npm-run start:production",
+    "start:staging": "yarn build:staging && better-npm-run start:staging",
+    "start:static": "better-npm-run start:static",
+    "build:staging": "yarn clean:build && yarn copy:favicon && better-npm-run build:staging",
+    "build:spa:staging": "yarn build:staging && yarn render:index",
+    "build:production": "yarn clean:build && yarn copy:favicon && better-npm-run build:production",
+    "build:spa:production": "yarn build:production && yarn render:index",
+    "analyze": "yarn clean:build && better-npm-run analyze",
+    "lint": "yarn lint:js && yarn lint:style",
+    "lint:js": "better-npm-run lint:js",
+    "lint:style": "better-npm-run lint:style",
+    "clean:build": "better-npm-run clean:build",
+    "copy:favicon": "node ./tools/scripts/copy-favicon.js",
+    "render:index": "node ./tools/scripts/render-index.js",
+    "mock:manifest": "node ./tools/scripts/mock-manifest.js"
+  },
+  "betterScripts": {
+    "start": {
+      "command": "node ./index.js",
+      "env": {
+        "APP_MODE": "ssr",
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development",
+        "APP_ENV": "development",
+        "RUNTIME_ENV": "server",
+        "PORT": 5000
+      }
+    },
+    "start:spa": {
+      "command": "node ./index.js",
+      "env": {
+        "APP_MODE": "spa",
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development",
+        "APP_ENV": "development",
+        "RUNTIME_ENV": "server",
+        "PORT": 5000
+      }
+    },
+    "start:staging": {
+      "command": "node ./index.js",
+      "env": {
+        "APP_MODE": "ssr",
+        "NODE_PATH": "./src",
+        "NODE_ENV": "production",
+        "PORT": 8080,
+        "APP_ENV": "staging",
+        "RUNTIME_ENV": "server"
+      }
+    },
+    "start:production": {
+      "command": "node ./index.js",
+      "env": {
+        "APP_MODE": "ssr",
+        "NODE_PATH": "./src",
+        "NODE_ENV": "production",
+        "PORT": 8080,
+        "RUNTIME_ENV": "server",
+        "APP_ENV": "production"
+      }
+    },
+    "start:static": {
+      "command": "node ./tools/static-server",
+      "env": {
+        "PORT": 8080
+      }
+    },
+    "build:staging": {
+      "command": "webpack --progress --hide-modules --config ./webpack",
+      "env": {
+        "NODE_ENV": "production",
+        "APP_ENV": "staging",
+        "RUNTIME_ENV": "server"
+      }
+    },
+    "build:production": {
+      "command": "webpack --progress --hide-modules --config ./webpack",
+      "env": {
+        "NODE_ENV": "production",
+        "APP_ENV": "production",
+        "RUNTIME_ENV": "server"
+      }
+    },
+    "analyze": {
+      "command": "webpack --progress --hide-modules --config ./webpack",
+      "env": {
+        "NODE_ENV": "analyze"
+      }
+    },
+    "lint:js": {
+      "command": "eslint --fix ./src ./tools ./index.js"
+    },
+    "lint:style": {
+      "command": "stylelint --fix \"./src/**/*.styled.js\""
+    },
+    "clean:build": {
+      "command": "rimraf ./public/*"
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
+  "dependencies": {
+    "@babel/register": "^7.0.0",
+    "@quickbaseoss/babel-plugin-styled-components-css-namespace": "^1.0.0-rc3",
+    "@reduxjs/toolkit": "^1.3.4",
+    "axios": "^0.18.0",
+    "bowser": "^2.1.2",
+    "chalk": "^2.4.1",
+    "compression": "^1.7.2",
+    "connected-react-router": "^6.3.1",
+    "eslint-import-resolver-babel-module": "^5.1.2",
+    "express": "^4.16.3",
+    "helmet": "^3.12.0",
+    "history": "^4.9.0",
+    "hpp": "^0.2.2",
+    "http-proxy-middleware": "^0.20.0",
+    "json-server": "^0.16.1",
+    "lodash.memoize": "^4.1.2",
+    "memory-cache": "^0.2.0",
+    "morgan": "^1.9.0",
+    "nanoid": "^2.1.6",
+    "normalizr": "^3.4.1",
+    "prop-types": "^15.7.2",
+    "query-string": "^6.9.0",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "react-helmet-async": "^1.0.3",
+    "react-hook-form": "^5.3.1",
+    "react-redux": "^7.1.1",
+    "react-router-config": "^5.1.1",
+    "react-router-dom": "^5.1.2",
+    "react-transition-group": "^4.3.0",
+    "redux": "^4.0.4",
+    "redux-saga": "^1.1.1",
+    "reselect": "^4.0.0",
+    "serialize-javascript": "^1.5.0",
+    "serve-favicon": "^2.5.0",
+    "styled-components": "^4.4.0",
+    "styled-normalize": "^8.0.6",
+    "styled-transition-group": "^2.0.1",
+    "yup": "^0.27.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@babel/plugin-proposal-decorators": "^7.3.0",
+    "@babel/plugin-transform-runtime": "^7.6.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "asset-require-hook": "^1.2.0",
+    "babel-eslint": "^8.2.3",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-styled-components": "^1.10.6",
+    "better-npm-run": "^0.1.0",
+    "compression-webpack-plugin": "^1.1.11",
+    "cross-spawn": "^6.0.5",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-import-resolver-webpack": "^0.9.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.4.0",
+    "file-loader": "^6.0.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "fs-extra": "^8.1.0",
+    "html-minifier": "^3.5.15",
+    "html-webpack-plugin": "^4.0.0-beta.11",
+    "imagemin-webpack-plugin": "^2.1.1",
+    "opn": "^5.3.0",
+    "prettier": "^1.18.2",
+    "rimraf": "^2.6.2",
+    "stylelint": "^11.0.0",
+    "stylelint-config-standard": "^19.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.8.0",
+    "stylelint-webpack-plugin": "^1.0.1",
+    "webpack": "^4.41.6",
+    "webpack-bundle-analyzer": "^2.11.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-middleware": "^3.1.3",
+    "webpack-hot-middleware": "^2.22.1",
+    "webpack-manifest-plugin": "^2.0.1",
+    "webpack-merge": "^4.2.1",
+    "webpack-notifier": "^1.8.0"
+  },
+  "resolutions": {
+    "webpack-sources": "^1.1.0",
+    "core-js": "^2.4.0"
+  }
+}

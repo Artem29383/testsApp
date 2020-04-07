@@ -1,0 +1,33 @@
+{
+  "auth": [
+    {
+      "id": 1,
+      "login": "user",
+      "password": "123",
+      "isAdmin": false
+    },
+    {
+      "id": 2,
+      "login": "admin",
+      "password": "123",
+      "isAdmin": true
+    }
+  ],
+  "tests": [
+    {
+      "id": 1,
+      "name": "Test1",
+      "created": "17.03.2020"
+    },
+    {
+      "id": 2,
+      "name": "Test2",
+      "created": "15.03.2020"
+    },
+    {
+      "id": 3,
+      "name": "Test3",
+      "created": "16.03.2020"
+    }
+  ]
+}

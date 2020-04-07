@@ -1,0 +1,9 @@
+import usePortal from 'hooks/usePortal';
+import { createPortal } from 'react-dom';
+
+const Portal = ({ id, children }) => {
+  const target = usePortal(id);
+  return createPortal(children, target);
+};
+
+export default Portal;
