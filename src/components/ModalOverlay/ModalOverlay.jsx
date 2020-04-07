@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import ButtonRipple from 'components/ButtonRipple';
 import Cross from 'components/Cross';
@@ -15,18 +15,9 @@ const ModalOverlay = ({
   link,
   linkPath,
 }) => {
-  const [animated, setAnimated] = useState(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => setAnimated(isOpen), 200);
-    }
-  }, [isOpen]);
-
   const hideWindow = e => {
     e.preventDefault();
-    setAnimated(false);
-    setTimeout(() => toggle(), 200);
+    toggle();
   };
 
   const hideWindowHandlerKey = e => {
@@ -47,9 +38,9 @@ const ModalOverlay = ({
   }, []);
 
   return (
-    <S.OverlayM in={animated} timeout={100000000}>
+    <S.OverlayM unmountOnExit in={isOpen} timeout={100}>
       <S.BackDrop onClick={hideWindow} />
-      <S.ModalWindow in={animated} timeout={100000000}>
+      <S.ModalWindow appear in={isOpen} timeout={100}>
         <S.ModalHeader>
           <Cross rotate="45deg" right="20px" clickHandler={hideWindow} />
           {headerText}

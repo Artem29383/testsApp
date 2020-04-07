@@ -40,19 +40,17 @@ const TestPage = () => {
           </ButtonRipple>
         </S.BtnPos>
       )}
-      {showModal && (
-        <Portal id="modal">
-          <ModalOverlay
-            toggle={setShowModal}
-            isOpen={showModal}
-            isFooter
-            negativeBtn="Отмена"
-            link="Перейти"
-            linkPath={routes.create}
-            headerText="Перейти на страницу создания теста?"
-          />
-        </Portal>
-      )}
+      <Portal id="modal">
+        <ModalOverlay
+          toggle={setShowModal}
+          isOpen={showModal}
+          isFooter
+          negativeBtn="Отмена"
+          link="Перейти"
+          linkPath={routes.create}
+          headerText="Перейти на страницу создания теста?"
+        />
+      </Portal>
     </S.Content>
   );
 };

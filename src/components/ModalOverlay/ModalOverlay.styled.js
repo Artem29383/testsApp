@@ -11,12 +11,13 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
+    background-color: rgba(0,0,0,0.6);
     z-index: 1000;
     overflow: hidden;
     transition: background-color 200ms linear;
     
      &:enter {
-        background-color: rgba(0,0,0,0.6);
+        background-color: rgba(0,0,0,0.0);
       }
       
       &:enter-active {
@@ -37,13 +38,17 @@ export default {
     z-index: 1000;
     position: relative;
     min-height: 160px;
-    transform: translateY(-450px);
-    background-color: ${colors.white};
+    transform: translateY(100px);
+    background-color: ${colors.white}
     margin: 0 auto;
     transition: transform 200ms linear;
     
      &:enter {
-        transform: translateY(100px);
+        transform: translateY(-450px);
+      }
+      
+      &:appear {
+        transform: translateY(-450px);
       }
       
       &:enter-active {
