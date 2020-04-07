@@ -42,10 +42,6 @@ export default {
     background-color: ${colors.white}
     margin: 0 auto;
     transition: transform 200ms linear;
-    
-     &:enter {
-        transform: translateY(-450px);
-      }
       
       &:appear {
         transform: translateY(-450px);
