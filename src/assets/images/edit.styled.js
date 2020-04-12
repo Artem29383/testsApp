@@ -6,9 +6,11 @@ export default {
     width: 30px;
     height: 30px;
     fill: ${colors.gray};
+    margin-left: auto;
+    cursor: pointer;
 
     &:hover {
-      fill: ${colors.vermillion};
+      fill: ${colors.blazeOrange};
     }
   `,
 };

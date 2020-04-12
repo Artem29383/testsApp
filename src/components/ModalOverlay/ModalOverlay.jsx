@@ -5,7 +5,6 @@ import Cross from 'components/Cross';
 import S from './ModalOverlay.styled';
 
 const ModalOverlay = ({
-  isOpen,
   toggle,
   children,
   isFooter,
@@ -14,6 +13,10 @@ const ModalOverlay = ({
   headerText,
   link,
   linkPath,
+  // eslint-disable-next-line no-unused-vars
+  clickHandler,
+  isOpen,
+  isClosable,
 }) => {
   const hideWindow = e => {
     e.preventDefault();
@@ -27,33 +30,52 @@ const ModalOverlay = ({
   };
 
   useEffect(() => {
-    document.body.style.height = '100vh';
-    document.body.style.overflow = 'hidden';
-    document.addEventListener('keydown', hideWindowHandlerKey);
+    if (isOpen) {
+      document.body.style.height = '100vh';
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', hideWindowHandlerKey);
+    }
     return () => {
       document.body.style.height = '100%';
       document.body.style.overflow = 'visible';
       document.removeEventListener('keydown', hideWindowHandlerKey);
     };
-  }, []);
+  }, [isOpen]);
 
   return (
     <S.OverlayM unmountOnExit in={isOpen} timeout={100}>
       <S.BackDrop onClick={hideWindow} />
       <S.ModalWindow appear in={isOpen} timeout={100}>
         <S.ModalHeader>
-          <Cross rotate="45deg" right="20px" clickHandler={hideWindow} />
-          {headerText}
+          {isClosable && (
+            <Cross
+              rotate="45deg"
+              right="20px"
+              position="absolute"
+              clickHandler={hideWindow}
+            />
+          )}
+          <S.Title>{headerText}</S.Title>
         </S.ModalHeader>
         {children}
         {isFooter && (
           <S.ModalFooter>
             {negativeBtn && (
-              <ButtonRipple className="red" onClickHandler={hideWindow}>
+              <ButtonRipple
+                clickHandler={e => {
+                  hideWindow(e);
+                  clickHandler();
+                }}
+                className="red"
+              >
                 {negativeBtn}
               </ButtonRipple>
             )}
-            {positiveBtn && <ButtonRipple>{positiveBtn}</ButtonRipple>}
+            {positiveBtn && (
+              <ButtonRipple clickHandler={hideWindow}>
+                {positiveBtn}
+              </ButtonRipple>
+            )}
             {link && (
               <S.Link to={linkPath}>
                 <ButtonRipple>{link}</ButtonRipple>
@@ -76,10 +98,13 @@ ModalOverlay.propTypes = {
   headerText: PropTypes.string,
   link: PropTypes.string,
   linkPath: PropTypes.string,
+  clickHandler: PropTypes.func,
+  isClosable: PropTypes.bool,
 };
 
 ModalOverlay.defaultProps = {
   isFooter: false,
+  isClosable: true,
   linkPath: '/',
   headerText: 'just modal window',
 };

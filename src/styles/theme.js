@@ -28,5 +28,6 @@ export default {
   },
   border: {
     google: `1px solid ${colors.olsoGray}`,
+    googleError: `2px solid ${colors.persianRed}`,
   },
 };

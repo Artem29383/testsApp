@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TableFields from 'pages/TestPage/Table/TableFields';
-import useSelector from 'hooks/useSelector';
+import { useSelector } from 'hooks/index';
 import { getIsAdminSelector } from 'models/user/selectors';
 import S from './Table.styled';
 

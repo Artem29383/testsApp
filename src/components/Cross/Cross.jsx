@@ -2,15 +2,31 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import S from './Cross.styled';
 
-const Cross = ({ color, rotate, top, left, right, bottom, clickHandler }) => {
+const Cross = ({
+  color,
+  rotate,
+  clickHandler,
+  position,
+  top,
+  left,
+  bottom,
+  right,
+  hover,
+  margin,
+  touched,
+}) => {
   return (
     <S.Div
       rotate={rotate}
-      top={top}
-      right={right}
-      left={left}
-      bottom={bottom}
       onClick={clickHandler}
+      onTouchEnd={touched ? clickHandler : undefined}
+      position={position}
+      top={top}
+      left={left}
+      right={right}
+      bottom={bottom}
+      hover={hover}
+      margin={margin}
     >
       <S.line1 color={color} />
       <S.line2 color={color} />
@@ -21,11 +37,15 @@ const Cross = ({ color, rotate, top, left, right, bottom, clickHandler }) => {
 Cross.propTypes = {
   color: PropTypes.string,
   rotate: PropTypes.string,
+  clickHandler: PropTypes.func,
   top: PropTypes.string,
   left: PropTypes.string,
   right: PropTypes.string,
   bottom: PropTypes.string,
-  clickHandler: PropTypes.func,
+  position: PropTypes.string,
+  hover: PropTypes.bool,
+  margin: PropTypes.string,
+  touched: PropTypes.bool,
 };
 
 Cross.defaultProps = {
@@ -35,6 +55,10 @@ Cross.defaultProps = {
   bottom: null,
   right: null,
   left: null,
+  position: 'static',
+  hover: false,
+  margin: null,
+  touched: false,
 };
 
 export default memo(Cross);

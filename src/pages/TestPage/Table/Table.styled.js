@@ -5,7 +5,7 @@ import { device } from 'constants/device';
 export default {
   DivTable: styled.div`
     width: 100%;
-    padding: 0 20px;
+    padding: 70px 20px;
   `,
   TableWrap: styled.div`
     max-width: 800px;
@@ -13,8 +13,7 @@ export default {
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 0 15px 1px rgba(117, 117, 117, 1);
-    transform: translateX(-50%);
-    margin: 50px 0 50px 50%;
+    margin: 0 auto;
   `,
   Table: styled.table`
     border-collapse: collapse;

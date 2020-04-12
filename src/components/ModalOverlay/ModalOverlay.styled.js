@@ -105,5 +105,9 @@ export default {
     bottom: 0;
     right: 0;
   `,
+  Title: styled.div`
+    width: 100%;
+    text-align: center;
+  `,
 };
 /* stylelint-enable */

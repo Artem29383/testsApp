@@ -19,7 +19,7 @@ const Field = ({ id, f, label }) => {
 };
 
 Field.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   f: PropTypes.string,
   label: PropTypes.string,
 };

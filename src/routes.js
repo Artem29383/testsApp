@@ -1,7 +1,7 @@
 import routes from 'constants/routes';
 import AuthPage from 'pages/AuthPage';
 import TestPage from 'pages/TestPage';
-import CreateTestPage from 'pages/CreateTestPage';
+import CreateEditTestPage from 'pages/CreateEditTestPage';
 import PassingTestPage from 'pages/PassingTestPage';
 import EditTestPage from 'pages/EditTestPage';
 
@@ -29,7 +29,7 @@ export default [
   {
     path: routes.create,
     exact: true,
-    component: CreateTestPage,
+    component: CreateEditTestPage,
     isAuth: true,
     isAdmin: true,
   },

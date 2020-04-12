@@ -7,7 +7,6 @@ export const colors = {
   olsoGray: '#80868b',
   gray: '#808080',
   alabaster: '#fafafa',
-  alaracar: '#ebebeb',
   scorpion: '#5e5e5e',
   alto: '#d5d5d5',
   havelockBlue: '#6c7ae0',
@@ -21,6 +20,18 @@ export const colors = {
   vermillion: '#ff490d',
   blazeOrange: '#ff6107',
   malibu: '#6eb9f7',
+  toreaBay: '#1228A9',
   dustyGray: '#999',
+  graySuit: '#c4bfcb',
   costaDelSol: '#556B2F',
+  astral: '#337ab7',
+  lavenderPurple: '#9d83b7',
+  gallery: '#ebebeb',
+  windSand: '#f4f4f4',
+};
+
+export const questionVariable = {
+  one: 'Один из списка',
+  some: 'Несколько из списка',
+  number: 'Численный',
 };

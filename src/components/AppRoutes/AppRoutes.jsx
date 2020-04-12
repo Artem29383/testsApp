@@ -7,7 +7,6 @@ import { getAuth, getIsAdminSelector } from 'models/user/selectors';
 import routers from '../../routes';
 
 const appRoutes = () => {
-  // eslint-disable-next-line consistent-return
   const isAdminMode = useSelector(getIsAdminSelector);
   const isAuthApp = useSelector(getAuth);
   if (!isAuthApp) {
@@ -29,10 +28,7 @@ const appRoutes = () => {
                 key={path}
                 exact={exact}
                 path={path}
-                render={props => (
-                  /* eslint-disable-next-line react/jsx-props-no-spreading */
-                  <Component {...props} />
-                )}
+                render={props => <Component {...props} />}
               />
             );
           }
@@ -42,16 +38,13 @@ const appRoutes = () => {
                 key={path}
                 exact={exact}
                 path={path}
-                render={props => (
-                  /* eslint-disable-next-line react/jsx-props-no-spreading */
-                  <Component {...props} />
-                )}
+                render={props => <Component {...props} />}
               />
             );
           }
         }
       })}
-      <Redirect to={isAdminMode ? routes.edit : routes.testPage} />
+      <Redirect to={routes.testPage} />
     </Switch>
   );
 };

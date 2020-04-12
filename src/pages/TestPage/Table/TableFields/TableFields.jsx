@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Field from 'pages/TestPage/Table/TableFields/Field';
-import useSelector from 'hooks/useSelector';
-import { getIsAdminSelector } from 'models/user/selectors';
 import routes from 'constants/routes';
 import edit from 'assets/images/edit.svg';
 import Edit from 'assets/images/edit.styled';
 import { colors } from 'styles/constants';
+import { getIsAdminSelector } from 'models/user/selectors';
+import useSelector from 'hooks/useSelector';
 import S from './TableFields.styled';
 
 const TableFields = ({ id }) => {
   const isAdmin = useSelector(getIsAdminSelector);
   const fields = [
-    ['name', 'Название теста'],
+    ['testName', 'Название теста'],
     ['created', 'Дата создания'],
   ].map(f => {
     return <Field key={f[0]} id={id} f={f[0]} label={f[1]} />;
@@ -39,7 +39,7 @@ const TableFields = ({ id }) => {
 };
 
 TableFields.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
 };
 
 export default TableFields;

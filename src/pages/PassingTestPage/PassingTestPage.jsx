@@ -24,7 +24,7 @@ const PassingTestPage = () => {
     getCurrentTest({ id, isAdmin });
   }, []);
 
-  return isLoading ? <Loader /> : <h1>Название: {test.name}</h1>;
+  return isLoading ? <Loader /> : <h1>Название: {test.testName}</h1>;
 };
 
 export default PassingTestPage;

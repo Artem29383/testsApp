@@ -1,17 +1,17 @@
-import React, { memo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import S from './ButtonRipple.styled';
 
-const ButtonRipple = ({ children, className, onClickHandler }) => (
-  <S.Button className={className} onClick={onClickHandler}>
+const ButtonRipple = ({ children, className, clickHandler }) => (
+  <S.Button className={className} onClick={clickHandler}>
     {children}
   </S.Button>
 );
 
-ButtonRipple.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  onClickHandler: PropTypes.func,
-};
+export default ButtonRipple;
 
-export default memo(ButtonRipple);
+ButtonRipple.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  clickHandler: PropTypes.func,
+};

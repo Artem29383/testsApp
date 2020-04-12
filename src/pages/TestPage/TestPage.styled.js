@@ -3,9 +3,8 @@ import styled from 'styled-components';
 export default {
   Content: styled.div`
     position: relative;
-    padding: 1px;
     width: 100%;
-    min-height: calc(100vh - 80px);
+    height: calc(100% - 80px);
   `,
   BtnPos: styled.div`
     width: 50px;

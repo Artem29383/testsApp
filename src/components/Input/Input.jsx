@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import S, { InputField, Label } from './Input.styled';
 
@@ -10,8 +10,9 @@ const Input = ({
   name,
   type,
   focus,
-  errors,
   keyHandler,
+  errors,
+  blur,
 }) => (
   <>
     <S.Group>
@@ -24,12 +25,15 @@ const Input = ({
         type={type}
         autoFocus={focus}
         onKeyDown={keyHandler}
+        onBlur={blur}
       />
       <Label>{label}</Label>
     </S.Group>
     {errors && <S.Error>{errors.message}</S.Error>}
   </>
 );
+
+export default Input;
 
 Input.propTypes = {
   label: PropTypes.string,
@@ -41,11 +45,10 @@ Input.propTypes = {
   focus: PropTypes.bool,
   keyHandler: PropTypes.func,
   errors: PropTypes.object,
+  blur: PropTypes.func,
 };
 
 Input.defaultProps = {
   type: 'text',
   focus: false,
 };
-
-export default memo(Input);
