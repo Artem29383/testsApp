@@ -33,12 +33,14 @@ export default {
       box-shadow: inset 0 0 1px 1.5px rgba(77, 37, 196, 1);
     }
 
-    &
-      ${InputField}:focus
-      + ${Label},
-      &
-      ${InputField}:not(:placeholder-shown)
-      + ${Label} {
+    & ${InputField}:focus + ${Label} {
+      color: ${colors.royalBlue};
+      transform: translateY(-220%);
+      padding: 0 3px;
+      font-size: 14px;
+    }
+
+    &.noText ${InputField}:not(:placeholder-shown) + ${Label} {
       color: ${colors.royalBlue};
       transform: translateY(-220%);
       padding: 0 3px;

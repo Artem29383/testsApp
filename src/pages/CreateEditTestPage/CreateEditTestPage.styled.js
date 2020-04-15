@@ -15,4 +15,5 @@ export default {
     max-width: 600px;
     padding-bottom: 120px;
   `,
+  DragZone: styled.div``,
 };

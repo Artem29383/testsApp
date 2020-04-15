@@ -195,9 +195,16 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     min-height: 100%;
     width: 100%;
+    height: 100%;
+    overflow: visible;
     color: #000;
     font-family: Medium;
     background-color: ${colors.white};
+    
+    &.modal {
+      overflow: hidden;
+      height: 100vh;
+    }
   }
   
   #root {

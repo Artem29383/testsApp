@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import useToggle from 'hooks/useToggle';
+import useClickAway from 'hooks/useClickAway';
 import S from './DropDown.styled';
 
 const DropDown = ({ options, value, setValue, className, label }) => {
-  const [showDropDown, setShowDropDown] = useToggle(false);
+  const { ref, active, toggle } = useClickAway();
   const [temp, setTemp] = useState(value);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
@@ -16,13 +16,13 @@ const DropDown = ({ options, value, setValue, className, label }) => {
 
   const dropClickHandler = e => {
     setCoords(e);
-    setShowDropDown();
+    toggle();
   };
 
   useEffect(() => {
-    if (showDropDown) {
+    if (active) {
       setTimeout(() => {
-        setShowDropDown();
+        toggle();
         setTimeout(() => {
           setValue(temp);
         }, 100);
@@ -41,12 +41,7 @@ const DropDown = ({ options, value, setValue, className, label }) => {
     li => {
       if (String(li) !== value) {
         return (
-          <S.Li
-            key={li}
-            onClick={setValueDropDown}
-            /* eslint-disable-next-line react/jsx-props-no-spreading */
-            {...coordinates}
-          >
+          <S.Li key={li} onClick={setValueDropDown} {...coordinates}>
             {li}
           </S.Li>
         );
@@ -55,15 +50,14 @@ const DropDown = ({ options, value, setValue, className, label }) => {
   );
 
   return (
-    <S.DropDownDiv className={className}>
+    <S.DropDownDiv className={className} ref={ref}>
       <S.DefaultValueDiv>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <S.DefaultValue onClick={dropClickHandler} {...coordinates}>
           {label} {value}
-          <S.Triangle isAnim={showDropDown} />
+          <S.Triangle isAnim={active} />
         </S.DefaultValue>
       </S.DefaultValueDiv>
-      <S.DropList unmountOnExit in={showDropDown} timeout={200}>
+      <S.DropList unmountOnExit in={active} timeout={200}>
         <S.Ul>{liList}</S.Ul>
       </S.DropList>
     </S.DropDownDiv>

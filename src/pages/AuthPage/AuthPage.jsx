@@ -44,6 +44,7 @@ const AuthPage = () => {
           name="login"
           register={register}
           errors={errors.login}
+          className="noText"
         />
       </S.WrapInput>
       <S.WrapInput>
@@ -52,6 +53,7 @@ const AuthPage = () => {
           name="password"
           register={register}
           errors={errors.password}
+          className="noText"
         />
       </S.WrapInput>
       <S.WrapInput>

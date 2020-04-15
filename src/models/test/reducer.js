@@ -104,9 +104,12 @@ const testReducer = createSlice({
       state.questions.entities[id].errorMsg = errorMsg;
       state.questions.entities[id].isValid = false;
     },
-    setDragAndDropArray(state, { payload }) {
+    setDragAndDropArrayAnswers(state, { payload }) {
       const { id, ids } = payload;
       state.questions.entities[id].answer.ids = ids;
+    },
+    setDragAndDropArrayQuests(state, { payload }) {
+      state.questions.ids = payload;
     },
     setFetchTestData(state, { payload }) {
       const { testName, questions, created } = payload;
@@ -137,6 +140,7 @@ export const {
   setValidQuestion,
   setQuestError,
   setLoad,
-  setDragAndDropArray,
+  setDragAndDropArrayAnswers,
   setFetchTestData,
+  setDragAndDropArrayQuests,
 } = testReducer.actions;

@@ -1,7 +1,8 @@
-import React, { useEffect, memo } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import ButtonRipple from 'components/ButtonRipple';
 import Cross from 'components/Cross';
+import useModal from 'hooks/useModal';
 import S from './ModalOverlay.styled';
 
 const ModalOverlay = ({
@@ -13,38 +14,15 @@ const ModalOverlay = ({
   headerText,
   link,
   linkPath,
-  // eslint-disable-next-line no-unused-vars
   clickHandler,
   isOpen,
   isClosable,
 }) => {
-  const hideWindow = e => {
-    e.preventDefault();
-    toggle();
-  };
-
-  const hideWindowHandlerKey = e => {
-    if (e.key === 'Escape') {
-      hideWindow(e);
-    }
-  };
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.height = '100vh';
-      document.body.style.overflow = 'hidden';
-      document.addEventListener('keydown', hideWindowHandlerKey);
-    }
-    return () => {
-      document.body.style.height = '100%';
-      document.body.style.overflow = 'visible';
-      document.removeEventListener('keydown', hideWindowHandlerKey);
-    };
-  }, [isOpen]);
+  useModal(toggle, isOpen);
 
   return (
     <S.OverlayM unmountOnExit in={isOpen} timeout={100}>
-      <S.BackDrop onClick={hideWindow} />
+      <S.BackDrop onClick={toggle} />
       <S.ModalWindow appear in={isOpen} timeout={100}>
         <S.ModalHeader>
           {isClosable && (
@@ -52,7 +30,7 @@ const ModalOverlay = ({
               rotate="45deg"
               right="20px"
               position="absolute"
-              clickHandler={hideWindow}
+              clickHandler={toggle}
             />
           )}
           <S.Title>{headerText}</S.Title>
@@ -62,8 +40,8 @@ const ModalOverlay = ({
           <S.ModalFooter>
             {negativeBtn && (
               <ButtonRipple
-                clickHandler={e => {
-                  hideWindow(e);
+                clickHandler={() => {
+                  toggle();
                   clickHandler();
                 }}
                 className="red"
@@ -72,9 +50,7 @@ const ModalOverlay = ({
               </ButtonRipple>
             )}
             {positiveBtn && (
-              <ButtonRipple clickHandler={hideWindow}>
-                {positiveBtn}
-              </ButtonRipple>
+              <ButtonRipple clickHandler={toggle}>{positiveBtn}</ButtonRipple>
             )}
             {link && (
               <S.Link to={linkPath}>
@@ -107,6 +83,7 @@ ModalOverlay.defaultProps = {
   isClosable: true,
   linkPath: '/',
   headerText: 'just modal window',
+  clickHandler: () => null,
 };
 
 export default memo(ModalOverlay);

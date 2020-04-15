@@ -13,9 +13,10 @@ const Input = ({
   keyHandler,
   errors,
   blur,
+  className,
 }) => (
   <>
-    <S.Group>
+    <S.Group className={className}>
       <InputField
         placeholder=" "
         value={value}
@@ -46,6 +47,7 @@ Input.propTypes = {
   keyHandler: PropTypes.func,
   errors: PropTypes.object,
   blur: PropTypes.func,
+  className: PropTypes.string,
 };
 
 Input.defaultProps = {
