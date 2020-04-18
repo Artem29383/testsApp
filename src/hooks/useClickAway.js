@@ -12,7 +12,6 @@ export default function useClickAway() {
     }
   };
   useEffect(() => {
-    console.log(active);
     if (active) document.addEventListener('mousedown', handleClick);
     else document.removeEventListener('mousedown', handleClick);
     return () => {

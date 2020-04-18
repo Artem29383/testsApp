@@ -5,21 +5,16 @@ import RadioQuestions from 'pages/CreateEditTestPage/Question/RadioQuestions';
 import NumberQuestion from 'pages/CreateEditTestPage/Question/NumberQuestion';
 import CheckBoxQuestions from 'pages/CreateEditTestPage/Question/CheckBoxQuestions';
 import useSelector from 'hooks/useSelector';
-import {
-  getErrorMsgSelector,
-  getQuestionsSelector,
-  getQuestSelector,
-} from 'models/test/selectors';
+import { getErrorMsgSelector, getQuestSelector } from 'models/test/selectors';
 import useAction from 'hooks/useAction';
 import {
-  setDragAndDropArrayAnswers,
   setInitialRadioOrCheckBox,
   setNumericAnswer,
 } from 'models/test/reducer';
 import { questionVariable } from 'styles/constants';
 import QuestionHeader from 'pages/CreateEditTestPage/Question/QuestionHeader';
 import QuestionFooter from 'pages/CreateEditTestPage/Question/QuestionFooter';
-import { DragDropContext, Draggable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 import S from './Question.styled';
 
 const Question = ({ id, index }) => {
@@ -31,29 +26,6 @@ const Question = ({ id, index }) => {
   const nameRadio = nanoid();
   const setInitAnswer = useAction(setInitialRadioOrCheckBox);
   const setNumeric = useAction(setNumericAnswer);
-  const questionsEntities = useSelector(getQuestionsSelector);
-  const setDNDNewIds = useAction(setDragAndDropArrayAnswers);
-
-  const onDragEnd = result => {
-    const { destination, source, draggableId } = result;
-    if (!destination) return;
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      // eslint-disable-next-line consistent-return
-      return false;
-    }
-
-    if (destination.droppableId !== source.droppableId) return;
-
-    const quests = questionsEntities[source.droppableId];
-    const copyIds = [...quests.answer.ids];
-    copyIds.splice(source.index, 1);
-    copyIds.splice(destination.index, 0, draggableId);
-    setDNDNewIds({ id: destination.droppableId, ids: copyIds });
-  };
 
   useEffect(() => {
     if (!quest.isValid || value !== temp) {
@@ -105,34 +77,32 @@ const Question = ({ id, index }) => {
               value={value}
             />
             <S.QuestFormBody>
-              <DragDropContext onDragEnd={onDragEnd}>
-                {questType === questionVariable.one && (
-                  <RadioQuestions
-                    name={nameRadio}
-                    entities={quest.answer.entities}
-                    ids={quest.answer.ids}
-                    id={id}
-                  />
-                )}
-                {questType === questionVariable.number && (
-                  <NumberQuestion
-                    id={id}
-                    ids={quest.answer.ids}
-                    entities={quest.answer.entities}
-                    numberId={quest.answer.ids[0]}
-                  />
-                )}
-                {questType === questionVariable.some && (
-                  <CheckBoxQuestions
-                    entities={quest.answer.entities}
-                    ids={quest.answer.ids}
-                    id={id}
-                  />
-                )}
-                <S.WrapInput>
-                  <S.Error>{errorMsg}</S.Error>
-                </S.WrapInput>
-              </DragDropContext>
+              {questType === questionVariable.one && (
+                <RadioQuestions
+                  name={nameRadio}
+                  entities={quest.answer.entities}
+                  ids={quest.answer.ids}
+                  id={id}
+                />
+              )}
+              {questType === questionVariable.number && (
+                <NumberQuestion
+                  id={id}
+                  ids={quest.answer.ids}
+                  entities={quest.answer.entities}
+                  numberId={quest.answer.ids[0]}
+                />
+              )}
+              {questType === questionVariable.some && (
+                <CheckBoxQuestions
+                  entities={quest.answer.entities}
+                  ids={quest.answer.ids}
+                  id={id}
+                />
+              )}
+              <S.WrapInput>
+                <S.Error>{errorMsg}</S.Error>
+              </S.WrapInput>
             </S.QuestFormBody>
             {questType !== questionVariable.number && (
               <QuestionFooter ids={quest.answer.ids} id={id} />

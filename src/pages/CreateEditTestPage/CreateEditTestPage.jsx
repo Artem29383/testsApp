@@ -2,9 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import Question from 'pages/CreateEditTestPage/Question';
 import nanoid from 'nanoid';
 import useSelector from 'hooks/useSelector';
-import { getQuestionsIdsSelector } from 'models/test/selectors';
+import {
+  getQuestionsIdsSelector,
+  getQuestionsSelector,
+} from 'models/test/selectors';
 import useAction from 'hooks/useAction';
-import { deleteTest, setDragAndDropArrayQuests } from 'models/test/reducer';
+import {
+  deleteTest,
+  setDragAndDropArrayAnswers,
+  setDragAndDropArrayQuests,
+} from 'models/test/reducer';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import FooterTest from 'pages/CreateEditTestPage/FooterTest';
 import TestTitle from 'pages/CreateEditTestPage/TestTitle';
@@ -16,6 +23,8 @@ const CreateEditTestPage = () => {
   const [uniqId, setUniqId] = useState(nanoid());
   const removeTest = useAction(deleteTest);
   const setDndIds = useAction(setDragAndDropArrayQuests);
+  const questionsEntities = useSelector(getQuestionsSelector);
+  const setDNDNewIds = useAction(setDragAndDropArrayAnswers);
 
   useEffect(() => {
     return () => removeTest();
@@ -42,10 +51,18 @@ const CreateEditTestPage = () => {
 
     if (destination.droppableId !== source.droppableId) return;
 
-    const copyIds = [...questionsIds];
-    copyIds.splice(source.index, 1);
-    copyIds.splice(destination.index, 0, draggableId);
-    setDndIds(copyIds);
+    if (destination.droppableId === 'questDrop') {
+      const copyIds = [...questionsIds];
+      copyIds.splice(source.index, 1);
+      copyIds.splice(destination.index, 0, draggableId);
+      setDndIds(copyIds);
+    } else {
+      const quests = questionsEntities[source.droppableId];
+      const copyIds = [...quests.answer.ids];
+      copyIds.splice(source.index, 1);
+      copyIds.splice(destination.index, 0, draggableId);
+      setDNDNewIds({ id: destination.droppableId, ids: copyIds });
+    }
   };
 
   const questions = questionsIds.map((id, index) => (
@@ -57,7 +74,7 @@ const CreateEditTestPage = () => {
       <S.PageTest>
         <S.Content ref={scrollPageToBottomTest}>
           <TestTitle />
-          <Droppable droppableId="12345">
+          <Droppable droppableId="questDrop" type="questItem">
             {provided => (
               <S.DragZone ref={provided.innerRef} {...provided.droppableProps}>
                 {questions}

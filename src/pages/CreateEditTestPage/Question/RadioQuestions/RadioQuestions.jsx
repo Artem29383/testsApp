@@ -33,7 +33,7 @@ const RadioQuestions = ({ name, entities, ids, id }) => {
   ));
 
   return (
-    <Droppable droppableId={id}>
+    <Droppable droppableId={id} type="subItem">
       {provided => (
         <S.DragZone ref={provided.innerRef} {...provided.droppableProps}>
           {radioBtns}
