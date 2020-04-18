@@ -12,6 +12,7 @@ export default {
     margin: 25px 0;
     height: auto;
   `,
+  QuestionContent: styled.div``,
   QuestFormBody: styled.div`
     width: 100%;
     height: 100%;

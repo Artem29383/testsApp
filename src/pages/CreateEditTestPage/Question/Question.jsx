@@ -97,45 +97,47 @@ const Question = ({ id, index }) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <QuestionHeader
-            quest={quest}
-            setValue={setValue}
-            id={id}
-            value={value}
-          />
-          <S.QuestFormBody>
-            <DragDropContext onDragEnd={onDragEnd}>
-              {questType === questionVariable.one && (
-                <RadioQuestions
-                  name={nameRadio}
-                  entities={quest.answer.entities}
-                  ids={quest.answer.ids}
-                  id={id}
-                />
-              )}
-              {questType === questionVariable.number && (
-                <NumberQuestion
-                  id={id}
-                  ids={quest.answer.ids}
-                  entities={quest.answer.entities}
-                  numberId={quest.answer.ids[0]}
-                />
-              )}
-              {questType === questionVariable.some && (
-                <CheckBoxQuestions
-                  entities={quest.answer.entities}
-                  ids={quest.answer.ids}
-                  id={id}
-                />
-              )}
-              <S.WrapInput>
-                <S.Error>{errorMsg}</S.Error>
-              </S.WrapInput>
-            </DragDropContext>
-          </S.QuestFormBody>
-          {questType !== questionVariable.number && (
-            <QuestionFooter ids={quest.answer.ids} id={id} />
-          )}
+          <S.QuestionContent>
+            <QuestionHeader
+              quest={quest}
+              setValue={setValue}
+              id={id}
+              value={value}
+            />
+            <S.QuestFormBody>
+              <DragDropContext onDragEnd={onDragEnd}>
+                {questType === questionVariable.one && (
+                  <RadioQuestions
+                    name={nameRadio}
+                    entities={quest.answer.entities}
+                    ids={quest.answer.ids}
+                    id={id}
+                  />
+                )}
+                {questType === questionVariable.number && (
+                  <NumberQuestion
+                    id={id}
+                    ids={quest.answer.ids}
+                    entities={quest.answer.entities}
+                    numberId={quest.answer.ids[0]}
+                  />
+                )}
+                {questType === questionVariable.some && (
+                  <CheckBoxQuestions
+                    entities={quest.answer.entities}
+                    ids={quest.answer.ids}
+                    id={id}
+                  />
+                )}
+                <S.WrapInput>
+                  <S.Error>{errorMsg}</S.Error>
+                </S.WrapInput>
+              </DragDropContext>
+            </S.QuestFormBody>
+            {questType !== questionVariable.number && (
+              <QuestionFooter ids={quest.answer.ids} id={id} />
+            )}
+          </S.QuestionContent>
         </S.QuestionForm>
       )}
     </Draggable>

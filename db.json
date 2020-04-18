@@ -18,36 +18,6 @@
       "testName": "Мой тест",
       "questions": {
         "entities": {
-          "wcnZAkI-9mfsQrcUIujHf": {
-            "answer": {
-              "entities": {
-                "6PU9kpdhlW5xpMmMfwq8X": {
-                  "id": "6PU9kpdhlW5xpMmMfwq8X",
-                  "value": "Ответ",
-                  "isChecked": true
-                },
-                "9bOZsUafgvE5oU3-1xM1A": {
-                  "id": "9bOZsUafgvE5oU3-1xM1A",
-                  "value": "Ответ 23123",
-                  "isChecked": false
-                },
-                "hRkVAcpbnlzrAHTteLsao": {
-                  "id": "hRkVAcpbnlzrAHTteLsao",
-                  "value": "выфвцйу",
-                  "isChecked": false
-                }
-              },
-              "ids": [
-                "9bOZsUafgvE5oU3-1xM1A",
-                "6PU9kpdhlW5xpMmMfwq8X",
-                "hRkVAcpbnlzrAHTteLsao"
-              ]
-            },
-            "questName": "Вопрос 1",
-            "type": "Один из списка",
-            "isValid": true,
-            "errorMsg": null
-          },
           "jeikbuSo-U8NvCcFstnit": {
             "answer": {
               "entities": {
@@ -78,29 +48,59 @@
             "isValid": true,
             "errorMsg": null
           },
-          "6tDH4avK_7VnWppsm6pCW": {
+          "G5de8CRusWhsQ1AKORxFv": {
             "answer": {
               "entities": {
-                "KeihY8DrrnW6knxa7yjey": {
-                  "id": "KeihY8DrrnW6knxa7yjey",
-                  "value": "1232",
+                "vL5CeuerHyAuCfq8QmRuS": {
+                  "id": "vL5CeuerHyAuCfq8QmRuS",
+                  "value": "Вариант ответа",
+                  "isChecked": false
+                },
+                "7jac6wyhtm7yufW4s7Wdf": {
+                  "id": "7jac6wyhtm7yufW4s7Wdf",
+                  "value": "Вариант ответа",
                   "isChecked": true
                 }
               },
               "ids": [
-                "KeihY8DrrnW6knxa7yjey"
+                "7jac6wyhtm7yufW4s7Wdf",
+                "vL5CeuerHyAuCfq8QmRuS"
               ]
             },
             "questName": "Ваш вопрос",
-            "type": "Численный",
+            "type": "Один из списка",
+            "isValid": true,
+            "errorMsg": null
+          },
+          "SSEJM7oFr4tsjt6NqbRJ0": {
+            "answer": {
+              "entities": {
+                "4cNx5NWct9d2wLQPWId1p": {
+                  "id": "4cNx5NWct9d2wLQPWId1p",
+                  "value": "Вариант ответа",
+                  "isChecked": false
+                },
+                "MoDEfVA2fpiHm2edaZEVD": {
+                  "id": "MoDEfVA2fpiHm2edaZEVD",
+                  "value": "Вариант ответа",
+                  "isChecked": true
+                }
+              },
+              "ids": [
+                "4cNx5NWct9d2wLQPWId1p",
+                "MoDEfVA2fpiHm2edaZEVD"
+              ]
+            },
+            "questName": "Ваш вопрос",
+            "type": "Один из списка",
             "isValid": true,
             "errorMsg": null
           }
         },
         "ids": [
-          "6tDH4avK_7VnWppsm6pCW",
-          "wcnZAkI-9mfsQrcUIujHf",
-          "jeikbuSo-U8NvCcFstnit"
+          "SSEJM7oFr4tsjt6NqbRJ0",
+          "jeikbuSo-U8NvCcFstnit",
+          "G5de8CRusWhsQ1AKORxFv"
         ]
       },
       "id": "s6A23StiwD41habULXlZ3",
