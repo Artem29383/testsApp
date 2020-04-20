@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Input/Input';
 import DropDown from 'components/DropDown';
@@ -13,39 +13,15 @@ import S from './QuestionHeader.styled';
 
 const QuestionHeader = ({ quest, setValue, id, value }) => {
   const setQuestionName = useAction(setQuestName);
-  const [edit, setEdit] = useState(false);
   const deleteQuest = useAction(removeQuest);
   const [showModal, setShowModal] = useToggle(false);
-  const [questionName, questionSetName] = useState(quest.questName);
-
-  const startEdit = () => {
-    setEdit(true);
-  };
 
   const removeQuestion = () => {
     deleteQuest(id);
   };
 
-  const stopEditHandlerBlur = () => {
-    if (questionName.trim()) {
-      setEdit(false);
-      setQuestionName({ id, questionName });
-    }
-  };
-
-  const stopEditHandlerKey = e => {
-    if (e.key === 'Escape') {
-      setEdit(false);
-      questionSetName(quest.questName);
-    }
-    if (e.key === 'Enter' && questionName.trim()) {
-      setEdit(false);
-      setQuestionName({ id, questionName });
-    }
-  };
-
   const setQuestionNameHandler = e => {
-    questionSetName(e.currentTarget.value);
+    setQuestionName({ id, questionName: e.currentTarget.value });
   };
 
   return (
@@ -56,7 +32,7 @@ const QuestionHeader = ({ quest, setValue, id, value }) => {
           isOpen={showModal}
           isFooter
           positiveBtn="Отмена"
-          negativeBtn="Удалить"
+          negativeClickHandler="Удалить"
           headerText="Удалить вопрос?"
           clickHandler={removeQuestion}
         />
@@ -64,20 +40,11 @@ const QuestionHeader = ({ quest, setValue, id, value }) => {
       <S.QuestFormHeader>
         <S.QuestFormHeaderTitle>
           <S.WrapInput padding="0 20px 0 20px">
-            {edit ? (
-              <Input
-                label="Вопрос"
-                onChange={setQuestionNameHandler}
-                value={questionName}
-                blur={stopEditHandlerBlur}
-                keyHandler={stopEditHandlerKey}
-                focus
-              />
-            ) : (
-              <S.QuestNameDiv onClick={startEdit}>
-                {questionName}
-              </S.QuestNameDiv>
-            )}
+            <Input
+              label="Вопрос"
+              onChange={setQuestionNameHandler}
+              value={quest.questName}
+            />
           </S.WrapInput>
         </S.QuestFormHeaderTitle>
         <S.QuestFormHeaderTitle>

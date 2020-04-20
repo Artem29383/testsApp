@@ -115,7 +115,7 @@ const FooterTest = ({ setUniqId, uniqId }) => {
           isOpen={showModalSave}
           isFooter
           positiveBtn="Отмена"
-          negativeBtn="Сохранить"
+          negativeClickHandler="Сохранить"
           headerText="Сохранить тест?"
           clickHandler={saveTestAndDeploy}
         />

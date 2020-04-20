@@ -17,6 +17,7 @@ const ModalOverlay = ({
   clickHandler,
   isOpen,
   isClosable,
+  negativeClickHandler,
 }) => {
   useModal(toggle, isOpen);
 
@@ -39,14 +40,13 @@ const ModalOverlay = ({
         {isFooter && (
           <S.ModalFooter>
             {negativeBtn && (
-              <ButtonRipple
-                clickHandler={() => {
-                  toggle();
-                  clickHandler();
-                }}
-                className="red"
-              >
+              <ButtonRipple clickHandler={toggle} className="red">
                 {negativeBtn}
+              </ButtonRipple>
+            )}
+            {negativeClickHandler && (
+              <ButtonRipple clickHandler={clickHandler} className="red">
+                {negativeClickHandler}
               </ButtonRipple>
             )}
             {positiveBtn && (
@@ -76,14 +76,15 @@ ModalOverlay.propTypes = {
   linkPath: PropTypes.string,
   clickHandler: PropTypes.func,
   isClosable: PropTypes.bool,
+  negativeClickHandler: PropTypes.bool,
 };
 
 ModalOverlay.defaultProps = {
   isFooter: false,
   isClosable: true,
   linkPath: '/',
+  negativeClickHandler: false,
   headerText: 'just modal window',
-  clickHandler: () => null,
 };
 
 export default memo(ModalOverlay);
