@@ -76,14 +76,14 @@ ModalOverlay.propTypes = {
   linkPath: PropTypes.string,
   clickHandler: PropTypes.func,
   isClosable: PropTypes.bool,
-  negativeClickHandler: PropTypes.bool,
+  negativeClickHandler: PropTypes.string,
 };
 
 ModalOverlay.defaultProps = {
   isFooter: false,
   isClosable: true,
   linkPath: '/',
-  negativeClickHandler: false,
+  negativeClickHandler: '',
   headerText: 'just modal window',
 };
 
