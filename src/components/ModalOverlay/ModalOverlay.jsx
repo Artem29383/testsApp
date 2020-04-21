@@ -14,10 +14,10 @@ const ModalOverlay = ({
   headerText,
   link,
   linkPath,
-  onClickHandler,
   isOpen,
   isClosable,
   negativeClickHandler,
+  onClickHandler,
 }) => {
   useModal(toggle, isOpen);
 
@@ -74,9 +74,9 @@ ModalOverlay.propTypes = {
   headerText: PropTypes.string,
   link: PropTypes.string,
   linkPath: PropTypes.string,
-  onClickHandler: PropTypes.func,
   isClosable: PropTypes.bool,
   negativeClickHandler: PropTypes.string,
+  onClickHandler: PropTypes.func,
 };
 
 ModalOverlay.defaultProps = {

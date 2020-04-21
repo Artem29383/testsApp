@@ -17,9 +17,9 @@ const RadioButton = ({
   id,
   name,
   radioObject,
-  onChangeHandler,
   questionId,
   index,
+  onChangeHandler,
 }) => {
   const [radioLabel, setRadioLabel] = useState(radioObject.value);
   const [edit, setEdit] = useState(false);
@@ -108,8 +108,8 @@ RadioButton.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   radioObject: PropTypes.object,
-  onChangeHandler: PropTypes.func,
   questionId: PropTypes.string,
   setCheckedId: PropTypes.func,
   index: PropTypes.number,
+  onChangeHandler: PropTypes.func,
 };

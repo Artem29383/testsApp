@@ -5,7 +5,6 @@ import S from './Cross.styled';
 const Cross = ({
   color,
   rotate,
-  onClickHandler,
   position,
   top,
   left,
@@ -14,6 +13,7 @@ const Cross = ({
   hover,
   margin,
   touched,
+  onClickHandler,
 }) => {
   return (
     <S.Div
@@ -37,7 +37,6 @@ const Cross = ({
 Cross.propTypes = {
   color: PropTypes.string,
   rotate: PropTypes.string,
-  onClickHandler: PropTypes.func,
   top: PropTypes.string,
   left: PropTypes.string,
   right: PropTypes.string,
@@ -46,6 +45,7 @@ Cross.propTypes = {
   hover: PropTypes.bool,
   margin: PropTypes.string,
   touched: PropTypes.bool,
+  onClickHandler: PropTypes.func,
 };
 
 Cross.defaultProps = {

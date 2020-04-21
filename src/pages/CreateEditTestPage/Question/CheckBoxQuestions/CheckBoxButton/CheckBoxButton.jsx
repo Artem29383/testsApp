@@ -17,8 +17,8 @@ const CheckBoxButton = ({
   questionId,
   id,
   checkBoxObject,
-  onChangeCheckBoxHandler,
   index,
+  onChangeCheckBoxHandler,
 }) => {
   const removeCheckBoxAnswer = useAction(removeAnswerFromRadioOrCheckBox);
   const [edit, setEdit] = useState(false);
@@ -103,11 +103,12 @@ const CheckBoxButton = ({
   );
 };
 
-export default CheckBoxButton;
 CheckBoxButton.propTypes = {
   questionId: PropTypes.string,
   id: PropTypes.string,
   checkBoxObject: PropTypes.object,
-  onChangeCheckBoxHandler: PropTypes.func,
   index: PropTypes.number,
+  onChangeCheckBoxHandler: PropTypes.func,
 };
+
+export default CheckBoxButton;
