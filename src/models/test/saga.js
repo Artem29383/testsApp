@@ -40,13 +40,13 @@ function* fetchTest(action) {
       type: setFetchTestData,
       payload: data,
     });
-    yield put({
-      type: setLoad,
-      payload: false,
-    });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
+  yield put({
+    type: setLoad,
+    payload: false,
+  });
 }
 
 function* updateTest(action) {
@@ -64,18 +64,17 @@ function* updateTest(action) {
     });
     yield put(push('/tests'));
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 
-// eslint-disable-next-line require-yield
 function* removeTest(action) {
   try {
     yield call(deleteTestApi, action.payload);
     yield call(deleteFieldNameTestApi, action.payload);
     yield put(push('/tests'));
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 
