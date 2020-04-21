@@ -11,10 +11,7 @@ const RadioQuestions = ({ name, entities, ids, id }) => {
   const toggleRadio = useAction(toggleChecked);
   const resetErrorChange = useCheckChangeQuest(id);
   const changeRadioHandler = e => {
-    // eslint-disable-next-line array-callback-return,consistent-return
-    const checkedId = ids.filter(qId => {
-      if (entities[qId].isChecked) return qId;
-    });
+    const checkedId = ids.filter(qId => entities[qId].isChecked);
     const radioId = e.currentTarget.id;
     toggleRadio({ id, radioId, checkedId });
     resetErrorChange(ids.length);

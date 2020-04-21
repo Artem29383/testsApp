@@ -10,19 +10,16 @@ function* signIn(action) {
   try {
     const { login, password } = action.payload;
     const { data } = yield call(authApi);
-    // eslint-disable-next-line array-callback-return,consistent-return
-    const user = data.filter(u => {
-      if (u.login === login && u.password === password) return u;
-    });
-    const isAuth = Boolean(user.length);
+    const user = data.find(u => u.login === login && u.password === password);
+    const isAuth = Boolean(user);
     if (!isAuth) throw new Error('Неверные данные для входа...');
     localStorage.setItem(
       'user',
-      JSON.stringify({ isAuth, name: user[0].login, isAdmin: user[0].isAdmin })
+      JSON.stringify({ isAuth, name: user.login, isAdmin: user.isAdmin })
     );
     yield put({
       type: loginUserSuccess.type,
-      payload: { name: user[0].login, isAuth },
+      payload: { name: user.login, isAuth },
     });
   } catch (e) {
     yield put({
