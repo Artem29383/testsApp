@@ -39,13 +39,15 @@ const DropDown = ({ options, value, setValue, className, label }) => {
   const liList = options.map(
     // eslint-disable-next-line array-callback-return,consistent-return
     li => {
-      if (String(li) !== value) {
-        return (
-          <S.Li key={li} onClick={setValueDropDown} {...coordinates}>
-            {li}
-          </S.Li>
-        );
+      if (String(li) === value) {
+        return null;
       }
+
+      return (
+        <S.Li key={li} onClick={setValueDropDown} {...coordinates}>
+          {li}
+        </S.Li>
+      );
     }
   );
 
