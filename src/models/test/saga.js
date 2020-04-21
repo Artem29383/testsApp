@@ -7,12 +7,12 @@ import {
 } from 'models/test/action';
 import {
   deleteFieldNameTestApi,
-  deleteThisFilmApi,
+  deleteTestApi,
   createTestApi,
   deployingTestNameApi,
   getTestDataApi,
   updateFieldNameTestApi,
-  updateThisTestApi,
+  updateTestApi,
 } from 'api/api';
 import { push } from 'connected-react-router';
 import { setFetchTestData, setLoad } from 'models/test/reducer';
@@ -56,7 +56,7 @@ function* updateTest(action) {
       type: setLoad,
       payload: true,
     });
-    yield call(updateThisTestApi, { id, testName, entities, ids, created });
+    yield call(updateTestApi, { id, testName, entities, ids, created });
     yield call(updateFieldNameTestApi, { id, testName, created });
     yield put({
       type: setLoad,
@@ -71,7 +71,7 @@ function* updateTest(action) {
 // eslint-disable-next-line require-yield
 function* removeTest(action) {
   try {
-    yield call(deleteThisFilmApi, action.payload);
+    yield call(deleteTestApi, action.payload);
     yield call(deleteFieldNameTestApi, action.payload);
     yield put(push('/tests'));
   } catch (e) {
