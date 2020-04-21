@@ -15,7 +15,7 @@ function* getTest() {
     const { data } = yield call(getTestsApi);
     const dataNormalized = normalized(data, 'tests');
     yield put({
-      type: setTests,
+      type: setTests.type,
       payload: {
         entities: dataNormalized.entities.tests,
         ids: dataNormalized.result,
@@ -25,7 +25,7 @@ function* getTest() {
     console.error(e);
   }
   yield put({
-    type: setLoading,
+    type: setLoading.type,
     payload: false,
   });
 }
@@ -34,14 +34,14 @@ function* getCurrentTest(action) {
   try {
     const { data } = yield call(getTestApi, action.payload.id);
     yield put({
-      type: setCurrentTest,
+      type: setCurrentTest.type,
       payload: data,
     });
   } catch (e) {
     yield put(push(action.payload.isAdmin ? '/edit' : '/tests'));
   }
   yield put({
-    type: setLoading,
+    type: setLoading.type,
     payload: false,
   });
 }

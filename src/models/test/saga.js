@@ -38,14 +38,14 @@ function* fetchTest(action) {
   try {
     const { data } = yield call(getTestDataApi, action.payload);
     yield put({
-      type: setFetchTestData,
+      type: setFetchTestData.type,
       payload: data,
     });
   } catch (e) {
     console.error(e);
   }
   yield put({
-    type: setLoad,
+    type: setLoad.type,
     payload: false,
   });
 }
@@ -54,13 +54,13 @@ function* updateTest(action) {
   try {
     const { id, testName, entities, ids, created } = action.payload;
     yield put({
-      type: setLoad,
+      type: setLoad.type,
       payload: true,
     });
     yield call(updateTestApi, { id, testName, entities, ids, created });
     yield call(updateFieldNameTestApi, { id, testName, created });
     yield put({
-      type: setLoad,
+      type: setLoad.type,
       payload: false,
     });
     yield put(push('/tests'));

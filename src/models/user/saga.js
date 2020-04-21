@@ -21,12 +21,12 @@ function* signIn(action) {
       JSON.stringify({ isAuth, name: user[0].login, isAdmin: user[0].isAdmin })
     );
     yield put({
-      type: loginUserSuccess,
+      type: loginUserSuccess.type,
       payload: { name: user[0].login, isAuth },
     });
   } catch (e) {
     yield put({
-      type: loginUserFailure,
+      type: loginUserFailure.type,
       payload: e.message,
     });
   }
