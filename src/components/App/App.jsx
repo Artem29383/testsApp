@@ -8,7 +8,6 @@ import useInit from 'hooks/useInit';
 import { GlobalStyles } from 'styles/index';
 import { Helmet } from 'react-helmet-async';
 import config from 'config';
-import Loader from 'components/Loader';
 import S from './App.styled';
 
 const App = () => {
@@ -18,13 +17,11 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Helmet {...config.app} />
       <GlobalStyles />
-      {isInit ? (
+      {isInit && (
         <S.Content>
           {isAuth && <Navigation />}
           <AppRoutes />
         </S.Content>
-      ) : (
-        <Loader />
       )}
     </ThemeProvider>
   );
