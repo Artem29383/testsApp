@@ -28,7 +28,7 @@ const RadioQuestions = ({ name, entities, ids, id }) => {
       id={entities[qId].id}
       name={name}
       radioObject={entities[qId]}
-      changeHandler={changeRadioHandler}
+      onChangeHandler={changeRadioHandler}
     />
   ));
 

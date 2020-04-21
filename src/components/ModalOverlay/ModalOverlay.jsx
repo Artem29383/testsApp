@@ -14,7 +14,7 @@ const ModalOverlay = ({
   headerText,
   link,
   linkPath,
-  clickHandler,
+  onClickHandler,
   isOpen,
   isClosable,
   negativeClickHandler,
@@ -40,17 +40,17 @@ const ModalOverlay = ({
         {isFooter && (
           <S.ModalFooter>
             {negativeBtn && (
-              <ButtonRipple clickHandler={toggle} className="red">
+              <ButtonRipple onClickHandler={toggle} className="red">
                 {negativeBtn}
               </ButtonRipple>
             )}
             {negativeClickHandler && (
-              <ButtonRipple clickHandler={clickHandler} className="red">
+              <ButtonRipple onClickHandler={onClickHandler} className="red">
                 {negativeClickHandler}
               </ButtonRipple>
             )}
             {positiveBtn && (
-              <ButtonRipple clickHandler={toggle}>{positiveBtn}</ButtonRipple>
+              <ButtonRipple onClickHandler={toggle}>{positiveBtn}</ButtonRipple>
             )}
             {link && (
               <S.Link to={linkPath}>
@@ -74,7 +74,7 @@ ModalOverlay.propTypes = {
   headerText: PropTypes.string,
   link: PropTypes.string,
   linkPath: PropTypes.string,
-  clickHandler: PropTypes.func,
+  onClickHandler: PropTypes.func,
   isClosable: PropTypes.bool,
   negativeClickHandler: PropTypes.string,
 };

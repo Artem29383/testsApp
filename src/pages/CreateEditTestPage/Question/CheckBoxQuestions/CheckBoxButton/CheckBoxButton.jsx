@@ -17,7 +17,7 @@ const CheckBoxButton = ({
   questionId,
   id,
   checkBoxObject,
-  changeCheckBoxHandler,
+  onChangeCheckBoxHandler,
   index,
 }) => {
   const removeCheckBoxAnswer = useAction(removeAnswerFromRadioOrCheckBox);
@@ -78,7 +78,7 @@ const CheckBoxButton = ({
               <CheckBox
                 id={id}
                 isChecked={checkBoxObject.isChecked}
-                changeHandler={changeCheckBoxHandler}
+                onChangeHandler={onChangeCheckBoxHandler}
                 label={checkBoxLabel}
               />
               <Edit.Icon
@@ -92,7 +92,7 @@ const CheckBoxButton = ({
                 rotate="135deg"
                 touched
                 margin="0 0 0 -20px"
-                clickHandler={deleteAnswer}
+                onClickHandler={deleteAnswer}
                 hover
               />
             </>
@@ -108,6 +108,6 @@ CheckBoxButton.propTypes = {
   questionId: PropTypes.string,
   id: PropTypes.string,
   checkBoxObject: PropTypes.object,
-  changeCheckBoxHandler: PropTypes.func,
+  onChangeCheckBoxHandler: PropTypes.func,
   index: PropTypes.number,
 };

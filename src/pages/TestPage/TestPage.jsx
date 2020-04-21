@@ -34,7 +34,7 @@ const TestPage = () => {
       {isLoading ? <Loader /> : <Table tests={tests} />}
       {isAdmin && (
         <S.BtnPos>
-          <ButtonRipple clickHandler={setShowModal} className="circle">
+          <ButtonRipple onClickHandler={setShowModal} className="circle">
             <Cross top="50%" left="50%" position="absolute" />
           </ButtonRipple>
         </S.BtnPos>

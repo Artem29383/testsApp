@@ -117,18 +117,18 @@ const FooterTest = ({ setUniqId, uniqId }) => {
           positiveBtn="Отмена"
           negativeClickHandler="Сохранить"
           headerText="Сохранить тест?"
-          clickHandler={saveTestAndDeploy}
+          onClickHandler={saveTestAndDeploy}
         />
       </Portal>
       <S.FooterTest editId={editId}>
-        <ButtonRipple clickHandler={addNewQuestion}>
+        <ButtonRipple onClickHandler={addNewQuestion}>
           Добавить вопрос
         </ButtonRipple>
-        <ButtonRipple className="green" clickHandler={modalSaveHandler}>
+        <ButtonRipple className="green" onClickHandler={modalSaveHandler}>
           {editId ? 'Обновить тест' : 'Сохранить Тест'}
         </ButtonRipple>
         {editId && (
-          <ButtonRipple className="red" clickHandler={removeThisTest}>
+          <ButtonRipple className="red" onClickHandler={removeThisTest}>
             Удалить тест
           </ButtonRipple>
         )}

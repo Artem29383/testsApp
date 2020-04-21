@@ -29,7 +29,7 @@ const CheckBoxQuestions = ({ entities, ids, id }) => {
         questionId={id}
         id={entities[qId].id}
         checkBoxObject={entities[qId]}
-        changeCheckBoxHandler={changeCheckBoxHandler}
+        onChangeCheckBoxHandler={changeCheckBoxHandler}
       />
     );
   });

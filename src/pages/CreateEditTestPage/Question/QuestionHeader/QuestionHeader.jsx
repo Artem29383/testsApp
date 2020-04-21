@@ -34,7 +34,7 @@ const QuestionHeader = ({ quest, setValue, id, value }) => {
           positiveBtn="Отмена"
           negativeClickHandler="Удалить"
           headerText="Удалить вопрос?"
-          clickHandler={removeQuestion}
+          onClickHandler={removeQuestion}
         />
       </Portal>
       <S.QuestFormHeader>
@@ -67,7 +67,7 @@ const QuestionHeader = ({ quest, setValue, id, value }) => {
           right="25px"
           rotate="135deg"
           hover
-          clickHandler={setShowModal}
+          onClickHandler={setShowModal}
         />
       </S.QuestFormHeader>
     </>

@@ -3,16 +3,16 @@ import LinesEllipsis from 'react-lines-ellipsis';
 import PropTypes from 'prop-types';
 import S, { Label, Span } from 'components/CheckBox/CheckBox.styled';
 
-const CheckBox = ({ id, isChecked, changeHandler, label }) => (
+const CheckBox = ({ id, isChecked, onChangeHandler, label }) => (
   <>
     <S.Input
       type="checkbox"
       id={id}
-      onChange={changeHandler}
+      onChange={onChangeHandler}
       checked={isChecked}
       value={label}
     />
-    <Label htmlFor={id} id={id} onTouchEnd={changeHandler}>
+    <Label htmlFor={id} id={id} onTouchEnd={onChangeHandler}>
       <LinesEllipsis maxLine="7" text={label} />
       <Span />
     </Label>
@@ -22,7 +22,7 @@ const CheckBox = ({ id, isChecked, changeHandler, label }) => (
 CheckBox.propTypes = {
   id: PropTypes.string,
   isChecked: PropTypes.bool,
-  changeHandler: PropTypes.func,
+  onChangeHandler: PropTypes.func,
   label: PropTypes.string,
 };
 
