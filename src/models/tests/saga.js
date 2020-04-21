@@ -9,6 +9,7 @@ import {
   setTests,
 } from 'models/tests/reducer';
 import { push } from 'connected-react-router';
+import routes from 'constants/routes';
 
 function* getTest() {
   try {
@@ -22,7 +23,7 @@ function* getTest() {
       },
     });
   } catch (e) {
-    console.error(e);
+    yield put(push(routes.error));
   }
   yield put({
     type: setLoading.type,

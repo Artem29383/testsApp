@@ -4,4 +4,5 @@ export default {
   edit: '/edit',
   create: '/create',
   passing: '/passing',
+  error: '/error',
 };

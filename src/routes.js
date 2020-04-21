@@ -4,6 +4,7 @@ import TestPage from 'pages/TestPage';
 import CreateEditTestPage from 'pages/CreateEditTestPage';
 import PassingTestPage from 'pages/PassingTestPage';
 import EditTestPage from 'pages/EditTestPage';
+import ErrorPage from 'pages/Error404Page';
 
 export default [
   {
@@ -46,5 +47,12 @@ export default [
     component: EditTestPage,
     isAuth: true,
     isAdmin: true,
+  },
+  {
+    path: routes.error,
+    exact: true,
+    component: ErrorPage,
+    isAuth: true,
+    isAdmin: false,
   },
 ];

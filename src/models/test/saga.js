@@ -14,14 +14,15 @@ import {
   setLoad,
   updateTestById,
 } from 'models/test/reducer';
+import routes from 'constants/routes';
 
 function* deployTest(action) {
   try {
     const { payload } = action;
     yield call(createTestApi, payload);
-    yield put(push('/tests'));
+    yield put(push(routes.testPage));
   } catch (e) {
-    console.log(e);
+    yield put(push(routes.error));
   }
 }
 
@@ -33,7 +34,7 @@ function* fetchTest(action) {
       payload: data,
     });
   } catch (e) {
-    console.error(e);
+    yield put(push(routes.error));
   }
   yield put({
     type: setLoad.type,
@@ -53,9 +54,9 @@ function* updateTest(action) {
       type: setLoad.type,
       payload: false,
     });
-    yield put(push('/tests'));
+    yield put(push(routes.testPage));
   } catch (e) {
-    console.error(e);
+    yield put(push(routes.error));
   }
 }
 
@@ -64,7 +65,7 @@ function* removeTest(action) {
     yield call(deleteTestApi, action.payload);
     yield put(push('/tests'));
   } catch (e) {
-    console.error(e);
+    yield put(push(routes.error));
   }
 }
 
