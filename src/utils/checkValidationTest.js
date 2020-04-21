@@ -22,14 +22,13 @@ export function checkValidationTest(
         const isRightAnswer = questions[id].answer.ids.some(
           qId => questions[id].answer.entities[qId].isChecked
         );
-        if (isRightAnswer) {
-          validQuestions.push(id);
-        }
         if (!isRightAnswer) {
           inValidQuestions.push({
             id,
             errorMsg: 'Отсутствует правильный ответ',
           });
+        } else {
+          validQuestions.push(id);
         }
       }
     }

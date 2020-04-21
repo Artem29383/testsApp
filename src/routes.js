@@ -4,7 +4,7 @@ import TestPage from 'pages/TestPage';
 import CreateEditTestPage from 'pages/CreateEditTestPage';
 import PassingTestPage from 'pages/PassingTestPage';
 import EditTestPage from 'pages/EditTestPage';
-import ErrorPage from 'pages/Error404Page';
+import ErrorPage from 'pages/ErrorPage';
 
 export default [
   {

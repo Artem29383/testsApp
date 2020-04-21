@@ -19,7 +19,6 @@ const appRoutes = () => {
   }
   return (
     <Switch>
-      {/* eslint-disable-next-line array-callback-return,consistent-return */}
       {routers.map(({ path, exact, component: Component, isAdmin, isAuth }) => {
         if (isAuth) {
           if (isAdmin === isAdminMode) {
@@ -43,6 +42,7 @@ const appRoutes = () => {
             );
           }
         }
+        return null;
       })}
       <Redirect to={routes.testPage} />
     </Switch>

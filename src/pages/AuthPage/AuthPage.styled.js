@@ -26,4 +26,3 @@ export default {
     text-align: center;
   `,
 };
-/* stylelint-enable */

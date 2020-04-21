@@ -45,8 +45,7 @@ const CreateEditTestPage = () => {
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
-      // eslint-disable-next-line consistent-return
-      return false;
+      return;
     }
 
     if (destination.droppableId !== source.droppableId) return;

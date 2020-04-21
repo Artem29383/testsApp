@@ -5,15 +5,15 @@ import S, { InputField, Label } from './Input.styled';
 const Input = ({
   label,
   value,
-  onChange,
   register,
   name,
   type,
   focus,
-  onKeyHandler,
   errors,
-  onBlur,
   className,
+  onChange,
+  onKeyHandler,
+  onBlur,
 }) => (
   <>
     <S.Group className={className}>
