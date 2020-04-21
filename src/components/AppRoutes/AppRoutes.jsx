@@ -32,7 +32,7 @@ const appRoutes = () => {
               />
             );
           }
-          if (isAdmin === false) {
+          if (!isAdmin) {
             return (
               <Route
                 key={path}
