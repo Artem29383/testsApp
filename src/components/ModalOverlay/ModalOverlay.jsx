@@ -31,7 +31,7 @@ const ModalOverlay = ({
               rotate="45deg"
               right="20px"
               position="absolute"
-              clickHandler={toggle}
+              onClickHandler={toggle}
             />
           )}
           <S.Title>{headerText}</S.Title>
