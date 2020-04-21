@@ -15,7 +15,7 @@
   ],
   "tests": [
     {
-      "testName": "Тест",
+      "testName": "Тест432312",
       "questions": {
         "entities": {
           "jeikbuSo-U8NvCcFstnit": {
@@ -221,23 +221,42 @@
           "C_gdDnRW_a9XPq1s955vA"
         ]
       }
-    }
-  ],
-  "testsNames": [
-    {
-      "id": "s6A23StiwD41habULXlZ3",
-      "testName": "Тест",
-      "created": "12.4.2020"
     },
     {
-      "id": "1G_2L7irn_yjyaaZfHONl",
-      "testName": "Очередной тест",
-      "created": "12.4.2020"
-    },
-    {
-      "id": "kGTUCzO_aPk9Nu_lXK-uF",
-      "testName": "Очередной тест555",
-      "created": "20.4.2020"
+      "id": "3Zen1LR_oP0gH3PHydFCP",
+      "testName": "ldlsod",
+      "created": "22.4.2020",
+      "questions": {
+        "entities": {
+          "fdcmdazPntfM61syDvLRX": {
+            "answer": {
+              "entities": {
+                "CZ6IQONFjDMfgj2BlCqhx": {
+                  "id": "CZ6IQONFjDMfgj2BlCqhx",
+                  "value": "Вариант ответа",
+                  "isChecked": false
+                },
+                "_dWoTvq5PVeWa5zB7JKyW": {
+                  "id": "_dWoTvq5PVeWa5zB7JKyW",
+                  "value": "Вариант ответа",
+                  "isChecked": true
+                }
+              },
+              "ids": [
+                "CZ6IQONFjDMfgj2BlCqhx",
+                "_dWoTvq5PVeWa5zB7JKyW"
+              ]
+            },
+            "questName": "Ваш вопрос",
+            "type": "Один из списка",
+            "isValid": true,
+            "errorMsg": null
+          }
+        },
+        "ids": [
+          "fdcmdazPntfM61syDvLRX"
+        ]
+      }
     }
   ]
 }

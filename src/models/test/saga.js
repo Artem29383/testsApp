@@ -1,11 +1,8 @@
 import { takeEvery, call, put } from '@redux-saga/core/effects';
 import {
-  deleteFieldNameTestApi,
   deleteTestApi,
   createTestApi,
-  deployingTestNameApi,
   getTestDataApi,
-  updateFieldNameTestApi,
   updateTestApi,
 } from 'api/api';
 import { push } from 'connected-react-router';
@@ -21,12 +18,6 @@ import {
 function* deployTest(action) {
   try {
     const { payload } = action;
-    const testName = {
-      id: payload.id,
-      testName: payload.testName,
-      created: payload.created,
-    };
-    yield call(deployingTestNameApi, testName);
     yield call(createTestApi, payload);
     yield put(push('/tests'));
   } catch (e) {
@@ -58,7 +49,6 @@ function* updateTest(action) {
       payload: true,
     });
     yield call(updateTestApi, { id, testName, entities, ids, created });
-    yield call(updateFieldNameTestApi, { id, testName, created });
     yield put({
       type: setLoad.type,
       payload: false,
@@ -72,7 +62,6 @@ function* updateTest(action) {
 function* removeTest(action) {
   try {
     yield call(deleteTestApi, action.payload);
-    yield call(deleteFieldNameTestApi, action.payload);
     yield put(push('/tests'));
   } catch (e) {
     console.error(e);
