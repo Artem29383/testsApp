@@ -6,12 +6,14 @@ import Portal from 'components/Portal';
 import nanoid from 'nanoid';
 import useAction from 'hooks/useAction';
 import {
+  createTest,
   pushQuestion,
+  removeTestById,
   setQuestError,
   setValidQuestion,
+  updateTestById,
 } from 'models/test/reducer';
 import { checkValidationTest } from 'utils/checkValidationTest';
-import { DELETE_TEST, DEPLOY_TEST, UPDATE_TEST } from 'models/test/action';
 import useSelector from 'hooks/useSelector';
 import {
   getCreatedDataSelector,
@@ -29,10 +31,10 @@ const FooterTest = ({ setUniqId, uniqId }) => {
   const pushQuest = useAction(pushQuestion);
   const setValidQuest = useAction(setValidQuestion);
   const setInvalidQuest = useAction(setQuestError);
-  const deployTest = useAction(DEPLOY_TEST);
-  const updateThisTest = useAction(UPDATE_TEST);
+  const deployTest = useAction(createTest);
+  const updateThisTest = useAction(updateTestById);
   const created = useSelector(getCreatedDataSelector);
-  const deleteThisTest = useAction(DELETE_TEST);
+  const deleteThisTest = useAction(removeTestById);
   const [isValidTest, setIsValidTest] = useState(false);
   const questionsIds = useSelector(getQuestionsIdsSelector);
   const questionsEntities = useSelector(getQuestionsSelector);

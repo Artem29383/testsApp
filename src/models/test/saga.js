@@ -1,11 +1,5 @@
 import { takeEvery, call, put } from '@redux-saga/core/effects';
 import {
-  DELETE_TEST,
-  DEPLOY_TEST,
-  FETCH_TEST,
-  UPDATE_TEST,
-} from 'models/test/action';
-import {
   deleteFieldNameTestApi,
   deleteTestApi,
   createTestApi,
@@ -15,7 +9,14 @@ import {
   updateTestApi,
 } from 'api/api';
 import { push } from 'connected-react-router';
-import { setFetchTestData, setLoad } from 'models/test/reducer';
+import {
+  createTest,
+  getTest,
+  removeTestById,
+  setFetchTestData,
+  setLoad,
+  updateTestById,
+} from 'models/test/reducer';
 
 function* deployTest(action) {
   try {
@@ -79,8 +80,8 @@ function* removeTest(action) {
 }
 
 export default function* rootSagaTest() {
-  yield takeEvery(DEPLOY_TEST, deployTest);
-  yield takeEvery(FETCH_TEST, fetchTest);
-  yield takeEvery(UPDATE_TEST, updateTest);
-  yield takeEvery(DELETE_TEST, removeTest);
+  yield takeEvery(createTest, deployTest);
+  yield takeEvery(getTest, fetchTest);
+  yield takeEvery(updateTestById, updateTest);
+  yield takeEvery(removeTestById, removeTest);
 }

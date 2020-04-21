@@ -120,11 +120,19 @@ const testReducer = createSlice({
     setLoad(state, { payload }) {
       state.isLoad = payload;
     },
+    createTest: state => state,
+    getTest: state => state,
+    updateTestById: state => state,
+    removeTestById: state => state,
   },
 });
 
 export default testReducer.reducer;
 export const {
+  getTest,
+  updateTestById,
+  removeTestById,
+  createTest,
   setQuestName,
   pushAnswer,
   toggleChecked,

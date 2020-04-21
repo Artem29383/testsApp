@@ -3,13 +3,12 @@ import Loader from 'components/Loader';
 import CreateEditTestPage from 'pages/CreateEditTestPage';
 import useAction from 'hooks/useAction';
 import { useParams } from 'react-router-dom';
-import { FETCH_TEST } from 'models/test/action';
-import { setLoad } from 'models/test/reducer';
+import { getTest, setLoad } from 'models/test/reducer';
 import useSelector from 'hooks/useSelector';
 import { getLoadSelector } from 'models/test/selectors';
 
 const EditTestPage = () => {
-  const fetchTest = useAction(FETCH_TEST);
+  const fetchTest = useAction(getTest);
   const setLoading = useAction(setLoad);
   const isLoad = useSelector(getLoadSelector);
   const editId = useParams().id;
