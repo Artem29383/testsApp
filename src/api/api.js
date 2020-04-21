@@ -10,7 +10,7 @@ export const getTestDataApi = id => axios.get(`${baseURL}/tests/${id}`);
 
 export const getTestApi = id => axios.get(`${baseURL}/tests/${id}`);
 
-export const deployingTestApi = data => axios.post(`${baseURL}/tests`, data);
+export const createTestApi = data => axios.post(`${baseURL}/tests`, data);
 
 export const deployingTestNameApi = data =>
   axios.post(`${baseURL}/testsNames`, data);

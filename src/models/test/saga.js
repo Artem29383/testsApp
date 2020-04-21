@@ -8,7 +8,7 @@ import {
 import {
   deleteFieldNameTestApi,
   deleteThisFilmApi,
-  deployingTestApi,
+  createTestApi,
   deployingTestNameApi,
   getTestDataApi,
   updateFieldNameTestApi,
@@ -26,7 +26,7 @@ function* deployTest(action) {
       created: payload.created,
     };
     yield call(deployingTestNameApi, testName);
-    yield call(deployingTestApi, payload);
+    yield call(createTestApi, payload);
     yield put(push('/tests'));
   } catch (e) {
     console.log(e);

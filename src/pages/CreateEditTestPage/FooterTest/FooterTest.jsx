@@ -38,7 +38,7 @@ const FooterTest = ({ setUniqId, uniqId }) => {
   const questionsEntities = useSelector(getQuestionsSelector);
   const [showModalSave, setShowModalSave] = useToggle(false);
 
-  const saveTestAndDeploy = () => {
+  const saveTestAndCreate = () => {
     const isValid = checkValidationTest(
       questionsEntities,
       questionsIds,
@@ -117,7 +117,7 @@ const FooterTest = ({ setUniqId, uniqId }) => {
           positiveBtn="Отмена"
           negativeClickHandler="Сохранить"
           headerText="Сохранить тест?"
-          onClickHandler={saveTestAndDeploy}
+          onClickHandler={saveTestAndCreate}
         />
       </Portal>
       <S.FooterTest editId={editId}>
