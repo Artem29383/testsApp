@@ -6,13 +6,13 @@ import {
   UPDATE_TEST,
 } from 'models/test/action';
 import {
-  deleteFieldNameTest,
-  deleteThisFilm,
-  deployingTest,
-  deployingTestName,
-  getTestData,
-  updateFieldNameTest,
-  updateThisTest,
+  deleteFieldNameTestApi,
+  deleteThisFilmApi,
+  deployingTestApi,
+  deployingTestNameApi,
+  getTestDataApi,
+  updateFieldNameTestApi,
+  updateThisTestApi,
 } from 'api/api';
 import { push } from 'connected-react-router';
 import { setFetchTestData, setLoad } from 'models/test/reducer';
@@ -25,8 +25,8 @@ function* deployTest(action) {
       testName: payload.testName,
       created: payload.created,
     };
-    yield call(deployingTestName, testName);
-    yield call(deployingTest, payload);
+    yield call(deployingTestNameApi, testName);
+    yield call(deployingTestApi, payload);
     yield put(push('/tests'));
   } catch (e) {
     console.log(e);
@@ -35,7 +35,7 @@ function* deployTest(action) {
 
 function* fetchTest(action) {
   try {
-    const { data } = yield call(getTestData, action.payload);
+    const { data } = yield call(getTestDataApi, action.payload);
     yield put({
       type: setFetchTestData,
       payload: data,
@@ -56,8 +56,8 @@ function* updateTest(action) {
       type: setLoad,
       payload: true,
     });
-    yield call(updateThisTest, { id, testName, entities, ids, created });
-    yield call(updateFieldNameTest, { id, testName, created });
+    yield call(updateThisTestApi, { id, testName, entities, ids, created });
+    yield call(updateFieldNameTestApi, { id, testName, created });
     yield put({
       type: setLoad,
       payload: false,
@@ -71,8 +71,8 @@ function* updateTest(action) {
 // eslint-disable-next-line require-yield
 function* removeTest(action) {
   try {
-    yield call(deleteThisFilm, action.payload);
-    yield call(deleteFieldNameTest, action.payload);
+    yield call(deleteThisFilmApi, action.payload);
+    yield call(deleteFieldNameTestApi, action.payload);
     yield put(push('/tests'));
   } catch (e) {
     console.log(e);

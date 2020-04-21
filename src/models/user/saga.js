@@ -1,5 +1,5 @@
 import { call, takeEvery, put } from 'redux-saga/effects';
-import { auth } from 'api/api';
+import { authApi } from 'api/api';
 import {
   loginUser,
   loginUserFailure,
@@ -9,7 +9,7 @@ import {
 function* signIn(action) {
   try {
     const { login, password } = action.payload;
-    const { data } = yield call(auth);
+    const { data } = yield call(authApi);
     // eslint-disable-next-line array-callback-return,consistent-return
     const user = data.filter(u => {
       if (u.login === login && u.password === password) return u;

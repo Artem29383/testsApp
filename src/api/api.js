@@ -2,20 +2,20 @@ import axios from 'axios';
 
 const baseURL = 'http://localhost:3000';
 
-export const auth = () => axios.get(`${baseURL}/auth`);
+export const authApi = () => axios.get(`${baseURL}/auth`);
 
-export const getTests = () => axios.get(`${baseURL}/tests`);
+export const getTestsApi = () => axios.get(`${baseURL}/tests`);
 
-export const getTestData = id => axios.get(`${baseURL}/tests/${id}`);
+export const getTestDataApi = id => axios.get(`${baseURL}/tests/${id}`);
 
 export const getTestApi = id => axios.get(`${baseURL}/tests/${id}`);
 
-export const deployingTest = data => axios.post(`${baseURL}/tests`, data);
+export const deployingTestApi = data => axios.post(`${baseURL}/tests`, data);
 
-export const deployingTestName = data =>
+export const deployingTestNameApi = data =>
   axios.post(`${baseURL}/testsNames`, data);
 
-export const updateThisTest = ({ id, testName, entities, ids, created }) => {
+export const updateThisTestApi = ({ id, testName, entities, ids, created }) => {
   const questions = {
     entities,
     ids,
@@ -29,10 +29,10 @@ export const updateThisTest = ({ id, testName, entities, ids, created }) => {
   return axios.put(`${baseURL}/tests/${id}`, test);
 };
 
-export const updateFieldNameTest = data =>
+export const updateFieldNameTestApi = data =>
   axios.put(`${baseURL}/testsNames/${data.id}`, data);
 
-export const deleteThisFilm = id => axios.delete(`${baseURL}/tests/${id}`);
+export const deleteThisFilmApi = id => axios.delete(`${baseURL}/tests/${id}`);
 
-export const deleteFieldNameTest = id =>
+export const deleteFieldNameTestApi = id =>
   axios.delete(`${baseURL}/testsNames/${id}`);

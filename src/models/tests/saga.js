@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from '@redux-saga/core/effects';
-import { getTestApi, getTests } from 'api/api';
+import { getTestApi, getTestsApi } from 'api/api';
 import { normalized } from 'utils/normalized';
 import {
   getAllTests,
@@ -12,7 +12,7 @@ import { push } from 'connected-react-router';
 
 function* getTest() {
   try {
-    const { data } = yield call(getTests);
+    const { data } = yield call(getTestsApi);
     const dataNormalized = normalized(data, 'tests');
     yield put({
       type: setTests,
