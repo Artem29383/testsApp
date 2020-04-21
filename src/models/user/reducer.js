@@ -26,6 +26,7 @@ const userReducer = createSlice({
     setInit(state, { payload }) {
       state.isInit = payload;
     },
+    loginUser: state => state,
   },
 });
 
@@ -35,4 +36,5 @@ export const {
   loginUserFailure,
   loginUserSuccess,
   setInit,
+  loginUser,
 } = userReducer.actions;

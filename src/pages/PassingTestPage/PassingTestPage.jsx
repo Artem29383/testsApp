@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import useAction from 'hooks/useAction';
-import { setLoading } from 'models/tests/reducer';
+import { getTestById, setLoading } from 'models/tests/reducer';
 import useSelector from 'hooks/useSelector';
 import {
   getCurrentTestSelector,
   getLoadingSelector,
 } from 'models/tests/selectors';
 import Loader from 'components/Loader';
-import { GET_TEST } from 'models/tests/actions';
 import { getIsAdminSelector } from 'models/user/selectors';
 
 const PassingTestPage = () => {
@@ -16,7 +15,7 @@ const PassingTestPage = () => {
   const isAdmin = useSelector(getIsAdminSelector);
   const setLoad = useAction(setLoading);
   const isLoading = useSelector(getLoadingSelector);
-  const getCurrentTest = useAction(GET_TEST);
+  const getCurrentTest = useAction(getTestById);
   const test = useSelector(getCurrentTestSelector);
 
   useEffect(() => {

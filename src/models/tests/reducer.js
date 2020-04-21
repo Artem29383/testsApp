@@ -21,8 +21,16 @@ const testsReducer = createSlice({
     setCurrentTest(state, { payload }) {
       state.currentTest = payload;
     },
+    getAllTests: state => state,
+    getTestById: state => state,
   },
 });
 
 export default testsReducer.reducer;
-export const { setLoading, setTests, setCurrentTest } = testsReducer.actions;
+export const {
+  setLoading,
+  setTests,
+  setCurrentTest,
+  getAllTests,
+  getTestById,
+} = testsReducer.actions;

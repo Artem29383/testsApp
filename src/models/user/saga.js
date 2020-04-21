@@ -1,7 +1,10 @@
 import { call, takeEvery, put } from 'redux-saga/effects';
 import { auth } from 'api/api';
-import { loginUserFailure, loginUserSuccess } from 'models/user/reducer';
-import { LOGIN_USER } from 'models/user/actions';
+import {
+  loginUser,
+  loginUserFailure,
+  loginUserSuccess,
+} from 'models/user/reducer';
 
 function* signIn(action) {
   try {
@@ -30,5 +33,5 @@ function* signIn(action) {
 }
 
 export default function* rootSagaAuth() {
-  yield takeEvery(LOGIN_USER, signIn);
+  yield takeEvery(loginUser, signIn);
 }

@@ -5,8 +5,7 @@ import ButtonRipple from 'components/ButtonRipple';
 import useSelector from 'hooks/useSelector';
 import { getErrorSelector } from 'models/user/selectors';
 import useAction from 'hooks/useAction';
-import { loginUserFailure } from 'models/user/reducer';
-import { LOGIN_USER } from 'models/user/actions';
+import { loginUser, loginUserFailure } from 'models/user/reducer';
 import Input from 'components/Input';
 import S from './AuthPage.styled';
 
@@ -20,7 +19,7 @@ const AuthPage = () => {
     mode: 'onChange',
     validationSchema: loginSchema,
   });
-  const login = useAction(LOGIN_USER);
+  const login = useAction(loginUser);
   const setError = useAction(loginUserFailure);
   const error = useSelector(getErrorSelector);
   const watchLogin = watch('login');
