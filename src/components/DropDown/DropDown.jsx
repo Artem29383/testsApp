@@ -63,7 +63,6 @@ const DropDown = ({ options, value, setValue, className, label }) => {
   );
 };
 
-export default DropDown;
 DropDown.propTypes = {
   options: PropTypes.array,
   value: PropTypes.string,
@@ -71,3 +70,5 @@ DropDown.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
 };
+
+export default DropDown;

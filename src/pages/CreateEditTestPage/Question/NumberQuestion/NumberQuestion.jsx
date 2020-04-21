@@ -60,12 +60,12 @@ const NumberQuestion = ({ id, entities, numberId }) => {
       {edit ? (
         <InputEdit
           label="Правильный ответ"
-          handler={setValueHandler}
+          onHandler={setValueHandler}
           value={value}
           focus
           type="number"
-          blur={endEditBlur}
-          keyDown={endEditKey}
+          onBlur={endEditBlur}
+          onKeyDown={endEditKey}
           checkMark
         />
       ) : (

@@ -68,9 +68,9 @@ const CheckBoxButton = ({
               type="text"
               focus
               value={checkBoxLabel}
-              handler={changeHandler}
-              blur={stopEditHandlerBlur}
-              keyDown={stopEditHandlerKey}
+              onHandler={changeHandler}
+              onBlur={stopEditHandlerBlur}
+              onKeyDown={stopEditHandlerKey}
               checkMark
             />
           ) : (

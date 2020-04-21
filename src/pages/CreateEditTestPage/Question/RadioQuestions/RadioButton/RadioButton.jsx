@@ -69,10 +69,10 @@ const RadioButton = ({
             <InputEdit
               type="text"
               focus
-              handler={changeRadioLabelHandler}
+              onHandler={changeRadioLabelHandler}
               value={radioLabel}
-              blur={endEditBlur}
-              keyDown={endEditKeyDown}
+              onBlur={endEditBlur}
+              onKeyDown={endEditKeyDown}
               checkMark
             />
           ) : (

@@ -10,9 +10,9 @@ const Input = ({
   name,
   type,
   focus,
-  keyHandler,
+  onKeyHandler,
   errors,
-  blur,
+  onBlur,
   className,
 }) => (
   <>
@@ -25,8 +25,8 @@ const Input = ({
         name={name}
         type={type}
         autoFocus={focus}
-        onKeyDown={keyHandler}
-        onBlur={blur}
+        onKeyDown={onKeyHandler}
+        onBlur={onBlur}
       />
       <Label>{label}</Label>
     </S.Group>
@@ -34,23 +34,23 @@ const Input = ({
   </>
 );
 
-export default Input;
-
 Input.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
-  onChange: PropTypes.func,
   register: PropTypes.func,
   name: PropTypes.string,
   type: PropTypes.string,
   focus: PropTypes.bool,
-  keyHandler: PropTypes.func,
   errors: PropTypes.object,
-  blur: PropTypes.func,
   className: PropTypes.string,
+  onChange: PropTypes.func,
+  onKeyHandler: PropTypes.func,
+  onBlur: PropTypes.func,
 };
 
 Input.defaultProps = {
   type: 'text',
   focus: false,
 };
+
+export default Input;

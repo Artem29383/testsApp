@@ -8,10 +8,10 @@ const ButtonRipple = ({ children, className, onClickHandler }) => (
   </S.Button>
 );
 
-export default ButtonRipple;
-
 ButtonRipple.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
   onClickHandler: PropTypes.func,
 };
+
+export default ButtonRipple;
