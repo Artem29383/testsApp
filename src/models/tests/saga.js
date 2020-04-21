@@ -21,13 +21,13 @@ function* getTest() {
         ids: dataNormalized.result,
       },
     });
-    yield put({
-      type: setLoading,
-      payload: false,
-    });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
+  yield put({
+    type: setLoading,
+    payload: false,
+  });
 }
 
 function* getCurrentTest(action) {
@@ -37,13 +37,13 @@ function* getCurrentTest(action) {
       type: setCurrentTest,
       payload: data,
     });
-    yield put({
-      type: setLoading,
-      payload: false,
-    });
   } catch (e) {
     yield put(push(action.payload.isAdmin ? '/edit' : '/tests'));
   }
+  yield put({
+    type: setLoading,
+    payload: false,
+  });
 }
 
 export default function* rootSagaTests() {
