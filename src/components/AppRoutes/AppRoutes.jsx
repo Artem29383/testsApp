@@ -4,7 +4,6 @@ import AuthPage from 'pages/AuthPage';
 import routes from 'constants/routes';
 import useSelector from 'hooks/useSelector';
 import { getAuth, getIsAdminSelector } from 'models/user/selectors';
-import ErrorPage from 'pages/ErrorPage';
 import routers from '../../routes';
 
 const appRoutes = () => {
@@ -14,7 +13,6 @@ const appRoutes = () => {
     return (
       <Switch>
         <Route exact path={routes.auth} render={() => <AuthPage />} />
-        <Route exact path={routes.error} render={() => <ErrorPage />} />
         <Redirect to={routes.auth} />
       </Switch>
     );

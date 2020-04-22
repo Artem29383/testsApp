@@ -10,6 +10,8 @@ import {
   logOutUser,
 } from 'models/user/reducer';
 import { setTests } from 'models/tests/reducer';
+import { push } from 'connected-react-router';
+import routes from 'constants/routes';
 
 function* signIn(action) {
   try {
@@ -55,7 +57,7 @@ function* getCurrentUser() {
       payload: { name: data.username, isAuth: true, isAdmin: data.is_admin },
     });
   } catch (e) {
-    console.error(e);
+    yield put(push(routes.auth));
   }
   yield put({
     type: setInit.type,
