@@ -64,9 +64,9 @@ const DropDown = ({ options, value, setValue, className, label }) => {
 };
 
 DropDown.propTypes = {
-  options: PropTypes.array,
-  value: PropTypes.string,
-  setValue: PropTypes.func,
+  options: PropTypes.array.isRequired,
+  value: PropTypes.string.isRequired,
+  setValue: PropTypes.func.isRequired,
   className: PropTypes.string,
   label: PropTypes.string,
 };

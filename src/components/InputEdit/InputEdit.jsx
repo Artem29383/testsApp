@@ -34,7 +34,7 @@ const InputEdit = ({
 );
 
 InputEdit.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.string.isRequired,
   label: PropTypes.string,
   focus: PropTypes.bool,
   isError: PropTypes.bool,
@@ -42,7 +42,7 @@ InputEdit.propTypes = {
   checkMark: PropTypes.bool,
   error: PropTypes.string,
   onKeyDown: PropTypes.func,
-  onHandler: PropTypes.func,
+  onHandler: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
 };
 

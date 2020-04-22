@@ -21,10 +21,10 @@ const Radio = ({ id, name, isChecked, label, onChangeHandler }) => (
 
 Radio.propTypes = {
   id: PropTypes.string,
-  name: PropTypes.string,
-  isChecked: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  isChecked: PropTypes.bool.isRequired,
   label: PropTypes.string,
-  onChangeHandler: PropTypes.func,
+  onChangeHandler: PropTypes.func.isRequired,
 };
 
 export default Radio;

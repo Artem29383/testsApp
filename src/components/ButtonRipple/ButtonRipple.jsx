@@ -9,7 +9,7 @@ const ButtonRipple = ({ children, className, onClickHandler }) => (
 );
 
 ButtonRipple.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.any.isRequired,
   className: PropTypes.string,
   onClickHandler: PropTypes.func,
 };
