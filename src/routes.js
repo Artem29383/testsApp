@@ -52,7 +52,7 @@ export default [
     path: routes.error,
     exact: true,
     component: ErrorPage,
-    isAuth: true,
+    isAuth: false,
     isAdmin: false,
   },
 ];

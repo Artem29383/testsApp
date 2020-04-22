@@ -26,7 +26,9 @@ const userReducer = createSlice({
     setInit(state, { payload }) {
       state.isInit = payload;
     },
+    checkAuthUser: state => state,
     loginUser: state => state,
+    logOutUser: state => state,
   },
 });
 
@@ -37,4 +39,6 @@ export const {
   loginUserSuccess,
   setInit,
   loginUser,
+  checkAuthUser,
+  logOutUser,
 } = userReducer.actions;

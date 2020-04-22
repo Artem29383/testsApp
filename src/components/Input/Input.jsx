@@ -36,14 +36,14 @@ const Input = ({
 
 Input.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   register: PropTypes.func,
   name: PropTypes.string,
   type: PropTypes.string,
   focus: PropTypes.bool,
   errors: PropTypes.object,
   className: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   onKeyHandler: PropTypes.func,
   onBlur: PropTypes.func,
 };

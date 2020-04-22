@@ -9,12 +9,8 @@ const useAuth = () => {
   const name = useSelector(getUserNameSelector);
   const login = useAction(loginUserSuccess);
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem('user')) || isAuth) {
-      if (JSON.parse(localStorage.getItem('user'))) {
-        login(JSON.parse(localStorage.getItem('user')));
-      } else {
-        login({ isAuth, name });
-      }
+    if (isAuth) {
+      login({ isAuth, name });
     }
   }, [isAuth]);
 

@@ -1,10 +1,15 @@
 import { call, takeEvery, put } from 'redux-saga/effects';
-import { signInApi } from 'api/api';
+import { getUsersCurrentApi, logoutUserApi, signInApi } from 'api/api';
 import {
+  checkAuthUser,
   loginUser,
   loginUserFailure,
   loginUserSuccess,
+  setInit,
+  logoutUser,
+  logOutUser,
 } from 'models/user/reducer';
+import { setTests } from 'models/tests/reducer';
 
 function* signIn(action) {
   try {
@@ -12,13 +17,9 @@ function* signIn(action) {
     const { data } = yield call(signInApi, login, password);
     const isAuth = Boolean(data);
     if (!isAuth) throw new Error('Неверные данные для входа...');
-    localStorage.setItem(
-      'user',
-      JSON.stringify({ isAuth, name: data.username, isAdmin: data.is_admin })
-    );
     yield put({
       type: loginUserSuccess.type,
-      payload: { name: data.username, isAuth },
+      payload: { name: data.username, isAuth, isAdmin: data.is_admin },
     });
   } catch (e) {
     yield put({
@@ -28,6 +29,42 @@ function* signIn(action) {
   }
 }
 
+function* logOut() {
+  try {
+    yield call(logoutUserApi);
+    yield put({
+      type: setTests.type,
+      payload: {
+        entities: [],
+        ids: [],
+      },
+    });
+    yield put({
+      type: logoutUser.type,
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function* getCurrentUser() {
+  try {
+    const { data } = yield call(getUsersCurrentApi);
+    yield put({
+      type: loginUserSuccess.type,
+      payload: { name: data.username, isAuth: true, isAdmin: data.is_admin },
+    });
+  } catch (e) {
+    console.error(e);
+  }
+  yield put({
+    type: setInit.type,
+    payload: true,
+  });
+}
+
 export default function* rootSagaAuth() {
   yield takeEvery(loginUser, signIn);
+  yield takeEvery(checkAuthUser, getCurrentUser);
+  yield takeEvery(logOutUser, logOut);
 }
