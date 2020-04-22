@@ -1,8 +1,13 @@
 import axios from 'axios';
 
 const baseURL = 'http://localhost:3000';
+const baseUrl2 = 'https://snp-tests.herokuapp.com/api/v1/';
 
-export const authApi = () => axios.get(`${baseURL}/auth`);
+export const signInApi = (login, password) =>
+  axios.post(`${baseUrl2}signin`, {
+    username: login,
+    password,
+  });
 
 export const getTestsApi = () => axios.get(`${baseURL}/tests`);
 

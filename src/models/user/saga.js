@@ -1,5 +1,5 @@
 import { call, takeEvery, put } from 'redux-saga/effects';
-import { authApi } from 'api/api';
+import { signInApi } from 'api/api';
 import {
   loginUser,
   loginUserFailure,
@@ -9,17 +9,16 @@ import {
 function* signIn(action) {
   try {
     const { login, password } = action.payload;
-    const { data } = yield call(authApi);
-    const user = data.find(u => u.login === login && u.password === password);
-    const isAuth = Boolean(user);
+    const { data } = yield call(signInApi, login, password);
+    const isAuth = Boolean(data);
     if (!isAuth) throw new Error('Неверные данные для входа...');
     localStorage.setItem(
       'user',
-      JSON.stringify({ isAuth, name: user.login, isAdmin: user.isAdmin })
+      JSON.stringify({ isAuth, name: data.username, isAdmin: data.is_admin })
     );
     yield put({
       type: loginUserSuccess.type,
-      payload: { name: user.login, isAuth },
+      payload: { name: data.username, isAuth },
     });
   } catch (e) {
     yield put({
