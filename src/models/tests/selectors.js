@@ -15,8 +15,6 @@ export const getCurrentTestSelector = createSelector(
   currentTest => currentTest
 );
 
-export const getIdsSelector = createSelector(getIds, ids => ids);
-
 export const getTestsSelector = createSelector(getTests, entities => entities);
 
 export const getLoadingSelector = createSelector(

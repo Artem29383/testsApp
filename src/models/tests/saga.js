@@ -8,8 +8,8 @@ import {
   setLoading,
   setTests,
 } from 'models/tests/reducer';
+import { setError } from 'models/user/reducer';
 import { push } from 'connected-react-router';
-import routes from 'constants/routes';
 
 function* getTest() {
   try {
@@ -23,7 +23,13 @@ function* getTest() {
       },
     });
   } catch (e) {
-    yield put(push(routes.error));
+    yield put({
+      type: setError.type,
+      payload: {
+        message: e.message,
+        idError: 'getTests',
+      },
+    });
   }
   yield put({
     type: setLoading.type,

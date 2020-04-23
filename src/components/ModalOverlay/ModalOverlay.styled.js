@@ -109,5 +109,14 @@ export default {
     width: 100%;
     text-align: center;
   `,
+  Error: styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: ${colors.persianRed};
+    padding: 10px;
+  `,
 };
 /* stylelint-enable */

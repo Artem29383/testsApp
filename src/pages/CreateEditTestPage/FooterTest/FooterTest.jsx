@@ -23,6 +23,9 @@ import {
 } from 'models/test/selectors';
 import { useParams } from 'react-router-dom';
 import useToggle from 'hooks/useToggle';
+import Loader from 'components/Loader';
+import { colors } from 'styles/constants';
+import useFetchingError from 'hooks/useFetchingError';
 import S from './FooterTest.styled';
 
 const FooterTest = ({ setUniqId, uniqId }) => {
@@ -39,7 +42,14 @@ const FooterTest = ({ setUniqId, uniqId }) => {
   const questionsIds = useSelector(getQuestionsIdsSelector);
   const questionsEntities = useSelector(getQuestionsSelector);
   const [showModalSave, setShowModalSave] = useToggle(false);
-
+  const {
+    load,
+    setIsLoading,
+    error,
+    resetError,
+    action,
+    setAction,
+  } = useFetchingError();
   const saveTestAndCreate = () => {
     const isValid = checkValidationTest(
       questionsEntities,
@@ -48,9 +58,18 @@ const FooterTest = ({ setUniqId, uniqId }) => {
       setInvalidQuest
     );
     if (isValid && questionsIds.length !== 0) {
+      resetError('');
+      setAction('save');
+      setIsLoading();
       setIsValidTest(true);
     }
   };
+
+  useEffect(() => {
+    if (error && load) {
+      setIsLoading();
+    }
+  }, [error]);
 
   useEffect(() => {
     if (!editId) {
@@ -89,10 +108,14 @@ const FooterTest = ({ setUniqId, uniqId }) => {
         };
         updateThisTest(test);
       }
+      setIsValidTest(false);
     }
   }, [isValidTest]);
 
   const removeThisTest = () => {
+    resetError('');
+    setAction('remove');
+    setIsLoading();
     deleteThisTest(editId);
   };
 
@@ -119,6 +142,9 @@ const FooterTest = ({ setUniqId, uniqId }) => {
           positiveBtn="Отмена"
           negativeClickHandler="Сохранить"
           headerText="Сохранить тест?"
+          load={load}
+          action={action}
+          error={error}
           onClickHandler={saveTestAndCreate}
         />
       </Portal>
@@ -130,8 +156,19 @@ const FooterTest = ({ setUniqId, uniqId }) => {
           {editId ? 'Обновить тест' : 'Сохранить Тест'}
         </ButtonRipple>
         {editId && (
-          <ButtonRipple className="red" onClickHandler={removeThisTest}>
-            Удалить тест
+          <ButtonRipple
+            className="red"
+            onClickHandler={removeThisTest}
+            isLoader
+          >
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {load && action === 'remove' ? (
+              <Loader width="35" height="35" color={colors.white} />
+            ) : error && action === 'remove' ? (
+              'Повторить'
+            ) : (
+              'Удалить тест'
+            )}
           </ButtonRipple>
         )}
       </S.FooterTest>

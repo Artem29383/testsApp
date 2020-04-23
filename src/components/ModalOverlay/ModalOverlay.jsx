@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ButtonRipple from 'components/ButtonRipple';
 import Cross from 'components/Cross';
 import useModal from 'hooks/useModal';
+import Loader from 'components/Loader';
+import { colors } from 'styles/constants';
 import S from './ModalOverlay.styled';
 
 const ModalOverlay = ({
@@ -18,6 +20,9 @@ const ModalOverlay = ({
   isClosable,
   negativeClickHandler,
   onClickHandler,
+  load,
+  error,
+  action,
 }) => {
   useModal(toggle, isOpen);
 
@@ -45,8 +50,19 @@ const ModalOverlay = ({
               </ButtonRipple>
             )}
             {negativeClickHandler && (
-              <ButtonRipple onClickHandler={onClickHandler} className="red">
-                {negativeClickHandler}
+              <ButtonRipple
+                onClickHandler={onClickHandler}
+                className="red"
+                isLoader
+              >
+                {/* eslint-disable-next-line no-nested-ternary */}
+                {load && action === 'save' ? (
+                  <Loader height="35" width="35" color={colors.white} />
+                ) : error && action === 'save' ? (
+                  'Повторить'
+                ) : (
+                  negativeClickHandler
+                )}
               </ButtonRipple>
             )}
             {positiveBtn && (
@@ -75,6 +91,9 @@ ModalOverlay.propTypes = {
   link: PropTypes.string,
   linkPath: PropTypes.string,
   isClosable: PropTypes.bool,
+  load: PropTypes.bool,
+  error: PropTypes.string,
+  action: PropTypes.string,
   negativeClickHandler: PropTypes.string,
   onClickHandler: PropTypes.func,
 };

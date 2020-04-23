@@ -14,6 +14,7 @@ import {
   setLoad,
   updateTestById,
 } from 'models/test/reducer';
+import { setError } from 'models/user/reducer';
 import routes from 'constants/routes';
 
 function* deployTest(action) {
@@ -22,7 +23,13 @@ function* deployTest(action) {
     yield call(createTestApi, payload);
     yield put(push(routes.testPage));
   } catch (e) {
-    yield put(push(routes.error));
+    yield put({
+      type: setError.type,
+      payload: {
+        message: e.message,
+        idError: 'deployTest',
+      },
+    });
   }
 }
 
@@ -34,7 +41,13 @@ function* fetchTest(action) {
       payload: data,
     });
   } catch (e) {
-    yield put(push(routes.error));
+    yield put({
+      type: setError.type,
+      payload: {
+        message: e.message,
+        idError: 'fetchTest',
+      },
+    });
   }
   yield put({
     type: setLoad.type,
@@ -45,18 +58,16 @@ function* fetchTest(action) {
 function* updateTest(action) {
   try {
     const { id, testName, entities, ids, created } = action.payload;
-    yield put({
-      type: setLoad.type,
-      payload: true,
-    });
     yield call(updateTestApi, { id, testName, entities, ids, created });
-    yield put({
-      type: setLoad.type,
-      payload: false,
-    });
     yield put(push(routes.testPage));
   } catch (e) {
-    yield put(push(routes.error));
+    yield put({
+      type: setError.type,
+      payload: {
+        message: e.message,
+        idError: 'updateTest',
+      },
+    });
   }
 }
 
@@ -65,7 +76,13 @@ function* removeTest(action) {
     yield call(deleteTestApi, action.payload);
     yield put(push('/tests'));
   } catch (e) {
-    yield put(push(routes.error));
+    yield put({
+      type: setError.type,
+      payload: {
+        message: e.message,
+        idError: 'removeTest',
+      },
+    });
   }
 }
 

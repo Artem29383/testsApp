@@ -9,8 +9,15 @@ const userReducer = createSlice({
     isAdmin: false,
     name: '',
     isInit: false,
+    error: {
+      message: '',
+      idError: '',
+    },
   },
   reducers: {
+    setError(state, { payload }) {
+      state.error = payload;
+    },
     logoutUser(state) {
       state.isAuth = false;
       state.name = '';
@@ -41,4 +48,5 @@ export const {
   loginUser,
   checkAuthUser,
   logOutUser,
+  setError,
 } = userReducer.actions;

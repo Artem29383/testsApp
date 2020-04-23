@@ -25,7 +25,6 @@ const CreateEditTestPage = () => {
   const setDndIds = useAction(setDragAndDropArrayQuests);
   const questionsEntities = useSelector(getQuestionsSelector);
   const setDNDNewIds = useAction(setDragAndDropArrayAnswers);
-
   useEffect(() => {
     return () => removeTest();
   }, []);

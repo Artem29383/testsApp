@@ -15,23 +15,40 @@ import ModalOverlay from 'components/ModalOverlay';
 import routes from 'constants/routes';
 import Cross from 'components/Cross';
 import Portal from 'components/Portal';
+import useFetchingError from 'hooks/useFetchingError';
 import S from './TestPage.styled';
 
 const TestPage = () => {
+  const { error, resetError, idError } = useFetchingError();
   const setLoad = useAction(setLoading);
   const getTests = useAction(getAllTests);
   const isLoading = useSelector(getLoadingSelector);
   const { tests } = useSelector(getDenormalizedDataSelector)('tests');
   const isAdmin = useSelector(getIsAdminSelector);
   const [showModal, setShowModal] = useToggle(false);
-  useEffect(() => {
+
+  const fetchAllTests = () => {
     setLoad(true);
+    resetError('');
     getTests();
+  };
+
+  useEffect(() => {
+    fetchAllTests();
   }, []);
 
   return (
     <S.Content>
-      {isLoading ? <Loader /> : <Table tests={tests} />}
+      {/* eslint-disable-next-line no-nested-ternary */}
+      {isLoading ? (
+        <Loader />
+      ) : error && idError === 'getTests' ? (
+        <S.Error>
+          <ButtonRipple onClickHandler={fetchAllTests}>Повторить</ButtonRipple>
+        </S.Error>
+      ) : (
+        <Table tests={tests} />
+      )}
       {isAdmin && (
         <S.BtnPos>
           <ButtonRipple onClickHandler={setShowModal} className="circle">
