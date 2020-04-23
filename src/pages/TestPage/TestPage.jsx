@@ -37,18 +37,17 @@ const TestPage = () => {
     fetchAllTests();
   }, []);
 
+  if (isLoading) return <Loader />;
+  if (error && idError === 'getTests')
+    return (
+      <S.Error>
+        <ButtonRipple onClickHandler={fetchAllTests}>Повторить</ButtonRipple>
+      </S.Error>
+    );
+
   return (
     <S.Content>
-      {/* eslint-disable-next-line no-nested-ternary */}
-      {isLoading ? (
-        <Loader />
-      ) : error && idError === 'getTests' ? (
-        <S.Error>
-          <ButtonRipple onClickHandler={fetchAllTests}>Повторить</ButtonRipple>
-        </S.Error>
-      ) : (
-        <Table tests={tests} />
-      )}
+      <Table tests={tests} />
       {isAdmin && (
         <S.BtnPos>
           <ButtonRipple onClickHandler={setShowModal} className="circle">

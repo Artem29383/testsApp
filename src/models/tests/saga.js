@@ -10,6 +10,7 @@ import {
 } from 'models/tests/reducer';
 import { setError } from 'models/user/reducer';
 import { push } from 'connected-react-router';
+import routes from 'constants/routes';
 
 function* getTest() {
   try {
@@ -45,7 +46,7 @@ function* getCurrentTest(action) {
       payload: data,
     });
   } catch (e) {
-    yield put(push(action.payload.isAdmin ? '/edit' : '/tests'));
+    yield put(push(action.payload.isAdmin ? routes.edit : routes.testPage));
   }
   yield put({
     type: setLoading.type,
