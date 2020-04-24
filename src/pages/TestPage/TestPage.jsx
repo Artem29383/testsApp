@@ -28,7 +28,6 @@ const TestPage = () => {
   const [showModal, setShowModal] = useToggle(false);
 
   const fetchAllTests = () => {
-    console.log(tests);
     setLoad(true);
     resetError('');
     getTests();

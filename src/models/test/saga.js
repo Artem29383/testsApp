@@ -16,11 +16,20 @@ import {
 } from 'models/test/reducer';
 import { setError } from 'models/user/reducer';
 import routes from 'constants/routes';
+import {
+  addNewTestField,
+  removeTestField,
+  updateTestName,
+} from 'models/tests/reducer';
 
 function* deployTest(action) {
   try {
     const { payload } = action;
     yield call(createTestApi, payload);
+    yield put({
+      type: addNewTestField.type,
+      payload,
+    });
     yield put(push(routes.testPage));
   } catch (e) {
     yield put({
@@ -59,6 +68,10 @@ function* updateTest(action) {
   try {
     const { id, testName, entities, ids, created } = action.payload;
     yield call(updateTestApi, { id, testName, entities, ids, created });
+    yield put({
+      type: updateTestName.type,
+      payload: { id, testName },
+    });
     yield put(push(routes.testPage));
   } catch (e) {
     yield put({
@@ -74,6 +87,10 @@ function* updateTest(action) {
 function* removeTest(action) {
   try {
     yield call(deleteTestApi, action.payload);
+    yield put({
+      type: removeTestField.type,
+      payload: action.payload,
+    });
     yield put(push('/tests'));
   } catch (e) {
     yield put({
