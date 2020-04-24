@@ -23,7 +23,7 @@ const TableFields = ({ id }) => {
       {fields}
       {isAdmin && (
         <S.ThText data-label="Редактирование" className={colors.blazeOrange}>
-          <S.Link to={`${routes.edit}/${id}`}>
+          <S.Link to={`${routes.testPage}/${id}${routes.edit}`}>
             <S.ThDiv>
               <S.Text data-id={id}>
                 <Edit.Icon>

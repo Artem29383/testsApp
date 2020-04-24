@@ -13,13 +13,6 @@ export default [
     isAuth: false,
   },
   {
-    path: routes.edit,
-    exact: true,
-    component: TestPage,
-    isAuth: true,
-    isAdmin: true,
-  },
-  {
     path: routes.testPage,
     exact: true,
     component: TestPage,
@@ -34,14 +27,14 @@ export default [
     isAdmin: true,
   },
   {
-    path: `${routes.passing}/:id`,
+    path: `${routes.testPage}/:id${routes.passing}`,
     exact: true,
     component: PassingTestPage,
     isAuth: true,
     isAdmin: false,
   },
   {
-    path: `${routes.edit}/:id`,
+    path: `${routes.testPage}/:id${routes.edit}`,
     exact: true,
     component: EditTestPage,
     isAuth: true,
