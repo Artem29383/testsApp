@@ -18,3 +18,7 @@ export const getIsAdminSelector = createSelector(
 export const getInit = state => state.user.isInit;
 
 export const getUserNameSelector = createSelector(getUserName, name => name);
+
+const getErrorFetch = state => state.user.error;
+
+export const getErrorSel = createSelector(getErrorFetch, error => error);

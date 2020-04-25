@@ -36,18 +36,17 @@ const DropDown = ({ options, value, setValue, className, label }) => {
     setTemp(valueOptions);
   };
 
-  const liList = options.map(
-    // eslint-disable-next-line array-callback-return,consistent-return
-    li => {
-      if (String(li) !== value) {
-        return (
-          <S.Li key={li} onClick={setValueDropDown} {...coordinates}>
-            {li}
-          </S.Li>
-        );
-      }
+  const liList = options.map(li => {
+    if (String(li) === value) {
+      return null;
     }
-  );
+
+    return (
+      <S.Li key={li} onClick={setValueDropDown} {...coordinates}>
+        {li}
+      </S.Li>
+    );
+  });
 
   return (
     <S.DropDownDiv className={className} ref={ref}>
@@ -64,11 +63,12 @@ const DropDown = ({ options, value, setValue, className, label }) => {
   );
 };
 
-export default DropDown;
 DropDown.propTypes = {
-  options: PropTypes.array,
-  value: PropTypes.string,
-  setValue: PropTypes.func,
+  options: PropTypes.array.isRequired,
+  value: PropTypes.string.isRequired,
+  setValue: PropTypes.func.isRequired,
   className: PropTypes.string,
   label: PropTypes.string,
 };
+
+export default DropDown;

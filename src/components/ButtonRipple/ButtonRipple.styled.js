@@ -7,7 +7,10 @@ export default {
     border-radius: 2px;
     padding: 0 18px;
     line-height: 2.5;
+    position: relative;
     font-size: 16px;
+    width: ${({ width }) => width && `${width}px`};
+    height: ${({ height }) => height && `${height}px`};
     text-transform: uppercase;
     cursor: pointer;
     display: block;

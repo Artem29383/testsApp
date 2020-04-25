@@ -19,19 +19,16 @@ export function checkValidationTest(
           errorMsg: 'Нужно больше двух вариантов ответа',
         });
       } else {
-        const checkAnswer = [];
-        // eslint-disable-next-line array-callback-return,consistent-return
-        questions[id].answer.ids.some(qId => {
-          if (questions[id].answer.entities[qId].isChecked) {
-            checkAnswer.push(id);
-            return validQuestions.push(id);
-          }
-        });
-        if (checkAnswer.length === 0) {
+        const isRightAnswer = questions[id].answer.ids.some(
+          qId => questions[id].answer.entities[qId].isChecked
+        );
+        if (!isRightAnswer) {
           inValidQuestions.push({
             id,
             errorMsg: 'Отсутствует правильный ответ',
           });
+        } else {
+          validQuestions.push(id);
         }
       }
     }

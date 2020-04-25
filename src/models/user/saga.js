@@ -1,34 +1,72 @@
 import { call, takeEvery, put } from 'redux-saga/effects';
-import { auth } from 'api/api';
-import { loginUserFailure, loginUserSuccess } from 'models/user/reducer';
-import { LOGIN_USER } from 'models/user/actions';
+import { getUsersCurrentApi, logoutUserApi, signInApi } from 'api/api';
+import {
+  checkAuthUser,
+  loginUser,
+  loginUserFailure,
+  loginUserSuccess,
+  setInit,
+  logoutUser,
+  logOutUser,
+} from 'models/user/reducer';
+import { setTests } from 'models/tests/reducer';
+import { push } from 'connected-react-router';
+import routes from 'constants/routes';
 
 function* signIn(action) {
   try {
     const { login, password } = action.payload;
-    const { data } = yield call(auth);
-    // eslint-disable-next-line array-callback-return,consistent-return
-    const user = data.filter(u => {
-      if (u.login === login && u.password === password) return u;
-    });
-    const isAuth = Boolean(user.length);
+    const { data } = yield call(signInApi, login, password);
+    const isAuth = Boolean(data);
     if (!isAuth) throw new Error('Неверные данные для входа...');
-    localStorage.setItem(
-      'user',
-      JSON.stringify({ isAuth, name: user[0].login, isAdmin: user[0].isAdmin })
-    );
     yield put({
-      type: loginUserSuccess,
-      payload: { name: user[0].login, isAuth },
+      type: loginUserSuccess.type,
+      payload: { name: data.username, isAuth, isAdmin: data.is_admin },
     });
   } catch (e) {
     yield put({
-      type: loginUserFailure,
+      type: loginUserFailure.type,
       payload: e.message,
     });
   }
 }
 
+function* logOut() {
+  try {
+    yield call(logoutUserApi);
+    yield put({
+      type: setTests.type,
+      payload: {
+        entities: [],
+        ids: [],
+      },
+    });
+    yield put({
+      type: logoutUser.type,
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function* getCurrentUser() {
+  try {
+    const { data } = yield call(getUsersCurrentApi);
+    yield put({
+      type: loginUserSuccess.type,
+      payload: { name: data.username, isAuth: true, isAdmin: data.is_admin },
+    });
+  } catch (e) {
+    yield put(push(routes.auth));
+  }
+  yield put({
+    type: setInit.type,
+    payload: true,
+  });
+}
+
 export default function* rootSagaAuth() {
-  yield takeEvery(LOGIN_USER, signIn);
+  yield takeEvery(loginUser, signIn);
+  yield takeEvery(checkAuthUser, getCurrentUser);
+  yield takeEvery(logOutUser, logOut);
 }

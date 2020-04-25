@@ -17,9 +17,9 @@ const RadioButton = ({
   id,
   name,
   radioObject,
-  changeHandler,
   questionId,
   index,
+  onChangeHandler,
 }) => {
   const [radioLabel, setRadioLabel] = useState(radioObject.value);
   const [edit, setEdit] = useState(false);
@@ -69,10 +69,10 @@ const RadioButton = ({
             <InputEdit
               type="text"
               focus
-              handler={changeRadioLabelHandler}
+              onHandler={changeRadioLabelHandler}
               value={radioLabel}
-              blur={endEditBlur}
-              keyDown={endEditKeyDown}
+              onBlur={endEditBlur}
+              onKeyDown={endEditKeyDown}
               checkMark
             />
           ) : (
@@ -82,7 +82,7 @@ const RadioButton = ({
                 id={id}
                 isChecked={radioObject.isChecked}
                 label={radioLabel}
-                changeHandler={changeHandler}
+                onChangeHandler={onChangeHandler}
               />
               <Edit.Icon onClick={startEdit} onTouchEnd={startEdit}>
                 <use xlinkHref={`${editSvg}#edit`} />
@@ -92,7 +92,7 @@ const RadioButton = ({
                 color="#80868b"
                 rotate="135deg"
                 margin="0 0 0 -20px"
-                clickHandler={deleteAnswer}
+                onClickHandler={deleteAnswer}
                 hover
               />
             </>
@@ -108,8 +108,8 @@ RadioButton.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   radioObject: PropTypes.object,
-  changeHandler: PropTypes.func,
   questionId: PropTypes.string,
   setCheckedId: PropTypes.func,
   index: PropTypes.number,
+  onChangeHandler: PropTypes.func,
 };

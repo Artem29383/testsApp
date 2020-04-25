@@ -4,47 +4,46 @@ import S from './InputEdit.styled';
 
 const InputEdit = ({
   value,
-  handler,
-  blur,
-  keyDown,
   label,
   focus,
   isError,
   type,
   checkMark,
   error,
+  onHandler,
+  onBlur,
+  onKeyDown,
 }) => (
   <>
     <S.Group>
       <S.InputField
         value={value}
-        onChange={handler}
-        onKeyDown={keyDown}
-        onBlur={blur}
+        onChange={onHandler}
+        onKeyDown={onKeyDown}
+        onBlur={onBlur}
         placeholder=" "
         type={type}
         autoFocus={focus}
       />
       <S.Bar isError={isError} />
       {label && <S.Label>{label}</S.Label>}
-      {checkMark && <S.Close onTouchEnd={blur} onClick={blur} />}
+      {checkMark && <S.Close onTouchEnd={onBlur} onClick={onBlur} />}
     </S.Group>
     {isError && <S.Error>{error}</S.Error>}
   </>
 );
 
-export default memo(InputEdit);
 InputEdit.propTypes = {
-  value: PropTypes.string,
-  handler: PropTypes.func,
-  blur: PropTypes.func,
-  keyDown: PropTypes.func,
+  value: PropTypes.string.isRequired,
   label: PropTypes.string,
   focus: PropTypes.bool,
   isError: PropTypes.bool,
   type: PropTypes.string,
   checkMark: PropTypes.bool,
   error: PropTypes.string,
+  onKeyDown: PropTypes.func,
+  onHandler: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
 };
 
 InputEdit.defaultProps = {
@@ -52,3 +51,5 @@ InputEdit.defaultProps = {
   type: 'text',
   checkMark: false,
 };
+
+export default memo(InputEdit);

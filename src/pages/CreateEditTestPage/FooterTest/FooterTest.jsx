@@ -6,12 +6,14 @@ import Portal from 'components/Portal';
 import nanoid from 'nanoid';
 import useAction from 'hooks/useAction';
 import {
+  createTest,
   pushQuestion,
+  removeTestById,
   setQuestError,
   setValidQuestion,
+  updateTestById,
 } from 'models/test/reducer';
 import { checkValidationTest } from 'utils/checkValidationTest';
-import { DELETE_TEST, DEPLOY_TEST, UPDATE_TEST } from 'models/test/action';
 import useSelector from 'hooks/useSelector';
 import {
   getCreatedDataSelector,
@@ -21,6 +23,9 @@ import {
 } from 'models/test/selectors';
 import { useParams } from 'react-router-dom';
 import useToggle from 'hooks/useToggle';
+import Loader from 'components/Loader';
+import { colors } from 'styles/constants';
+import useFetchingError from 'hooks/useFetchingError';
 import S from './FooterTest.styled';
 
 const FooterTest = ({ setUniqId, uniqId }) => {
@@ -29,16 +34,23 @@ const FooterTest = ({ setUniqId, uniqId }) => {
   const pushQuest = useAction(pushQuestion);
   const setValidQuest = useAction(setValidQuestion);
   const setInvalidQuest = useAction(setQuestError);
-  const deployTest = useAction(DEPLOY_TEST);
-  const updateThisTest = useAction(UPDATE_TEST);
+  const deployTest = useAction(createTest);
+  const updateThisTest = useAction(updateTestById);
   const created = useSelector(getCreatedDataSelector);
-  const deleteThisTest = useAction(DELETE_TEST);
+  const deleteThisTest = useAction(removeTestById);
   const [isValidTest, setIsValidTest] = useState(false);
   const questionsIds = useSelector(getQuestionsIdsSelector);
   const questionsEntities = useSelector(getQuestionsSelector);
   const [showModalSave, setShowModalSave] = useToggle(false);
-
-  const saveTestAndDeploy = () => {
+  const {
+    load,
+    setIsLoading,
+    error,
+    resetError,
+    action,
+    setAction,
+  } = useFetchingError();
+  const saveTestAndCreate = () => {
     const isValid = checkValidationTest(
       questionsEntities,
       questionsIds,
@@ -46,9 +58,18 @@ const FooterTest = ({ setUniqId, uniqId }) => {
       setInvalidQuest
     );
     if (isValid && questionsIds.length !== 0) {
+      resetError('');
+      setAction('save');
+      setIsLoading();
       setIsValidTest(true);
     }
   };
+
+  useEffect(() => {
+    if (error && load) {
+      setIsLoading();
+    }
+  }, [error]);
 
   useEffect(() => {
     if (!editId) {
@@ -87,10 +108,14 @@ const FooterTest = ({ setUniqId, uniqId }) => {
         };
         updateThisTest(test);
       }
+      setIsValidTest(false);
     }
   }, [isValidTest]);
 
   const removeThisTest = () => {
+    resetError('');
+    setAction('remove');
+    setIsLoading();
     deleteThisTest(editId);
   };
 
@@ -117,19 +142,33 @@ const FooterTest = ({ setUniqId, uniqId }) => {
           positiveBtn="Отмена"
           negativeClickHandler="Сохранить"
           headerText="Сохранить тест?"
-          clickHandler={saveTestAndDeploy}
+          load={load}
+          action={action}
+          error={error}
+          onClickHandler={saveTestAndCreate}
         />
       </Portal>
       <S.FooterTest editId={editId}>
-        <ButtonRipple clickHandler={addNewQuestion}>
+        <ButtonRipple onClickHandler={addNewQuestion}>
           Добавить вопрос
         </ButtonRipple>
-        <ButtonRipple className="green" clickHandler={modalSaveHandler}>
+        <ButtonRipple className="green" onClickHandler={modalSaveHandler}>
           {editId ? 'Обновить тест' : 'Сохранить Тест'}
         </ButtonRipple>
         {editId && (
-          <ButtonRipple className="red" clickHandler={removeThisTest}>
-            Удалить тест
+          <ButtonRipple
+            className="red"
+            onClickHandler={removeThisTest}
+            isLoader
+          >
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {load && action === 'remove' ? (
+              <Loader width="35" height="35" color={colors.white} />
+            ) : error && action === 'remove' ? (
+              'Повторить'
+            ) : (
+              'Удалить тест'
+            )}
           </ButtonRipple>
         )}
       </S.FooterTest>

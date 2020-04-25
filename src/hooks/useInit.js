@@ -2,20 +2,17 @@ import useSelector from 'hooks/useSelector';
 import { getInit } from 'models/user/selectors';
 import { useEffect } from 'react';
 import useAction from 'hooks/useAction';
-import { loginUserSuccess, setInit } from 'models/user/reducer';
+import { checkAuthUser } from 'models/user/reducer';
 
 const useInit = () => {
-  const init = useSelector(getInit);
-  const login = useAction(loginUserSuccess);
-  const setInitApp = useAction(setInit);
-
+  const isInit = useSelector(getInit);
+  const checkUser = useAction(checkAuthUser);
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem('user'))) {
-      login(JSON.parse(localStorage.getItem('user')));
+    if (!isInit) {
+      checkUser();
     }
-    setInitApp(true);
-  }, [init]);
-  return init;
+  }, []);
+  return isInit;
 };
 
 export default useInit;

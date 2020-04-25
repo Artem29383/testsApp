@@ -9,7 +9,7 @@ const Field = ({ id, f, label }) => {
   const tests = useSelector(getTestsSelector);
   return (
     <S.ThText data-label={label}>
-      <S.Link to={`${routes.passing}/${id}`}>
+      <S.Link to={`${routes.testPage}/${id}${routes.passing}`}>
         <S.ThDiv>
           <S.Text data-id={id}>{tests[id][f]}</S.Text>
         </S.ThDiv>

@@ -1,47 +1,60 @@
-import { GET_TEST, GET_TESTS } from 'models/tests/actions';
 import { takeEvery, call, put } from '@redux-saga/core/effects';
-import { getTestApi, getTests } from 'api/api';
+import { getTestApi, getTestsApi } from 'api/api';
 import { normalized } from 'utils/normalized';
-import { setCurrentTest, setLoading, setTests } from 'models/tests/reducer';
+import {
+  getAllTests,
+  getTestById,
+  setCurrentTest,
+  setLoading,
+  setTests,
+} from 'models/tests/reducer';
+import { setError } from 'models/user/reducer';
 import { push } from 'connected-react-router';
+import routes from 'constants/routes';
 
 function* getTest() {
   try {
-    const { data } = yield call(getTests);
+    const { data } = yield call(getTestsApi);
     const dataNormalized = normalized(data, 'tests');
     yield put({
-      type: setTests,
+      type: setTests.type,
       payload: {
         entities: dataNormalized.entities.tests,
         ids: dataNormalized.result,
       },
     });
-    yield put({
-      type: setLoading,
-      payload: false,
-    });
   } catch (e) {
-    console.log(e);
+    yield put({
+      type: setError.type,
+      payload: {
+        message: e.message,
+        idError: 'getTests',
+      },
+    });
   }
+  yield put({
+    type: setLoading.type,
+    payload: false,
+  });
 }
 
 function* getCurrentTest(action) {
   try {
     const { data } = yield call(getTestApi, action.payload.id);
     yield put({
-      type: setCurrentTest,
+      type: setCurrentTest.type,
       payload: data,
     });
-    yield put({
-      type: setLoading,
-      payload: false,
-    });
   } catch (e) {
-    yield put(push(action.payload.isAdmin ? '/edit' : '/tests'));
+    yield put(push(action.payload.isAdmin ? routes.edit : routes.testPage));
   }
+  yield put({
+    type: setLoading.type,
+    payload: false,
+  });
 }
 
 export default function* rootSagaTests() {
-  yield takeEvery(GET_TESTS, getTest);
-  yield takeEvery(GET_TEST, getCurrentTest);
+  yield takeEvery(getAllTests, getTest);
+  yield takeEvery(getTestById, getCurrentTest);
 }

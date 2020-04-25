@@ -25,7 +25,6 @@ const CreateEditTestPage = () => {
   const setDndIds = useAction(setDragAndDropArrayQuests);
   const questionsEntities = useSelector(getQuestionsSelector);
   const setDNDNewIds = useAction(setDragAndDropArrayAnswers);
-
   useEffect(() => {
     return () => removeTest();
   }, []);
@@ -45,8 +44,7 @@ const CreateEditTestPage = () => {
       destination.droppableId === source.droppableId &&
       destination.index === source.index
     ) {
-      // eslint-disable-next-line consistent-return
-      return false;
+      return;
     }
 
     if (destination.droppableId !== source.droppableId) return;

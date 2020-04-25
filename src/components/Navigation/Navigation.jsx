@@ -3,26 +3,19 @@ import throttle from 'lodash.throttle';
 import ButtonRipple from 'components/ButtonRipple';
 import routes from 'constants/routes';
 import useAction from 'hooks/useAction';
-import { logoutUser } from 'models/user/reducer';
-import { setTests } from 'models/tests/reducer';
+import { logOutUser } from 'models/user/reducer';
 import { useToggle } from 'hooks/index';
 import S from './Navigation.styled';
 
 const Navigation = () => {
-  const resetTests = useAction(setTests);
-  const logout = useAction(logoutUser);
   const [showHeader, setShowHeader] = useState(true);
   const [scroll, setScroll] = useState(0);
   const headerHeight = useRef();
   const [showNav, setShowNav] = useToggle(false);
+  const logOut = useAction(logOutUser);
 
   const logoutClick = () => {
-    localStorage.removeItem('user');
-    resetTests({
-      entities: [],
-      ids: [],
-    });
-    logout();
+    logOut();
   };
 
   const checkScroll = useCallback(
@@ -56,7 +49,7 @@ const Navigation = () => {
         <S.NavUl>
           <S.NavItem className="padding">
             <S.Link to={routes.testPage}>
-              <ButtonRipple className="green" clickHandler={setShowNav}>
+              <ButtonRipple className="green" onClickHandler={setShowNav}>
                 Тесты
               </ButtonRipple>
             </S.Link>
@@ -69,7 +62,7 @@ const Navigation = () => {
         <S.Line3 isOpen={showNav} />
       </S.Burger>
       <S.NavItem className="right">
-        <ButtonRipple clickHandler={logoutClick} className="red">
+        <ButtonRipple onClickHandler={logoutClick} className="red">
           Выйти
         </ButtonRipple>
       </S.NavItem>

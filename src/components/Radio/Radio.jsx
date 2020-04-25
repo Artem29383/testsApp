@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import S, { Label } from 'components/Radio/Radio.styled';
 import LinesEllipsis from 'react-lines-ellipsis';
 
-const Radio = ({ id, name, isChecked, label, changeHandler }) => (
+const Radio = ({ id, name, isChecked, label, onChangeHandler }) => (
   <>
     <S.Input
       id={id}
@@ -11,9 +11,9 @@ const Radio = ({ id, name, isChecked, label, changeHandler }) => (
       type="radio"
       checked={isChecked}
       value={label}
-      onChange={changeHandler}
+      onChange={onChangeHandler}
     />
-    <Label htmlFor={id} id={id} onTouchEnd={changeHandler}>
+    <Label htmlFor={id} id={id} onTouchEnd={onChangeHandler}>
       <LinesEllipsis maxLine="7" text={label} />
     </Label>
   </>
@@ -21,10 +21,10 @@ const Radio = ({ id, name, isChecked, label, changeHandler }) => (
 
 Radio.propTypes = {
   id: PropTypes.string,
-  name: PropTypes.string,
-  isChecked: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  isChecked: PropTypes.bool.isRequired,
   label: PropTypes.string,
-  changeHandler: PropTypes.func,
+  onChangeHandler: PropTypes.func.isRequired,
 };
 
 export default Radio;

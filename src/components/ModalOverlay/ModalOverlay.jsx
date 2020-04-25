@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ButtonRipple from 'components/ButtonRipple';
 import Cross from 'components/Cross';
 import useModal from 'hooks/useModal';
+import Loader from 'components/Loader';
+import { colors } from 'styles/constants';
 import S from './ModalOverlay.styled';
 
 const ModalOverlay = ({
@@ -14,10 +16,13 @@ const ModalOverlay = ({
   headerText,
   link,
   linkPath,
-  clickHandler,
   isOpen,
   isClosable,
   negativeClickHandler,
+  onClickHandler,
+  load,
+  error,
+  action,
 }) => {
   useModal(toggle, isOpen);
 
@@ -31,7 +36,7 @@ const ModalOverlay = ({
               rotate="45deg"
               right="20px"
               position="absolute"
-              clickHandler={toggle}
+              onClickHandler={toggle}
             />
           )}
           <S.Title>{headerText}</S.Title>
@@ -40,17 +45,28 @@ const ModalOverlay = ({
         {isFooter && (
           <S.ModalFooter>
             {negativeBtn && (
-              <ButtonRipple clickHandler={toggle} className="red">
+              <ButtonRipple onClickHandler={toggle} className="red">
                 {negativeBtn}
               </ButtonRipple>
             )}
             {negativeClickHandler && (
-              <ButtonRipple clickHandler={clickHandler} className="red">
-                {negativeClickHandler}
+              <ButtonRipple
+                onClickHandler={onClickHandler}
+                className="red"
+                isLoader
+              >
+                {/* eslint-disable-next-line no-nested-ternary */}
+                {load && action === 'save' ? (
+                  <Loader height="35" width="35" color={colors.white} />
+                ) : error && action === 'save' ? (
+                  'Повторить'
+                ) : (
+                  negativeClickHandler
+                )}
               </ButtonRipple>
             )}
             {positiveBtn && (
-              <ButtonRipple clickHandler={toggle}>{positiveBtn}</ButtonRipple>
+              <ButtonRipple onClickHandler={toggle}>{positiveBtn}</ButtonRipple>
             )}
             {link && (
               <S.Link to={linkPath}>
@@ -74,9 +90,12 @@ ModalOverlay.propTypes = {
   headerText: PropTypes.string,
   link: PropTypes.string,
   linkPath: PropTypes.string,
-  clickHandler: PropTypes.func,
   isClosable: PropTypes.bool,
+  load: PropTypes.bool,
+  error: PropTypes.string,
+  action: PropTypes.string,
   negativeClickHandler: PropTypes.string,
+  onClickHandler: PropTypes.func,
 };
 
 ModalOverlay.defaultProps = {

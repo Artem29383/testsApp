@@ -18,18 +18,19 @@ export const LoaderComponent = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
 
   &:after {
     content: ' ';
     display: block;
-    width: 64px;
-    height: 64px;
+    width: ${({ width }) => (width ? `${width}px` : '64px')};
+    height: ${({ height }) => (height ? `${height}px` : '64px')};
     margin: 8px;
     border-radius: 50%;
     border: 6px solid ${colors.mandy};
-    border-color: ${colors.mandy} transparent ${colors.mandy} transparent;
+    border-color: ${({ color }) =>
+      color
+        ? `${color} transparent ${color} transparent;`
+        : `${colors.mandy} transparent ${colors.mandy} transparent;`};
     animation: ${keyFrames} 1.2s linear infinite;
   }
 `;

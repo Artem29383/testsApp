@@ -5,51 +5,62 @@ import { device } from 'constants/device';
 
 const box = keyframes`
   0% {
-        transform: translateY(-50%) scale(1);
-    }
-    40%{
-        transform: translateY(-50%) scale(1.3,0.7);
-    }
-    55% {
-        transform: translateY(-50%) scale(1);
-    }
-    70% {
-        transform: translateY(-50%) scale(1.2,0.8);
-    }
-    80% {
-        transform: translateY(-50%) scale(1);
-    }
-    90% {
-        transform: translateY(-50%) scale(1.1,0.9);
-    }
-    100% {
-        transform: translateY(-50%) scale(1);
-    }
+    transform: translateY(-50%) scale(1);
+  }
+  
+  40% {
+    transform: translateY(-50%) scale(1.3,0.7);
+  }
+  
+  55% {
+    transform: translateY(-50%) scale(1);
+  }
+  
+  70% {
+    transform: translateY(-50%) scale(1.2,0.8);
+  }
+  
+  80% {
+    transform: translateY(-50%) scale(1);
+  }
+  
+  90% {
+    transform: translateY(-50%) scale(1.1,0.9);
+  }
+  
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
 `;
 
-// eslint-disable-next-line no-unused-vars
 const check = keyframes`
   0% {
-        transform: rotate(45deg) scale(1) translateY(-50%);
-    }
-    40%{
-        transform: rotate(45deg) scale(1.3,0.7) translateY(-50%);
-    }
-    55% {
-        transform: rotate(45deg) scale(1) translateY(-50%);
-    }
-    70% {
-        transform: rotate(45deg) scale(1.2,0.8) translateY(-50%);
-    }
-    80% {
-        transform: rotate(45deg) scale(1) translateY(-50%);
-    }
-    90% {
-        transform: rotate(45deg) scale(1.1,0.9) translateY(-50%);
-    }
-    100% {
-        transform: rotate(45deg) scale(1) translateY(-50%);
-    }
+    transform: rotate(45deg) scale(1) translateY(-50%);
+  }
+  
+  40% {
+    transform: rotate(45deg) scale(1.3,0.7) translateY(-50%);
+  }
+  
+  55% {
+    transform: rotate(45deg) scale(1) translateY(-50%);
+  }
+  
+  70% {
+    transform: rotate(45deg) scale(1.2,0.8) translateY(-50%);
+  }
+  
+  80% {
+    transform: rotate(45deg) scale(1) translateY(-50%);
+  }
+  
+  90% {
+    transform: rotate(45deg) scale(1.1,0.9) translateY(-50%);
+  }
+  
+  100% {
+    transform: rotate(45deg) scale(1) translateY(-50%);
+  }
 `;
 
 export const Span = styled.span`

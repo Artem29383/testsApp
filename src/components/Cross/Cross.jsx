@@ -5,7 +5,6 @@ import S from './Cross.styled';
 const Cross = ({
   color,
   rotate,
-  clickHandler,
   position,
   top,
   left,
@@ -14,12 +13,13 @@ const Cross = ({
   hover,
   margin,
   touched,
+  onClickHandler,
 }) => {
   return (
     <S.Div
       rotate={rotate}
-      onClick={clickHandler}
-      onTouchEnd={touched ? clickHandler : undefined}
+      onClick={onClickHandler}
+      onTouchEnd={touched ? onClickHandler : undefined}
       position={position}
       top={top}
       left={left}
@@ -37,7 +37,6 @@ const Cross = ({
 Cross.propTypes = {
   color: PropTypes.string,
   rotate: PropTypes.string,
-  clickHandler: PropTypes.func,
   top: PropTypes.string,
   left: PropTypes.string,
   right: PropTypes.string,
@@ -46,6 +45,7 @@ Cross.propTypes = {
   hover: PropTypes.bool,
   margin: PropTypes.string,
   touched: PropTypes.bool,
+  onClickHandler: PropTypes.func,
 };
 
 Cross.defaultProps = {

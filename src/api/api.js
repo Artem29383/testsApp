@@ -1,33 +1,39 @@
 import axios from 'axios';
 
 const baseURL = 'http://localhost:3000';
+const baseUrl2 = 'https://snp-tests.herokuapp.com/api/v1/';
 
-export const auth = () => {
-  return axios.get(`${baseURL}/auth`);
-};
+export const signInApi = (login, password) =>
+  axios.post(
+    `${baseUrl2}signin`,
+    {
+      username: login,
+      password,
+    },
+    {
+      withCredentials: true,
+    }
+  );
 
-export const getTests = () => {
-  return axios.get(`${baseURL}/tests`);
-};
+export const getUsersCurrentApi = () =>
+  axios.get(`${baseUrl2}users/current`, {
+    withCredentials: true,
+  });
 
-export const getTestData = id => {
-  return axios.get(`${baseURL}/tests/${id}`);
-};
+export const logoutUserApi = () =>
+  axios.delete(`${baseUrl2}logout`, {
+    withCredentials: true,
+  });
 
-export const getTestApi = id => {
-  return axios.get(`${baseURL}/tests/${id}`);
-};
+export const getTestsApi = () => axios.get(`${baseURL}/tests`);
 
-export const deployingTest = data => {
-  return axios.post(`${baseURL}/tests`, data);
-};
+export const getTestDataApi = id => axios.get(`${baseURL}/tests/${id}`);
 
-export const deployingTestName = data => {
-  return axios.post(`${baseURL}/testsNames`, data);
-};
+export const getTestApi = id => axios.get(`${baseURL}/tests/${id}`);
 
-export const updateThisTest = data => {
-  const { id, testName, entities, ids, created } = data;
+export const createTestApi = data => axios.post(`${baseURL}/tests`, data);
+
+export const updateTestApi = ({ id, testName, entities, ids, created }) => {
   const questions = {
     entities,
     ids,
@@ -41,14 +47,4 @@ export const updateThisTest = data => {
   return axios.put(`${baseURL}/tests/${id}`, test);
 };
 
-export const updateFieldNameTest = data => {
-  return axios.put(`${baseURL}/testsNames/${data.id}`, data);
-};
-
-export const deleteThisFilm = id => {
-  return axios.delete(`${baseURL}/tests/${id}`);
-};
-
-export const deleteFieldNameTest = id => {
-  return axios.delete(`${baseURL}/testsNames/${id}`);
-};
+export const deleteTestApi = id => axios.delete(`${baseURL}/tests/${id}`);
