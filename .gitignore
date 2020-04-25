@@ -4,6 +4,7 @@
 coverage
 node_modules
 public
+db.json
 webpack-assets.json
 webpack-stats.json
 .vscode
