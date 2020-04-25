@@ -55,7 +55,7 @@
                 "cmBYZFGkTCrmnxRCXklUQ"
               ]
             },
-            "questName": "Ваш вопрос",
+            "questName": "Ваш вопрос1",
             "type": "Один из списка",
             "isValid": true,
             "errorMsg": null
@@ -103,7 +103,7 @@
                 "eIPqOl7fhSOJ3jYnxtbB5"
               ]
             },
-            "questName": "Ваш вопрос",
+            "questName": "Ваш вопрос2",
             "type": "Несколько из списка",
             "isValid": true,
             "errorMsg": null
@@ -127,6 +127,48 @@
                 "Jw1OqSnmW9fQ0wo8SzqBv"
               ]
             },
+            "questName": "Ваш вопрос3",
+            "type": "Один из списка",
+            "isValid": true,
+            "errorMsg": null
+          },
+          "o71U87CT2laacG868G5jJ": {
+            "answer": {
+              "entities": {
+                "NowskzdfwtjjJ9bfZdHm0": {
+                  "id": "NowskzdfwtjjJ9bfZdHm0",
+                  "value": "15",
+                  "isChecked": true
+                }
+              },
+              "ids": [
+                "NowskzdfwtjjJ9bfZdHm0"
+              ]
+            },
+            "questName": "Numeric",
+            "type": "Численный",
+            "isValid": true,
+            "errorMsg": null
+          },
+          "YlzDLZc2iKkNNm7HUiUwN": {
+            "answer": {
+              "entities": {
+                "fFDvnoQKYnoC0NskHxqWd": {
+                  "id": "fFDvnoQKYnoC0NskHxqWd",
+                  "value": "Вариант ответа",
+                  "isChecked": false
+                },
+                "dJ9m-KpOkVldzAaKg7amV": {
+                  "id": "dJ9m-KpOkVldzAaKg7amV",
+                  "value": "Вариант ответа",
+                  "isChecked": true
+                }
+              },
+              "ids": [
+                "fFDvnoQKYnoC0NskHxqWd",
+                "dJ9m-KpOkVldzAaKg7amV"
+              ]
+            },
             "questName": "Ваш вопрос",
             "type": "Один из списка",
             "isValid": true,
@@ -136,7 +178,9 @@
         "ids": [
           "e2r5gxoYEtiZtIbzBbaqR",
           "TZEPVRdI87-t39HN651Rw",
-          "lFKTpBokFbIzfSaKkGffh"
+          "lFKTpBokFbIzfSaKkGffh",
+          "o71U87CT2laacG868G5jJ",
+          "YlzDLZc2iKkNNm7HUiUwN"
         ]
       },
       "id": "rwIh29wf-3wRGwqtXeyKp",

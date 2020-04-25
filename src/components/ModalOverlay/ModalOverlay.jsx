@@ -24,11 +24,11 @@ const ModalOverlay = ({
   error,
   action,
 }) => {
-  useModal(toggle, isOpen);
+  useModal(toggle, isOpen, isClosable);
 
   return (
     <S.OverlayM unmountOnExit in={isOpen} timeout={100}>
-      <S.BackDrop onClick={toggle} />
+      {isClosable && <S.BackDrop onClick={toggle} />}
       <S.ModalWindow appear in={isOpen} timeout={100}>
         <S.ModalHeader>
           {isClosable && (
