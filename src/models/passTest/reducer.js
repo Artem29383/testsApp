@@ -65,7 +65,7 @@ const passTestReducer = createSlice({
       state.currentQuestForPassing.entities[payload].isChecked = false;
     },
     setDefaultAnswerNumeric(state, { payload }) {
-      state.currentQuestForPassing.entities[payload].value = '0';
+      state.currentQuestForPassing.entities[payload].value = '';
     },
     setDefaultAnswersCheckBox(state, { payload }) {
       payload.forEach(p => {
