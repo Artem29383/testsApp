@@ -6,6 +6,7 @@ import {
   setLoadDataTest,
   setLoading,
 } from 'models/passTest/reducer';
+import { setError } from 'models/user/reducer';
 
 function* fetchPassingTest(action) {
   try {
@@ -14,13 +15,19 @@ function* fetchPassingTest(action) {
       type: setLoadDataTest.type,
       payload: data,
     });
-    yield put({
-      type: setLoading.type,
-      payload: false,
-    });
   } catch (e) {
-    console.log(e);
+    yield put({
+      type: setError.type,
+      payload: {
+        message: e.message,
+        idError: 'passingTest',
+      },
+    });
   }
+  yield put({
+    type: setLoading.type,
+    payload: false,
+  });
 }
 
 export default function* rootSagaPassTest() {

@@ -19,10 +19,16 @@ export function testResult(answers, ids, userAnswers) {
       }
     }
     if (userAnswers[id].type === questionVariable.some) {
+      let isTrue = false;
       const answer = userAnswers[id].userAnswer;
-      const isTrue = answer.every(
-        res => answers[id].answer.entities[res].isChecked
+      const trueAnswersLength = answers[id].answer.ids.filter(
+        tId => answers[id].answer.entities[tId].isChecked
       );
+      if (trueAnswersLength.length === answer.length) {
+        isTrue = answer.every(
+          res => answers[id].answer.entities[res].isChecked
+        );
+      }
       if (isTrue) {
         countsCorrectAnswers += 1;
       }

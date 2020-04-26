@@ -63,14 +63,6 @@ export default {
       outline: 1px solid ${colors.olsoGray};
     }
   `,
-  QuestFooter: styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 50px 20px 50px;
-    position: absolute;
-    bottom: 10px;
-  `,
   Body: styled.div`
     width: 100%;
     height: 450px;
@@ -106,10 +98,16 @@ export default {
     font-size: 28px;
     padding: 20px 0 0 10px;
   `,
-  Answer: styled.div`
-    font-size: 36px;
-    color: ${colors.dodjerBlue};
+  ErrorServer: styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+  `,
+  ErrorServerMessage: styled.div`
+    margin-top: 15px;
     text-align: center;
-    padding: 10px 0;
+    color: ${colors.blazeOrange};
   `,
 };
