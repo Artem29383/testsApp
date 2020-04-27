@@ -70,12 +70,7 @@ const Question = ({ id, index }) => {
           ref={provided.innerRef}
         >
           <S.QuestionContent>
-            <QuestionHeader
-              quest={quest}
-              setValue={setValue}
-              id={id}
-              value={value}
-            />
+            <QuestionHeader setValue={setValue} id={id} value={value} />
             <S.QuestFormBody>
               {questType === questionVariable.one && (
                 <RadioQuestions

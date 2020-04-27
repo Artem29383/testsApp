@@ -9,9 +9,12 @@ import { removeQuest, setQuestName } from 'models/test/reducer';
 import ModalOverlay from 'components/ModalOverlay/ModalOverlay';
 import Portal from 'components/Portal';
 import useToggle from 'hooks/useToggle';
+import useSelector from 'hooks/useSelector';
+import { getQuestSelector } from 'models/test/selectors';
 import S from './QuestionHeader.styled';
 
-const QuestionHeader = ({ quest, setValue, id, value }) => {
+const QuestionHeader = ({ setValue, id, value }) => {
+  const quest = useSelector(getQuestSelector)(id);
   const setQuestionName = useAction(setQuestName);
   const deleteQuest = useAction(removeQuest);
   const [showModal, setShowModal] = useToggle(false);
@@ -75,7 +78,6 @@ const QuestionHeader = ({ quest, setValue, id, value }) => {
 };
 
 QuestionHeader.propTypes = {
-  quest: PropTypes.object,
   setValue: PropTypes.func,
   id: PropTypes.string,
   value: PropTypes.string,
