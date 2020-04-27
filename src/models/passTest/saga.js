@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { takeEvery, call, put } from '@redux-saga/core/effects';
 import { getTestForPassingTestApi } from 'api/api';
 import {
