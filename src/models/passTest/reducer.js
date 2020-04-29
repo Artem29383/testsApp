@@ -1,51 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
 /* eslint-disable no-param-reassign */
 
+const initialState = {
+  id: null,
+  questions: {
+    entities: [],
+    ids: [],
+  },
+  testName: null,
+  isLoading: true,
+  currentQuestForPassing: {
+    entities: {},
+    ids: [],
+    questId: null,
+    correctAnswer: [],
+    userAnswer: [],
+  },
+  allCorrectUserAnswQuest: {
+    entities: {},
+    ids: [],
+  },
+  errorMessage: '',
+};
+
 const passTestReducer = createSlice({
   name: 'passingTest',
-  initialState: {
-    id: null,
-    questions: {
-      entities: [],
-      ids: [],
-    },
-    testName: null,
-    isLoading: true,
-    currentQuestForPassing: {
-      entities: {},
-      ids: [],
-      questId: null,
-      correctAnswer: [],
-      userAnswer: [],
-    },
-    allCorrectUserAnswQuest: {
-      entities: {},
-      ids: [],
-    },
-    errorMessage: '',
-  },
+  initialState,
   reducers: {
-    removeTrash(state) {
-      state.id = null;
-      state.questions = {
-        entities: {},
-        ids: [],
-      };
-      state.testName = null;
-      state.isLoading = true;
-      state.currentQuestForPassing = {
-        entities: {},
-        ids: [],
-        questId: null,
-        correctAnswer: {},
-        userAnswer: [],
-      };
-      state.allCorrectUserAnswQuest = {
-        entities: {},
-        ids: [],
-      };
-      state.errorMessage = '';
-    },
+    reset: () => initialState,
     setLoading(state, { payload }) {
       state.isLoading = payload;
     },
@@ -139,7 +121,7 @@ export const {
   toggleChecked,
   setErrorMessage,
   pushAnswer,
-  removeTrash,
+  reset,
   setUserTouchedAnswer,
   setNumericAnswer,
   setDefaultAnswerNumeric,

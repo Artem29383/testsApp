@@ -13,7 +13,7 @@ import Loader from 'components/Loader';
 import RadioAnswer from 'pages/PassingTestPage/RadioAnswer/RadioAnswer';
 import { questionVariable } from 'styles/constants';
 import ButtonRipple from 'components/ButtonRipple';
-import { getTestData, removeTrash, setLoading } from 'models/passTest/reducer';
+import { getTestData, reset, setLoading } from 'models/passTest/reducer';
 import NumberAnswer from 'pages/PassingTestPage/NumberAnswer';
 import AllQuestions from 'pages/PassingTestPage/AllQuestions';
 import CheckBoxAnswer from 'pages/PassingTestPage/CheckBoxAnswer';
@@ -32,15 +32,11 @@ const PassingTestPage = () => {
   const [questIndex, setQuestIndex] = useState(0);
   const currentQuest = useSelector(getQuestSelector)(questIndex);
   const errorMessage = useSelector(getErrorSel);
-  const deleteTrash = useAction(removeTrash);
+  const resetTest = useAction(reset);
 
   const getQuestIndex = e => {
     setQuestIndex(Number(e.currentTarget.id));
   };
-
-  useEffect(() => {
-    return () => deleteTrash();
-  }, []);
 
   const getTestDataPassing = () => {
     setLoad(true);
@@ -50,6 +46,7 @@ const PassingTestPage = () => {
 
   useEffect(() => {
     getTestDataPassing();
+    return () => resetTest();
   }, []);
 
   if (isLoad) return <Loader />;
