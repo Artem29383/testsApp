@@ -26,18 +26,14 @@ export function testResult(answers, ids, userAnswers) {
       if (userAnswers[id]) {
         if (userAnswers[id].type === questionVariable.one) {
           const [answer] = userAnswers[id].answer;
-          if (answer) {
-            if (answers[id].answer.entities[answer].isChecked) {
-              countsCorrectAnswers += 1;
-            }
+          if (answers[id].answer.entities[answer].isChecked) {
+            countsCorrectAnswers += 1;
           }
         }
         if (userAnswers[id].type === questionVariable.number) {
           const [answer, nId] = userAnswers[id].answer;
-          if (answer) {
-            if (answer === answers[id].answer.entities[nId].value) {
-              countsCorrectAnswers += 1;
-            }
+          if (answer === answers[id].answer.entities[nId].value) {
+            countsCorrectAnswers += 1;
           }
         }
         if (userAnswers[id].type === questionVariable.some) {

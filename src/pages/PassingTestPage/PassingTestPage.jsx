@@ -15,7 +15,6 @@ import { questionVariable } from 'styles/constants';
 import ButtonRipple from 'components/ButtonRipple';
 import {
   getTestData,
-  // eslint-disable-next-line no-unused-vars
   reset,
   setDataCurrentQuest,
   setLoading,
@@ -24,7 +23,6 @@ import NumberAnswer from 'pages/PassingTestPage/NumberAnswer';
 import AllQuestions from 'pages/PassingTestPage/AllQuestions';
 import CheckBoxAnswer from 'pages/PassingTestPage/CheckBoxAnswer';
 import useFetchingError from 'hooks/useFetchingError';
-// eslint-disable-next-line no-unused-vars
 import PassingTestFooter from 'pages/PassingTestPage/PassingTestFooter';
 import S from './PassingTestPage.styled';
 
