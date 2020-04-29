@@ -32,49 +32,17 @@ export const getQuestSelector = createSelector(
   }
 );
 
-const getEntitiesCurrentQuest = state =>
-  state.passingTest.currentQuestForPassing.entities;
+export const getAnswersQuest = state => state.passingTest.answers;
 
-export const getAnswerOptionsQuSel = createSelector(
-  getEntitiesCurrentQuest,
-  entities => entities
-);
-
-const getIdsCurrentQuest = state =>
-  state.passingTest.currentQuestForPassing.ids;
-
-export const getIdsAnswerOptionsQuSel = createSelector(
-  getIdsCurrentQuest,
-  ids => ids
-);
-
-const getUserAnswer = state =>
-  state.passingTest.currentQuestForPassing.userAnswer;
-
-export const getUserAnswerSel = createSelector(
-  getUserAnswer,
-  userAnswer => userAnswer
-);
+export const getAnswerQuestSel = createSelector([getAnswersQuest], answers => {
+  return memoize(id => {
+    return answers[id];
+  });
+});
 
 const getError = state => state.passingTest.errorMessage;
 
 export const getErrorSel = createSelector(
   getError,
   errorMessage => errorMessage
-);
-
-const getAllUserAnsweredId = state =>
-  state.passingTest.allCorrectUserAnswQuest.ids;
-
-export const getAllUserAnsweredIdSel = createSelector(
-  getAllUserAnsweredId,
-  ids => ids
-);
-
-const getAllUserAnsweredEntities = state =>
-  state.passingTest.allCorrectUserAnswQuest.entities;
-
-export const getAllUserAnsweredEntitiesSel = createSelector(
-  getAllUserAnsweredEntities,
-  entities => entities
 );

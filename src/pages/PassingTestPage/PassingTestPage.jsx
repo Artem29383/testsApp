@@ -13,11 +13,18 @@ import Loader from 'components/Loader';
 import RadioAnswer from 'pages/PassingTestPage/RadioAnswer/RadioAnswer';
 import { questionVariable } from 'styles/constants';
 import ButtonRipple from 'components/ButtonRipple';
-import { getTestData, reset, setLoading } from 'models/passTest/reducer';
+import {
+  getTestData,
+  // eslint-disable-next-line no-unused-vars
+  reset,
+  setDataCurrentQuest,
+  setLoading,
+} from 'models/passTest/reducer';
 import NumberAnswer from 'pages/PassingTestPage/NumberAnswer';
 import AllQuestions from 'pages/PassingTestPage/AllQuestions';
 import CheckBoxAnswer from 'pages/PassingTestPage/CheckBoxAnswer';
 import useFetchingError from 'hooks/useFetchingError';
+// eslint-disable-next-line no-unused-vars
 import PassingTestFooter from 'pages/PassingTestPage/PassingTestFooter';
 import S from './PassingTestPage.styled';
 
@@ -32,7 +39,17 @@ const PassingTestPage = () => {
   const [questIndex, setQuestIndex] = useState(0);
   const currentQuest = useSelector(getQuestSelector)(questIndex);
   const errorMessage = useSelector(getErrorSel);
+  const setThisQuest = useAction(setDataCurrentQuest);
   const resetTest = useAction(reset);
+
+  useEffect(() => {
+    if (currentQuest) {
+      setThisQuest({
+        id: ids[questIndex],
+        type: currentQuest.type,
+      });
+    }
+  }, [currentQuest]);
 
   const getQuestIndex = e => {
     setQuestIndex(Number(e.currentTarget.id));
@@ -70,25 +87,16 @@ const PassingTestPage = () => {
             <S.QuestTitle>Вопрос: {currentQuest.questName}</S.QuestTitle>
             <S.QuestBody>
               {currentQuest.type === questionVariable.one && (
-                <RadioAnswer
-                  questId={ids[questIndex]}
-                  questIndex={questIndex}
-                  currentQuest={currentQuest}
-                />
+                <RadioAnswer questId={ids[questIndex]} />
               )}
               {currentQuest.type === questionVariable.number && (
                 <NumberAnswer
                   questId={ids[questIndex]}
-                  questIndex={questIndex}
-                  currentQuest={currentQuest}
+                  nId={currentQuest.answer.ids[0]}
                 />
               )}
               {currentQuest.type === questionVariable.some && (
-                <CheckBoxAnswer
-                  currentQuest={currentQuest}
-                  questId={ids[questIndex]}
-                  questIndex={questIndex}
-                />
+                <CheckBoxAnswer questId={ids[questIndex]} />
               )}
             </S.QuestBody>
             {errorMessage && <S.Error>{errorMessage}</S.Error>}

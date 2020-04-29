@@ -1,26 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { removePropFromObject } from 'utils/removePropFromObject';
+import { questionVariable } from 'styles/constants';
 /* eslint-disable no-param-reassign */
 
 const initialState = {
   id: null,
   questions: {
-    entities: [],
+    entities: {},
     ids: [],
   },
+  currentQuestionId: null,
+  type: null,
   testName: null,
   isLoading: true,
-  currentQuestForPassing: {
-    entities: {},
-    ids: [],
-    questId: null,
-    correctAnswer: [],
-    userAnswer: [],
-  },
-  allCorrectUserAnswQuest: {
-    entities: {},
-    ids: [],
-  },
   errorMessage: '',
+  answers: {},
 };
 
 const passTestReducer = createSlice({
@@ -36,77 +30,57 @@ const passTestReducer = createSlice({
       state.id = id;
       state.questions = questions;
       questions.ids.forEach(q => {
-        questions.entities[q].isValid = false;
+        questions.entities[q].isValid = true;
       });
       state.testName = testName;
     },
     setDataCurrentQuest(state, { payload }) {
-      Object.assign(state.currentQuestForPassing, payload);
-    },
-    setDefaultAnswersRadio(state, { payload }) {
-      state.currentQuestForPassing.entities[payload].isChecked = false;
-    },
-    setDefaultAnswerNumeric(state, { payload }) {
-      state.currentQuestForPassing.entities[payload].value = '';
-    },
-    setDefaultAnswersCheckBox(state, { payload }) {
-      payload.forEach(p => {
-        state.currentQuestForPassing.entities[p].isChecked = false;
-      });
+      state.currentQuestionId = payload.id;
+      state.type = payload.type;
+      // eslint-disable-next-line no-prototype-builtins
+      if (!state.answers.hasOwnProperty(payload.id)) {
+        if (payload.type === questionVariable.some) {
+          state.answers[payload.id] = {
+            answer: {},
+            type: payload.type,
+          };
+        } else {
+          state.answers[payload.id] = {
+            answer: [],
+            type: payload.type,
+          };
+        }
+      }
     },
     toggleChecked(state, { payload }) {
-      const { radioId, checkedId } = payload;
-      state.currentQuestForPassing.entities[radioId].isChecked = true;
-      state.currentQuestForPassing.userAnswer = [radioId];
-      if (checkedId) {
-        state.currentQuestForPassing.entities[checkedId].isChecked = false;
+      const { qId, rId } = payload;
+      state.answers[qId].answer = [rId];
+    },
+    toggleCheckBox(state, { payload }) {
+      const { qId, cId } = payload;
+      if (state.answers[qId].answer[cId]) {
+        state.answers[qId].answer = removePropFromObject(
+          state.answers[qId].answer,
+          cId
+        );
+      } else {
+        state.answers[qId].answer[cId] = cId;
       }
     },
     setNumericAnswer(state, { payload }) {
-      const { taskId, value } = payload;
-      state.currentQuestForPassing.entities[taskId].value = value;
-      state.currentQuestForPassing.userAnswer = [value, taskId];
+      const { qId, value, nId } = payload;
+      state.answers[qId].answer = [value, nId];
     },
     setErrorMessage(state, { payload }) {
       state.errorMessage = payload;
     },
-    pushAnswer(state, { payload }) {
-      const { questId, userQuestAnswer, type, isValid } = payload;
-      state.allCorrectUserAnswQuest.entities[questId] = userQuestAnswer;
-      state.allCorrectUserAnswQuest.entities[questId].type = type;
-      state.questions.entities[questId].isValid = isValid;
-      if (!state.allCorrectUserAnswQuest.ids.includes(questId)) {
-        state.allCorrectUserAnswQuest.ids.push(questId);
-      }
-      state.currentQuestForPassing.userAnswer = [];
-    },
     setStatusInvalid(state, { payload }) {
-      state.questions.entities[payload].isValid = false;
-    },
-    setUserTouchedAnswer(state, { payload }) {
-      const { answers } = payload;
-      answers.forEach(ans => {
-        state.currentQuestForPassing.entities[ans].isChecked = true;
-        state.currentQuestForPassing.userAnswer.push(ans);
+      payload.forEach(id => {
+        state.questions.entities[id].isValid = false;
       });
     },
-    setUserTouchedNumAnswer(state, { payload }) {
-      const {
-        taskId,
-        answers: [answers],
-      } = payload;
-      state.currentQuestForPassing.entities[taskId].value = answers;
-      state.currentQuestForPassing.userAnswer = payload.answers;
-    },
-    toggleCheckBox(state, { payload }) {
-      state.currentQuestForPassing.entities[payload].isChecked = !state
-        .currentQuestForPassing.entities[payload].isChecked;
-      const index = state.currentQuestForPassing.userAnswer.indexOf(payload);
-      if (index !== -1) {
-        state.currentQuestForPassing.userAnswer.splice(index, 1);
-      } else {
-        state.currentQuestForPassing.userAnswer.push(payload);
-      }
+    setStatusValid(state, { payload }) {
+      state.questions.entities[payload].isValid = true;
     },
     getTestData: state => state,
   },
@@ -117,17 +91,11 @@ export const {
   setLoading,
   setLoadDataTest,
   setDataCurrentQuest,
-  setDefaultAnswersRadio,
   toggleChecked,
-  setErrorMessage,
-  pushAnswer,
   reset,
-  setUserTouchedAnswer,
   setNumericAnswer,
-  setDefaultAnswerNumeric,
-  setUserTouchedNumAnswer,
-  setDefaultAnswersCheckBox,
   toggleCheckBox,
   getTestData,
   setStatusInvalid,
+  setStatusValid,
 } = passTestReducer.actions;

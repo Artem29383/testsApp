@@ -15,7 +15,7 @@ const AllQuestions = ({ getQuestIndex, questId }) => {
       onClick={getQuestIndex}
       key={q}
       id={i}
-      isComplete={questions[q].isValid}
+      isComplete={!questions[q].isValid}
       className={questId === q && 'active'}
       type={questions[q].type}
     >

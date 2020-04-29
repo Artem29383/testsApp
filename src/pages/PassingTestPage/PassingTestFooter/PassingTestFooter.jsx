@@ -1,72 +1,41 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import ButtonRipple from 'components/ButtonRipple';
 import { testResult } from 'utils/testResult';
 import useSelector from 'hooks/useSelector';
 import {
-  getAllUserAnsweredEntitiesSel,
-  getAllUserAnsweredIdSel,
+  getAnswersQuest,
   getEntitiesQuestionsSel,
   getIdsQuestionsSel,
-  getQuestSelector,
-  getUserAnswerSel,
 } from 'models/passTest/selectors';
-import useAction from 'hooks/useAction';
-import { pushAnswer, setErrorMessage } from 'models/passTest/reducer';
 import ModalOverlay from 'components/ModalOverlay/ModalOverlay';
 import routes from 'constants/routes';
 import Portal from 'components/Portal';
 import useToggle from 'hooks/useToggle';
+import useAction from 'hooks/useAction';
+import { setStatusInvalid } from 'models/passTest/reducer';
 import S from './PassingTestFooter.styled';
 
-const PassingTestFooter = ({ questIndex, setQuestIndex }) => {
+const PassingTestFooter = () => {
+  const questions = useSelector(getEntitiesQuestionsSel);
   const ids = useSelector(getIdsQuestionsSel);
+  const userAnswers = useSelector(getAnswersQuest);
   const [showResult, setShowResult] = useToggle(false);
-  const userResCurrentQuest = useSelector(getUserAnswerSel);
-  const setError = useAction(setErrorMessage);
-  const pushAns = useAction(pushAnswer);
-  const currentQuest = useSelector(getQuestSelector)(questIndex);
-  const correctAnswersForTest = useSelector(getEntitiesQuestionsSel);
-  const answeredQuestsIds = useSelector(getAllUserAnsweredIdSel);
-  const answeredQuestsEntities = useSelector(getAllUserAnsweredEntitiesSel);
   const [result, setResult] = useState(0);
+  const setInvalidQuest = useAction(setStatusInvalid);
 
   const getResult = () => {
-    const counterCorrectAnswers = testResult(
-      correctAnswersForTest,
-      answeredQuestsIds,
-      answeredQuestsEntities
-    );
-    setResult(counterCorrectAnswers);
-    setShowResult(true);
-  };
-
-  const answerHandler = () => {
-    if (userResCurrentQuest.length === 0) {
-      if (!currentQuest.isValid) {
-        setError('Выберите хотя бы один ответ');
-      }
+    const resultOfChecking = testResult(questions, ids, userAnswers);
+    if (typeof resultOfChecking === 'object') {
+      setInvalidQuest(resultOfChecking);
     } else {
-      const userQuestAnswer = {
-        id: ids[questIndex],
-        userAnswer: userResCurrentQuest,
-      };
-      pushAns({
-        questId: ids[questIndex],
-        userQuestAnswer,
-        type: currentQuest.type,
-        isValid: true,
-      });
-      if (questIndex + 1 !== ids.length) {
-        setQuestIndex(questIndex + 1);
-      }
+      setResult(resultOfChecking);
+      setShowResult(true);
     }
   };
 
   return (
     <>
       <S.QuestFooter>
-        <ButtonRipple onClickHandler={answerHandler}>Ответить</ButtonRipple>
         <ButtonRipple className="red" onClickHandler={getResult}>
           Завершить тест
         </ButtonRipple>
@@ -87,11 +56,6 @@ const PassingTestFooter = ({ questIndex, setQuestIndex }) => {
       </Portal>
     </>
   );
-};
-
-PassingTestFooter.propTypes = {
-  questIndex: PropTypes.number,
-  setQuestIndex: PropTypes.func,
 };
 
 export default PassingTestFooter;
