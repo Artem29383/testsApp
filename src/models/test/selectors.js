@@ -1,5 +1,4 @@
 import { createSelector } from '@reduxjs/toolkit';
-import memoize from 'lodash.memoize';
 
 const getQuestions = state => state.test.questions.entities;
 
@@ -13,24 +12,6 @@ export const getQuestionsSelector = createSelector(
 export const getQuestionsIdsSelector = createSelector(
   getQuestionsIds,
   ids => ids
-);
-
-export const getQuestSelector = createSelector(
-  [getQuestionsSelector, getQuestionsIdsSelector],
-  entities => {
-    return memoize(dinamId => {
-      return entities[dinamId];
-    });
-  }
-);
-
-export const getErrorMsgSelector = createSelector(
-  [getQuestionsSelector, getQuestionsIdsSelector],
-  entities => {
-    return memoize(dinamId => {
-      return entities[dinamId].errorMsg;
-    });
-  }
 );
 
 const getTestName = state => state.test.testName;

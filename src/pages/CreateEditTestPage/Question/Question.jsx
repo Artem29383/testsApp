@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import RadioQuestions from 'pages/CreateEditTestPage/Question/RadioQuestions';
 import NumberQuestion from 'pages/CreateEditTestPage/Question/NumberQuestion';
 import CheckBoxQuestions from 'pages/CreateEditTestPage/Question/CheckBoxQuestions';
-import useSelector from 'hooks/useSelector';
-import { getErrorMsgSelector } from 'models/test/selectors';
 import useAction from 'hooks/useAction';
 import {
   setInitialRadioOrCheckBox,
@@ -17,8 +15,7 @@ import QuestionFooter from 'pages/CreateEditTestPage/Question/QuestionFooter';
 import { Draggable } from 'react-beautiful-dnd';
 import S from './Question.styled';
 
-const Question = ({ id, index, quest }) => {
-  const errorMsg = useSelector(getErrorMsgSelector)(id);
+const Question = ({ id, index, quest, errorMsg }) => {
   const [value, setValue] = useState(quest.type || questionVariable.one);
   const [temp, setTemp] = useState(quest.type);
   const [questType, setQuestType] = useState(value);
@@ -69,7 +66,12 @@ const Question = ({ id, index, quest }) => {
           ref={provided.innerRef}
         >
           <S.QuestionContent>
-            <QuestionHeader setValue={setValue} id={id} value={value} />
+            <QuestionHeader
+              setValue={setValue}
+              id={id}
+              value={value}
+              quest={quest}
+            />
             <S.QuestFormBody>
               {questType === questionVariable.one && (
                 <RadioQuestions
@@ -113,4 +115,5 @@ Question.propTypes = {
   id: PropTypes.string,
   index: PropTypes.number,
   quest: PropTypes.object,
+  errorMsg: PropTypes.string,
 };
