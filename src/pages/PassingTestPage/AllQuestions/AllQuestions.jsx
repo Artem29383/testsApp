@@ -7,10 +7,10 @@ import QuestItem from 'pages/PassingTestPage/AllQuestions/QuestItem';
 const AllQuestions = ({ questId, onQuestChange }) => {
   const ids = useSelector(getIdsQuestionsSel);
 
-  return ids.map((q, i) => (
+  return ids.map((id, i) => (
     <QuestItem
-      key={q}
-      answerId={q}
+      key={id}
+      answerId={id}
       questId={questId}
       index={i}
       onQuestChange={onQuestChange}
