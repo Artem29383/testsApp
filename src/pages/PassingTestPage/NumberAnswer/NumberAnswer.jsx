@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import InputEdit from 'components/InputEdit';
 import useAction from 'hooks/useAction';
@@ -7,7 +7,7 @@ import useSelector from 'hooks/useSelector';
 import { getAnswerQuestSel } from 'models/passTest/selectors';
 import S from './NumberAnswer.styled';
 
-const NumberAnswer = ({ questId, nId }) => {
+const NumberAnswer = ({ questId, numberId }) => {
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState('');
   const answers = useSelector(getAnswerQuestSel)(questId);
@@ -20,9 +20,12 @@ const NumberAnswer = ({ questId, nId }) => {
     setValid(questId);
   };
 
-  const changeHandler = e => {
-    setValue(e.currentTarget.value);
-  };
+  const changeHandler = useCallback(
+    e => {
+      setValue(e.currentTarget.value);
+    },
+    [value]
+  );
 
   const stopEditKey = e => {
     if (e.key === 'Escape') {
@@ -32,9 +35,9 @@ const NumberAnswer = ({ questId, nId }) => {
     if (e.key === 'Enter' && value.trim()) {
       setEdit(false);
       setNumberAnswer({
-        qId: questId,
+        questId,
         value,
-        nId,
+        numberId,
       });
     }
   };
@@ -43,9 +46,9 @@ const NumberAnswer = ({ questId, nId }) => {
     if (value.trim()) {
       setEdit(false);
       setNumberAnswer({
-        qId: questId,
+        questId,
         value,
-        nId,
+        numberId,
       });
     }
   };
@@ -54,11 +57,11 @@ const NumberAnswer = ({ questId, nId }) => {
     <S.NumberDiv>
       {edit ? (
         <InputEdit
-          onHandler={changeHandler}
           label="Численный ответ"
           focus
           type="number"
           value={value}
+          onHandler={changeHandler}
           onKeyDown={stopEditKey}
           onBlur={stopEditBlur}
         />
@@ -73,7 +76,7 @@ const NumberAnswer = ({ questId, nId }) => {
 
 NumberAnswer.propTypes = {
   questId: PropTypes.string,
-  nId: PropTypes.string,
+  numberId: PropTypes.string,
 };
 
 export default NumberAnswer;

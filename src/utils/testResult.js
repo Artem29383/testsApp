@@ -4,14 +4,16 @@ export function testResult(answers, ids, userAnswers) {
   const invalidQuest = [];
   ids.forEach(id => {
     if (userAnswers[id]) {
-      if (userAnswers[id].type !== questionVariable.some) {
+      if (answers[id].type !== questionVariable.some) {
         const isValid = !!userAnswers[id].answer[0];
         if (!isValid) {
           invalidQuest.push(id);
         }
       } else {
-        const isValid = !!Object.keys(userAnswers[id].answer).length;
-        if (!isValid) {
+        const isValid = Object.keys(userAnswers[id].answer).filter(
+          answerId => userAnswers[id].answer[answerId]
+        );
+        if (!isValid.length) {
           invalidQuest.push(id);
         }
       }
@@ -24,21 +26,23 @@ export function testResult(answers, ids, userAnswers) {
     let countsCorrectAnswers = 0;
     ids.forEach(id => {
       if (userAnswers[id]) {
-        if (userAnswers[id].type === questionVariable.one) {
+        if (answers[id].type === questionVariable.one) {
           const [answer] = userAnswers[id].answer;
           if (answers[id].answer.entities[answer].isChecked) {
             countsCorrectAnswers += 1;
           }
         }
-        if (userAnswers[id].type === questionVariable.number) {
+        if (answers[id].type === questionVariable.number) {
           const [answer, nId] = userAnswers[id].answer;
           if (answer === answers[id].answer.entities[nId].value) {
             countsCorrectAnswers += 1;
           }
         }
-        if (userAnswers[id].type === questionVariable.some) {
+        if (answers[id].type === questionVariable.some) {
           let isTrue = false;
-          const answer = Object.keys(userAnswers[id].answer);
+          const answer = Object.keys(userAnswers[id].answer).filter(
+            userAnswerId => userAnswers[id].answer[userAnswerId]
+          );
           const trueAnswersLength = answers[id].answer.ids.filter(
             tId => answers[id].answer.entities[tId].isChecked
           );

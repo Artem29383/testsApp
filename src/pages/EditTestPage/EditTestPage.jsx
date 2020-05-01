@@ -18,7 +18,7 @@ const EditTestPage = () => {
   const editId = useParams().id;
   const fetchTestById = () => {
     setLoading(true);
-    resetError('');
+    resetError();
     fetchTest(editId);
   };
 

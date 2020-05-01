@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Input/Input';
 import DropDown from 'components/DropDown';
@@ -23,9 +23,12 @@ const QuestionHeader = ({ setValue, id, value }) => {
     deleteQuest(id);
   };
 
-  const setQuestionNameHandler = e => {
-    setQuestionName({ id, questionName: e.currentTarget.value });
-  };
+  const setQuestionNameHandler = useCallback(
+    e => {
+      setQuestionName({ id, questionName: e.currentTarget.value });
+    },
+    [quest.questName]
+  );
 
   return (
     <>

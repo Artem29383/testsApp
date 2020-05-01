@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import useSelector from 'hooks/useSelector';
 import { getErrorSel } from 'models/user/selectors';
 import useAction from 'hooks/useAction';
@@ -11,12 +11,16 @@ const useFetchingError = () => {
   const error = useSelector(getErrorSel);
   const resetError = useAction(setError);
 
+  const reset = useCallback(() => {
+    resetError('');
+  }, []);
+
   return {
     load: isLoading,
     setIsLoading,
     error: error.message,
     idError: error.idError,
-    resetError,
+    resetError: reset,
     action,
     setAction,
   };

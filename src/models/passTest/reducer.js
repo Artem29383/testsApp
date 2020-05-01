@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { removePropFromObject } from 'utils/removePropFromObject';
 import { questionVariable } from 'styles/constants';
 /* eslint-disable no-param-reassign */
 
@@ -10,7 +9,6 @@ const initialState = {
     ids: [],
   },
   currentQuestionId: null,
-  type: null,
   testName: null,
   isLoading: true,
   errorMessage: '',
@@ -35,41 +33,32 @@ const passTestReducer = createSlice({
       state.testName = testName;
     },
     setDataCurrentQuest(state, { payload }) {
-      state.currentQuestionId = payload.id;
-      state.type = payload.type;
-      // eslint-disable-next-line no-prototype-builtins
-      if (!state.answers.hasOwnProperty(payload.id)) {
-        if (payload.type === questionVariable.some) {
-          state.answers[payload.id] = {
+      const { id } = payload;
+      state.currentQuestionId = id;
+      if (!state.answers[id]) {
+        if (state.questions.entities[id].type === questionVariable.some) {
+          state.answers[id] = {
             answer: {},
-            type: payload.type,
           };
         } else {
-          state.answers[payload.id] = {
+          state.answers[id] = {
             answer: [],
-            type: payload.type,
           };
         }
       }
     },
     toggleChecked(state, { payload }) {
-      const { qId, rId } = payload;
-      state.answers[qId].answer = [rId];
+      const { questId, radioId } = payload;
+      state.answers[questId].answer = [radioId];
     },
     toggleCheckBox(state, { payload }) {
-      const { qId, cId } = payload;
-      if (state.answers[qId].answer[cId]) {
-        state.answers[qId].answer = removePropFromObject(
-          state.answers[qId].answer,
-          cId
-        );
-      } else {
-        state.answers[qId].answer[cId] = cId;
-      }
+      const { questId, checkBoxId } = payload;
+      state.answers[questId].answer[checkBoxId] = !state.answers[questId]
+        .answer[checkBoxId];
     },
     setNumericAnswer(state, { payload }) {
-      const { qId, value, nId } = payload;
-      state.answers[qId].answer = [value, nId];
+      const { questId, value, numberId } = payload;
+      state.answers[questId].answer = [value, numberId];
     },
     setErrorMessage(state, { payload }) {
       state.errorMessage = payload;

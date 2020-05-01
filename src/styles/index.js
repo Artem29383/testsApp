@@ -1,9 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 import { colors } from 'styles/constants';
-// import Medium from 'assets/fonts/HelveticaNeueCyr-Medium.woff';
-// import Bold from 'assets/fonts/HelveticaNeueCyr-Bold.woff';
-// import Black from 'assets/fonts/HelveticaNeueCyr-Black.woff';
-// import Light from 'assets/fonts/HelveticaNeueCyr-Light.woff';
 /* stylelint-disable */
 
 export const GlobalStyles = createGlobalStyle`

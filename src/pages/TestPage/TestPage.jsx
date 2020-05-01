@@ -29,7 +29,7 @@ const TestPage = () => {
 
   const fetchAllTests = () => {
     setLoad(true);
-    resetError('');
+    resetError();
     getTests();
   };
 

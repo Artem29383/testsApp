@@ -16,10 +16,10 @@ const CheckBoxAnswer = ({ questId }) => {
   const setCheckBox = useAction(toggleCheckBox);
   const setValid = useAction(setStatusValid);
 
-  const checkBoxHandler = e => {
+  const onCheckBoxChange = e => {
     setCheckBox({
-      qId: questId,
-      cId: e.currentTarget.id,
+      questId,
+      checkBoxId: e.currentTarget.id,
     });
     setValid(questId);
   };
@@ -31,7 +31,7 @@ const CheckBoxAnswer = ({ questId }) => {
           label={questions[questId].answer.entities[id].value}
           id={id}
           isChecked={!!answers.answer[id]}
-          onChangeHandler={checkBoxHandler}
+          onChangeHandler={onCheckBoxChange}
         />
       </S.CheckBox>
     );

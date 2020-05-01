@@ -44,23 +44,18 @@ const PassingTestPage = () => {
     if (currentQuest) {
       setThisQuest({
         id: ids[questIndex],
-        type: currentQuest.type,
       });
     }
   }, [currentQuest]);
 
-  const getQuestIndex = e => {
-    setQuestIndex(Number(e.currentTarget.id));
-  };
-
-  const getTestDataPassing = () => {
+  const fetchTestDataPassing = () => {
     setLoad(true);
-    resetError('');
+    resetError();
     fetchTest(testId);
   };
 
   useEffect(() => {
-    getTestDataPassing();
+    fetchTestDataPassing();
     return () => resetTest();
   }, []);
 
@@ -68,7 +63,7 @@ const PassingTestPage = () => {
   if (error && idError === 'passingTest')
     return (
       <S.ErrorServer>
-        <ButtonRipple onClickHandler={getTestDataPassing}>
+        <ButtonRipple onClickHandler={fetchTestDataPassing}>
           Повторить
         </ButtonRipple>
         <S.ErrorServerMessage>{error}</S.ErrorServerMessage>
@@ -90,7 +85,7 @@ const PassingTestPage = () => {
               {currentQuest.type === questionVariable.number && (
                 <NumberAnswer
                   questId={ids[questIndex]}
-                  nId={currentQuest.answer.ids[0]}
+                  numberId={currentQuest.answer.ids[0]}
                 />
               )}
               {currentQuest.type === questionVariable.some && (
@@ -98,17 +93,14 @@ const PassingTestPage = () => {
               )}
             </S.QuestBody>
             {errorMessage && <S.Error>{errorMessage}</S.Error>}
-            <PassingTestFooter
-              questIndex={questIndex}
-              setQuestIndex={setQuestIndex}
-            />
+            <PassingTestFooter />
           </S.PassQuest>
           <S.AllQuestions>
             <S.AllQuestTitle>Вопросы</S.AllQuestTitle>
             <S.AllQuestList>
               <AllQuestions
-                getQuestIndex={getQuestIndex}
                 questId={ids[questIndex]}
+                onQuestChange={setQuestIndex}
               />
             </S.AllQuestList>
           </S.AllQuestions>

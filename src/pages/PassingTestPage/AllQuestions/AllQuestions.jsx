@@ -1,32 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useSelector from 'hooks/useSelector';
-import {
-  getEntitiesQuestionsSel,
-  getIdsQuestionsSel,
-} from 'models/passTest/selectors';
-import S from './AllQuestions.styled';
+import { getIdsQuestionsSel } from 'models/passTest/selectors';
+import QuestItem from 'pages/PassingTestPage/AllQuestions/QuestItem';
 
-const AllQuestions = ({ getQuestIndex, questId }) => {
+const AllQuestions = ({ questId, onQuestChange }) => {
   const ids = useSelector(getIdsQuestionsSel);
-  const questions = useSelector(getEntitiesQuestionsSel);
+
   return ids.map((q, i) => (
-    <S.AllQuestItem
-      onClick={getQuestIndex}
+    <QuestItem
       key={q}
-      id={i}
-      isComplete={!questions[q].isValid}
-      className={questId === q && 'active'}
-      type={questions[q].type}
-    >
-      {questions[q].questName}
-    </S.AllQuestItem>
+      answerId={q}
+      questId={questId}
+      index={i}
+      onQuestChange={onQuestChange}
+    />
   ));
 };
 
 AllQuestions.propTypes = {
-  getQuestIndex: PropTypes.func,
   questId: PropTypes.string,
+  onQuestChange: PropTypes.func,
 };
 
 export default AllQuestions;
