@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import nanoid from 'nanoid';
 import PropTypes from 'prop-types';
 import RadioQuestions from 'pages/CreateEditTestPage/Question/RadioQuestions';
 import NumberQuestion from 'pages/CreateEditTestPage/Question/NumberQuestion';
 import CheckBoxQuestions from 'pages/CreateEditTestPage/Question/CheckBoxQuestions';
 import useSelector from 'hooks/useSelector';
-import { getErrorMsgSelector, getQuestSelector } from 'models/test/selectors';
+import { getErrorMsgSelector } from 'models/test/selectors';
 import useAction from 'hooks/useAction';
 import {
   setInitialRadioOrCheckBox,
@@ -17,9 +17,8 @@ import QuestionFooter from 'pages/CreateEditTestPage/Question/QuestionFooter';
 import { Draggable } from 'react-beautiful-dnd';
 import S from './Question.styled';
 
-const Question = ({ id, index }) => {
+const Question = ({ id, index, quest }) => {
   const errorMsg = useSelector(getErrorMsgSelector)(id);
-  const quest = useSelector(getQuestSelector)(id);
   const [value, setValue] = useState(quest.type || questionVariable.one);
   const [temp, setTemp] = useState(quest.type);
   const [questType, setQuestType] = useState(value);
@@ -109,8 +108,9 @@ const Question = ({ id, index }) => {
   );
 };
 
-export default Question;
+export default memo(Question);
 Question.propTypes = {
   id: PropTypes.string,
   index: PropTypes.number,
+  quest: PropTypes.object,
 };

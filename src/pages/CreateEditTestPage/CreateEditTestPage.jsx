@@ -64,7 +64,7 @@ const CreateEditTestPage = () => {
   };
 
   const questions = questionsIds.map((id, index) => (
-    <Question key={id} id={id} index={index} />
+    <Question key={id} id={id} index={index} quest={questionsEntities[id]} />
   ));
 
   return (
