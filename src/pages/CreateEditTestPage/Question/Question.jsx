@@ -26,7 +26,6 @@ const Question = ({ id, index }) => {
   const nameRadio = nanoid();
   const setInitAnswer = useAction(setInitialRadioOrCheckBox);
   const setNumeric = useAction(setNumericAnswer);
-  console.log(123);
 
   useEffect(() => {
     if (!quest.isValid || value !== temp) {

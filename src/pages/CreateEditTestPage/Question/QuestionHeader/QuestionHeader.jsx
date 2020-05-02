@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Input/Input';
 import DropDown from 'components/DropDown';
@@ -13,34 +13,17 @@ import S from './QuestionHeader.styled';
 
 const QuestionHeader = ({ setValue, id, value, quest }) => {
   const setQuestionName = useAction(setQuestName);
-  const [edit, setEdit] = useState(false);
   const deleteQuest = useAction(removeQuest);
-  const [title, setTitle] = useState(quest.questName);
-  const [temp, setTemp] = useState(title);
   const [showModal, setShowModal] = useToggle(false);
   const removeQuestion = () => {
     deleteQuest(id);
   };
 
-  useEffect(() => {
-    if (edit) {
-      if (title === temp) {
-        setQuestionName({ id, questionName: title });
-        setEdit(false);
-      } else {
-        setTimeout(() => {
-          setTemp(title);
-        }, 500);
-      }
-    }
-  }, [edit, temp]);
-
   const setQuestionNameHandler = useCallback(
     e => {
-      setEdit(true);
-      setTitle(e.currentTarget.value);
+      setQuestionName({ id, questionName: e.currentTarget.value });
     },
-    [title]
+    [quest.questName]
   );
 
   return (
@@ -62,7 +45,7 @@ const QuestionHeader = ({ setValue, id, value, quest }) => {
             <Input
               label="Вопрос"
               onChange={setQuestionNameHandler}
-              value={title}
+              value={quest.questName}
             />
           </S.WrapInput>
         </S.QuestFormHeaderTitle>
