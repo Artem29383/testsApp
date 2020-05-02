@@ -12,10 +12,9 @@ import {
 import { questionVariable } from 'styles/constants';
 import QuestionHeader from 'pages/CreateEditTestPage/Question/QuestionHeader';
 import QuestionFooter from 'pages/CreateEditTestPage/Question/QuestionFooter';
-import { Draggable } from 'react-beautiful-dnd';
 import S from './Question.styled';
 
-const Question = ({ id, index, quest }) => {
+const Question = ({ id, quest, provided }) => {
   const { type, errorMsg, isValid } = quest;
   const [value, setValue] = useState(type || questionVariable.one);
   const [temp, setTemp] = useState(type);
@@ -57,49 +56,45 @@ const Question = ({ id, index, quest }) => {
   }, [value]);
 
   return (
-    <Draggable draggableId={id} index={index}>
-      {provided => (
-        <S.QuestionForm
-          isValid={errorMsg}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}
-        >
-          <S.QuestionContent>
-            <QuestionHeader
-              setValue={setValue}
-              id={id}
-              value={value}
-              quest={quest}
-            />
-            <S.QuestFormBody>
-              {questType === questionVariable.one && (
-                <RadioQuestions id={id} quest={quest} />
-              )}
-              {questType === questionVariable.number && (
-                <NumberQuestion id={id} quest={quest} />
-              )}
-              {questType === questionVariable.some && (
-                <CheckBoxQuestions id={id} quest={quest} />
-              )}
-              <S.WrapInput>
-                <S.Error>{errorMsg}</S.Error>
-              </S.WrapInput>
-            </S.QuestFormBody>
-            {questType !== questionVariable.number && (
-              <QuestionFooter id={id} quest={quest} />
-            )}
-          </S.QuestionContent>
-        </S.QuestionForm>
-      )}
-    </Draggable>
+    <S.QuestionForm
+      isValid={quest.errorMsg}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+      ref={provided.innerRef}
+    >
+      <S.QuestionContent>
+        <QuestionHeader
+          setValue={setValue}
+          id={id}
+          value={value}
+          quest={quest}
+        />
+        <S.QuestFormBody>
+          {questType === questionVariable.one && (
+            <RadioQuestions id={id} quest={quest} />
+          )}
+          {questType === questionVariable.number && (
+            <NumberQuestion id={id} quest={quest} />
+          )}
+          {questType === questionVariable.some && (
+            <CheckBoxQuestions id={id} quest={quest} />
+          )}
+          <S.WrapInput>
+            <S.Error>{errorMsg}</S.Error>
+          </S.WrapInput>
+        </S.QuestFormBody>
+        {questType !== questionVariable.number && (
+          <QuestionFooter id={id} quest={quest} />
+        )}
+      </S.QuestionContent>
+    </S.QuestionForm>
   );
 };
 
 Question.propTypes = {
   id: PropTypes.string,
-  index: PropTypes.number,
   quest: PropTypes.object,
+  provided: PropTypes.any,
 };
 
 export default memo(Question);
