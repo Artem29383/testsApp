@@ -1,9 +1,6 @@
 import React, { useEffect, useState, memo } from 'react';
 import nanoid from 'nanoid';
 import PropTypes from 'prop-types';
-import RadioQuestions from 'pages/CreateEditTestPage/Question/RadioQuestions';
-import NumberQuestion from 'pages/CreateEditTestPage/Question/NumberQuestion';
-import CheckBoxQuestions from 'pages/CreateEditTestPage/Question/CheckBoxQuestions';
 import useAction from 'hooks/useAction';
 import {
   setInitialRadioOrCheckBox,
@@ -12,6 +9,7 @@ import {
 import { questionVariable } from 'styles/constants';
 import QuestionHeader from 'pages/CreateEditTestPage/Question/QuestionHeader';
 import QuestionFooter from 'pages/CreateEditTestPage/Question/QuestionFooter';
+import QuestFormBody from 'pages/CreateEditTestPage/Question/QuestFormBody';
 import S from './Question.styled';
 
 const Question = ({ id, quest, provided }) => {
@@ -69,20 +67,12 @@ const Question = ({ id, quest, provided }) => {
           value={value}
           quest={quest}
         />
-        <S.QuestFormBody>
-          {questType === questionVariable.one && (
-            <RadioQuestions id={id} quest={quest} />
-          )}
-          {questType === questionVariable.number && (
-            <NumberQuestion id={id} quest={quest} />
-          )}
-          {questType === questionVariable.some && (
-            <CheckBoxQuestions id={id} quest={quest} />
-          )}
-          <S.WrapInput>
-            <S.Error>{errorMsg}</S.Error>
-          </S.WrapInput>
-        </S.QuestFormBody>
+        <QuestFormBody
+          quest={quest}
+          errorMsg={errorMsg}
+          id={id}
+          questType={type}
+        />
         {questType !== questionVariable.number && (
           <QuestionFooter id={id} quest={quest} />
         )}

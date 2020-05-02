@@ -36,7 +36,7 @@ const CheckBoxQuestions = ({ id, quest }) => {
   });
 
   return (
-    <Droppable droppableId={id} type="subItem">
+    <Droppable droppableId={id} type={id}>
       {provided => (
         <S.DragZone ref={provided.innerRef} {...provided.droppableProps}>
           {checkBoxVariable}

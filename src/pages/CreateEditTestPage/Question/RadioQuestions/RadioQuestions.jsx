@@ -8,6 +8,7 @@ import useCheckChangeQuest from 'hooks/useCheckChangeQuest';
 import S from './RadioQuestions.styled';
 
 const RadioQuestions = ({ id, quest }) => {
+  console.log(321);
   const { entities, ids } = quest.answer;
   const toggleRadio = useAction(toggleChecked);
   const resetErrorChange = useCheckChangeQuest(id);
@@ -30,7 +31,7 @@ const RadioQuestions = ({ id, quest }) => {
   ));
 
   return (
-    <Droppable droppableId={id} type="subItem">
+    <Droppable droppableId={id} type={id}>
       {provided => (
         <S.DragZone ref={provided.innerRef} {...provided.droppableProps}>
           {radioBtns}
