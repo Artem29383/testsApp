@@ -5,9 +5,13 @@ import CheckBoxButton from 'pages/CreateEditTestPage/Question/CheckBoxQuestions/
 import useAction from 'hooks/useAction';
 import { toggleCheckBox } from 'models/test/reducer';
 import useCheckChangeQuest from 'hooks/useCheckChangeQuest';
+import useSelector from 'hooks/useSelector';
+import { getQuestionEntities, getQuestionIds } from 'models/test/selectors';
 import S from './CheckBoxQuestions.styled';
 
-const CheckBoxQuestions = ({ entities, ids, id }) => {
+const CheckBoxQuestions = ({ id }) => {
+  const entities = useSelector(getQuestionEntities, id);
+  const ids = useSelector(getQuestionIds, id);
   const setToggleCheckBox = useAction(toggleCheckBox);
   const resetErrorChange = useCheckChangeQuest(id);
 
@@ -48,7 +52,5 @@ const CheckBoxQuestions = ({ entities, ids, id }) => {
 
 export default CheckBoxQuestions;
 CheckBoxQuestions.propTypes = {
-  entities: PropTypes.any,
-  ids: PropTypes.array,
   id: PropTypes.string,
 };

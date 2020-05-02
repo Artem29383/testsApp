@@ -5,9 +5,13 @@ import RadioButton from 'pages/CreateEditTestPage/Question/RadioQuestions/RadioB
 import useAction from 'hooks/useAction';
 import { toggleChecked } from 'models/test/reducer';
 import useCheckChangeQuest from 'hooks/useCheckChangeQuest';
+import useSelector from 'hooks/useSelector';
+import { getQuestionEntities, getQuestionIds } from 'models/test/selectors';
 import S from './RadioQuestions.styled';
 
-const RadioQuestions = ({ name, entities, ids, id }) => {
+const RadioQuestions = ({ id }) => {
+  const entities = useSelector(getQuestionEntities, id);
+  const ids = useSelector(getQuestionIds, id);
   const toggleRadio = useAction(toggleChecked);
   const resetErrorChange = useCheckChangeQuest(id);
   const changeRadioHandler = e => {
@@ -23,7 +27,6 @@ const RadioQuestions = ({ name, entities, ids, id }) => {
       questionId={id}
       index={index}
       id={entities[qId].id}
-      name={name}
       radioObject={entities[qId]}
       onChangeHandler={changeRadioHandler}
     />
@@ -42,8 +45,5 @@ const RadioQuestions = ({ name, entities, ids, id }) => {
 };
 export default RadioQuestions;
 RadioQuestions.propTypes = {
-  name: PropTypes.string,
-  entities: PropTypes.any,
-  ids: PropTypes.array,
   id: PropTypes.string,
 };

@@ -21,7 +21,7 @@ const Radio = ({ id, name, isChecked, label, onChangeHandler }) => (
 
 Radio.propTypes = {
   id: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   isChecked: PropTypes.bool.isRequired,
   label: PropTypes.string,
   onChangeHandler: PropTypes.func.isRequired,

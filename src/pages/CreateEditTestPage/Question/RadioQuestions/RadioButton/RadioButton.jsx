@@ -15,7 +15,6 @@ import S from './RadioButton.styled';
 
 const RadioButton = ({
   id,
-  name,
   radioObject,
   questionId,
   index,
@@ -78,7 +77,6 @@ const RadioButton = ({
           ) : (
             <>
               <Radio
-                name={name}
                 id={id}
                 isChecked={radioObject.isChecked}
                 label={radioLabel}
@@ -106,7 +104,6 @@ const RadioButton = ({
 export default RadioButton;
 RadioButton.propTypes = {
   id: PropTypes.string,
-  name: PropTypes.string,
   radioObject: PropTypes.object,
   questionId: PropTypes.string,
   setCheckedId: PropTypes.func,

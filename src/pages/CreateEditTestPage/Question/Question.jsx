@@ -14,21 +14,25 @@ import QuestionHeader from 'pages/CreateEditTestPage/Question/QuestionHeader';
 import QuestionFooter from 'pages/CreateEditTestPage/Question/QuestionFooter';
 import { Draggable } from 'react-beautiful-dnd';
 import useSelector from 'hooks/useSelector';
-import { getQuestion } from 'models/test/selectors';
+import {
+  getQuestionErrorMsg,
+  getQuestionType,
+  getQuestionValid,
+} from 'models/test/selectors';
 import S from './Question.styled';
 
 const Question = ({ id, index }) => {
-  const quest = useSelector(getQuestion, id);
-  const { errorMsg } = quest;
-  const [value, setValue] = useState(quest.type || questionVariable.one);
-  const [temp, setTemp] = useState(quest.type);
+  const type = useSelector(getQuestionType, id);
+  const errorMsg = useSelector(getQuestionErrorMsg, id);
+  const isValid = useSelector(getQuestionValid, id);
+  const [value, setValue] = useState(type || questionVariable.one);
+  const [temp, setTemp] = useState(type);
   const [questType, setQuestType] = useState(value);
-  const nameRadio = nanoid();
   const setInitAnswer = useAction(setInitialRadioOrCheckBox);
   const setNumeric = useAction(setNumericAnswer);
 
   useEffect(() => {
-    if (!quest.isValid || value !== temp) {
+    if (!isValid || value !== temp) {
       setTemp(value);
       const uniqId = nanoid();
       if (value === questionVariable.one || value === questionVariable.some) {
@@ -70,42 +74,21 @@ const Question = ({ id, index }) => {
           ref={provided.innerRef}
         >
           <S.QuestionContent>
-            <QuestionHeader
-              setValue={setValue}
-              id={id}
-              value={value}
-              quest={quest}
-            />
+            <QuestionHeader setValue={setValue} id={id} value={value} />
             <S.QuestFormBody>
-              {questType === questionVariable.one && (
-                <RadioQuestions
-                  name={nameRadio}
-                  entities={quest.answer.entities}
-                  ids={quest.answer.ids}
-                  id={id}
-                />
-              )}
+              {questType === questionVariable.one && <RadioQuestions id={id} />}
               {questType === questionVariable.number && (
-                <NumberQuestion
-                  id={id}
-                  ids={quest.answer.ids}
-                  entities={quest.answer.entities}
-                  numberId={quest.answer.ids[0]}
-                />
+                <NumberQuestion id={id} />
               )}
               {questType === questionVariable.some && (
-                <CheckBoxQuestions
-                  entities={quest.answer.entities}
-                  ids={quest.answer.ids}
-                  id={id}
-                />
+                <CheckBoxQuestions id={id} />
               )}
               <S.WrapInput>
                 <S.Error>{errorMsg}</S.Error>
               </S.WrapInput>
             </S.QuestFormBody>
             {questType !== questionVariable.number && (
-              <QuestionFooter ids={quest.answer.ids} id={id} />
+              <QuestionFooter id={id} />
             )}
           </S.QuestionContent>
         </S.QuestionForm>
