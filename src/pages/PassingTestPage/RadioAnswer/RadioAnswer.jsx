@@ -13,7 +13,7 @@ import S from './RadioAnswer.styled';
 
 const RadioAnswer = ({ questId }) => {
   const questions = useSelector(getEntitiesQuestionsSel);
-  const answers = useSelector(getAnswerQuestSel)(questId) || { answer: [] };
+  const answers = useSelector(getAnswerQuestSel, questId) || { answer: [] };
   const nameRadio = nanoid();
   const setRadio = useAction(toggleChecked);
   const setValid = useAction(setStatusValid);

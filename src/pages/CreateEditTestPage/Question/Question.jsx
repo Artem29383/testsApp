@@ -13,18 +13,10 @@ import { questionVariable } from 'styles/constants';
 import QuestionHeader from 'pages/CreateEditTestPage/Question/QuestionHeader';
 import QuestionFooter from 'pages/CreateEditTestPage/Question/QuestionFooter';
 import { Draggable } from 'react-beautiful-dnd';
-import useSelector from 'hooks/useSelector';
-import {
-  getQuestionErrorMsg,
-  getQuestionType,
-  getQuestionValid,
-} from 'models/test/selectors';
 import S from './Question.styled';
 
-const Question = ({ id, index }) => {
-  const type = useSelector(getQuestionType, id);
-  const errorMsg = useSelector(getQuestionErrorMsg, id);
-  const isValid = useSelector(getQuestionValid, id);
+const Question = ({ id, index, quest }) => {
+  const { type, errorMsg, isValid } = quest;
   const [value, setValue] = useState(type || questionVariable.one);
   const [temp, setTemp] = useState(type);
   const [questType, setQuestType] = useState(value);
@@ -74,14 +66,21 @@ const Question = ({ id, index }) => {
           ref={provided.innerRef}
         >
           <S.QuestionContent>
-            <QuestionHeader setValue={setValue} id={id} value={value} />
+            <QuestionHeader
+              setValue={setValue}
+              id={id}
+              value={value}
+              quest={quest}
+            />
             <S.QuestFormBody>
-              {questType === questionVariable.one && <RadioQuestions id={id} />}
+              {questType === questionVariable.one && (
+                <RadioQuestions id={id} quest={quest} />
+              )}
               {questType === questionVariable.number && (
-                <NumberQuestion id={id} />
+                <NumberQuestion id={id} quest={quest} />
               )}
               {questType === questionVariable.some && (
-                <CheckBoxQuestions id={id} />
+                <CheckBoxQuestions id={id} quest={quest} />
               )}
               <S.WrapInput>
                 <S.Error>{errorMsg}</S.Error>
@@ -97,8 +96,10 @@ const Question = ({ id, index }) => {
   );
 };
 
-export default memo(Question);
 Question.propTypes = {
   id: PropTypes.string,
   index: PropTypes.number,
+  quest: PropTypes.object,
 };
+
+export default memo(Question);

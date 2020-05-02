@@ -12,7 +12,7 @@ import S from './CheckBoxAnswer.styled';
 
 const CheckBoxAnswer = ({ questId }) => {
   const questions = useSelector(getEntitiesQuestionsSel);
-  const answers = useSelector(getAnswerQuestSel)(questId) || { answer: {} };
+  const answers = useSelector(getAnswerQuestSel, questId) || { answer: {} };
   const setCheckBox = useAction(toggleCheckBox);
   const setValid = useAction(setStatusValid);
 

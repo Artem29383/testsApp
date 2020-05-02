@@ -112,10 +112,7 @@ const testReducer = createSlice({
       state.questions.ids = payload;
     },
     setFetchTestData(state, { payload }) {
-      const { testName, questions, created } = payload;
-      state.testName = testName;
-      state.questions = questions;
-      state.created = created;
+      Object.assign(state, payload);
     },
     setLoad(state, { payload }) {
       state.isLoad = payload;

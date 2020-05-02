@@ -10,7 +10,7 @@ import S from './NumberAnswer.styled';
 const NumberAnswer = ({ questId, numberId }) => {
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState('');
-  const answers = useSelector(getAnswerQuestSel)(questId);
+  const answers = useSelector(getAnswerQuestSel, questId);
   const setNumberAnswer = useAction(setNumericAnswer);
   const setValid = useAction(setStatusValid);
 

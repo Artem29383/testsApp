@@ -4,13 +4,10 @@ import InputEdit from 'components/InputEdit';
 import { setNumericAnswer } from 'models/test/reducer';
 import useAction from 'hooks/useAction';
 import { questionVariable } from 'styles/constants';
-import useSelector from 'hooks/useSelector';
-import { getQuestionEntities, getQuestionIds } from 'models/test/selectors';
 import S from './NumberQuestion.styled';
 
-const NumberQuestion = ({ id }) => {
-  const entities = useSelector(getQuestionEntities, id);
-  const ids = useSelector(getQuestionIds, id);
+const NumberQuestion = ({ id, quest }) => {
+  const { entities, ids } = quest.answer;
   const numberId = ids[0];
   const [temp, setTemp] = useState('');
   const [value, setValue] = useState(entities[numberId].value);
@@ -83,4 +80,5 @@ const NumberQuestion = ({ id }) => {
 export default NumberQuestion;
 NumberQuestion.propTypes = {
   id: PropTypes.string,
+  quest: PropTypes.object,
 };

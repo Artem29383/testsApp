@@ -9,6 +9,12 @@ export const getQuestionsSelector = createSelector(
   entities => entities
 );
 
+export const getQuestion = createSelector(
+  getQuestions,
+  (_, id) => id,
+  (state, id) => state[id]
+);
+
 export const getQuestionType = createSelector(
   getQuestions,
   (_, id) => id,

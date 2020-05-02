@@ -35,7 +35,7 @@ const PassingTestPage = () => {
   const testName = useSelector(getTestNameSelector);
   const ids = useSelector(getIdsQuestionsSel);
   const [questIndex, setQuestIndex] = useState(0);
-  const currentQuest = useSelector(getQuestSelector)(questIndex);
+  const currentQuest = useSelector(getQuestSelector, questIndex);
   const errorMessage = useSelector(getErrorSel);
   const setThisQuest = useAction(setDataCurrentQuest);
   const resetTest = useAction(reset);
