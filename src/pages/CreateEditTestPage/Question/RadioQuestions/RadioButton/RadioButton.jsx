@@ -106,7 +106,6 @@ RadioButton.propTypes = {
   id: PropTypes.string,
   radioObject: PropTypes.object,
   questionId: PropTypes.string,
-  setCheckedId: PropTypes.func,
   index: PropTypes.number,
   onChangeHandler: PropTypes.func,
 };
