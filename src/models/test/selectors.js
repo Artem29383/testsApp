@@ -9,42 +9,6 @@ export const getQuestionsSelector = createSelector(
   entities => entities
 );
 
-export const getQuestion = createSelector(
-  getQuestions,
-  (_, id) => id,
-  (state, id) => state[id]
-);
-
-export const getQuestionType = createSelector(
-  getQuestions,
-  (_, id) => id,
-  (state, id) => state[id].type
-);
-
-export const getQuestionValid = createSelector(
-  getQuestions,
-  (_, id) => id,
-  (state, id) => state[id].isValid
-);
-
-export const getQuestionName = createSelector(
-  getQuestions,
-  (_, id) => id,
-  (state, id) => state[id].questName
-);
-
-export const getQuestionIds = createSelector(
-  getQuestions,
-  (_, id) => id,
-  (state, id) => state[id].answer.ids
-);
-
-export const getQuestionEntities = createSelector(
-  getQuestions,
-  (_, id) => id,
-  (state, id) => state[id].answer.entities
-);
-
 export const getQuestionErrorMsg = createSelector(
   getQuestions,
   (_, id) => id,

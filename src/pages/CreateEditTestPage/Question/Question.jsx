@@ -87,7 +87,7 @@ const Question = ({ id, index, quest }) => {
               </S.WrapInput>
             </S.QuestFormBody>
             {questType !== questionVariable.number && (
-              <QuestionFooter id={id} />
+              <QuestionFooter id={id} quest={quest} />
             )}
           </S.QuestionContent>
         </S.QuestionForm>
