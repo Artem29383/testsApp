@@ -13,15 +13,20 @@ import { questionVariable } from 'styles/constants';
 import QuestionHeader from 'pages/CreateEditTestPage/Question/QuestionHeader';
 import QuestionFooter from 'pages/CreateEditTestPage/Question/QuestionFooter';
 import { Draggable } from 'react-beautiful-dnd';
+import useSelector from 'hooks/useSelector';
+import { getQuestion } from 'models/test/selectors';
 import S from './Question.styled';
 
-const Question = ({ id, index, quest, errorMsg }) => {
+const Question = ({ id, index }) => {
+  const quest = useSelector(getQuestion, id);
+  const { errorMsg } = quest;
   const [value, setValue] = useState(quest.type || questionVariable.one);
   const [temp, setTemp] = useState(quest.type);
   const [questType, setQuestType] = useState(value);
   const nameRadio = nanoid();
   const setInitAnswer = useAction(setInitialRadioOrCheckBox);
   const setNumeric = useAction(setNumericAnswer);
+  console.log(123);
 
   useEffect(() => {
     if (!quest.isValid || value !== temp) {
@@ -114,6 +119,4 @@ export default memo(Question);
 Question.propTypes = {
   id: PropTypes.string,
   index: PropTypes.number,
-  quest: PropTypes.object,
-  errorMsg: PropTypes.string,
 };

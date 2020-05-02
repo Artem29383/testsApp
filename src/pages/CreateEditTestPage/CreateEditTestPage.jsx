@@ -25,6 +25,7 @@ const CreateEditTestPage = () => {
   const setDndIds = useAction(setDragAndDropArrayQuests);
   const questionsEntities = useSelector(getQuestionsSelector);
   const setDNDNewIds = useAction(setDragAndDropArrayAnswers);
+
   useEffect(() => {
     return () => removeTest();
   }, []);
@@ -64,13 +65,7 @@ const CreateEditTestPage = () => {
   };
 
   const questions = questionsIds.map((id, index) => (
-    <Question
-      key={id}
-      id={id}
-      index={index}
-      quest={questionsEntities[id]}
-      errorMsg={questionsEntities[id].errorMsg}
-    />
+    <Question key={id} id={id} index={index} />
   ));
 
   return (
