@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Input from 'components/Input';
 import useAction from 'hooks/useAction';
 import { setTestName } from 'models/test/reducer';
@@ -13,7 +13,6 @@ const TestTitle = () => {
   const editChangeHandler = e => {
     acceptTestName(e.currentTarget.value);
   };
-
   return (
     <S.TestForm>
       <S.WrapInput padding="25px 100px 25px 100px">
@@ -27,4 +26,4 @@ const TestTitle = () => {
   );
 };
 
-export default TestTitle;
+export default memo(TestTitle);

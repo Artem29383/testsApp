@@ -7,11 +7,10 @@ import { toggleChecked } from 'models/test/reducer';
 import useCheckChangeQuest from 'hooks/useCheckChangeQuest';
 import S from './RadioQuestions.styled';
 
-const RadioQuestions = ({ id, quest }) => {
-  console.log(321);
-  const { entities, ids } = quest.answer;
+const RadioQuestions = ({ id, quest, errorMsg }) => {
+  const { entities, ids } = quest;
   const toggleRadio = useAction(toggleChecked);
-  const resetErrorChange = useCheckChangeQuest(id);
+  const resetErrorChange = useCheckChangeQuest(id, errorMsg);
   const changeRadioHandler = e => {
     const checkedId = ids.filter(qId => entities[qId].isChecked);
     const radioId = e.currentTarget.id;
@@ -45,4 +44,5 @@ export default RadioQuestions;
 RadioQuestions.propTypes = {
   id: PropTypes.string,
   quest: PropTypes.object,
+  errorMsg: PropTypes.string,
 };

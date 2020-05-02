@@ -7,10 +7,10 @@ import { toggleCheckBox } from 'models/test/reducer';
 import useCheckChangeQuest from 'hooks/useCheckChangeQuest';
 import S from './CheckBoxQuestions.styled';
 
-const CheckBoxQuestions = ({ id, quest }) => {
-  const { entities, ids } = quest.answer;
+const CheckBoxQuestions = ({ id, quest, errorMsg }) => {
+  const { entities, ids } = quest;
   const setToggleCheckBox = useAction(toggleCheckBox);
-  const resetErrorChange = useCheckChangeQuest(id);
+  const resetErrorChange = useCheckChangeQuest(id, errorMsg);
 
   const changeCheckBoxHandler = e => {
     const checkId = e.currentTarget.id;
@@ -51,4 +51,5 @@ export default CheckBoxQuestions;
 CheckBoxQuestions.propTypes = {
   id: PropTypes.string,
   quest: PropTypes.object,
+  errorMsg: PropTypes.string,
 };

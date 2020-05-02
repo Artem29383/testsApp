@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import nanoid from 'nanoid';
 import useAction from 'hooks/useAction';
 import { pushAnswer } from 'models/test/reducer';
@@ -6,10 +6,9 @@ import PropTypes from 'prop-types';
 import useCheckChangeQuest from 'hooks/useCheckChangeQuest';
 import S from './QuestionFooter.styled';
 
-const QuestionFooter = ({ id, quest }) => {
-  const { ids } = quest.answer;
+const QuestionFooter = ({ id, ids, errorMsg }) => {
   const answerAdd = useAction(pushAnswer);
-  const resetErrorChange = useCheckChangeQuest(id);
+  const resetErrorChange = useCheckChangeQuest(id, errorMsg);
 
   const addAnswer = () => {
     const uniqId = nanoid();
@@ -27,7 +26,8 @@ const QuestionFooter = ({ id, quest }) => {
 
 QuestionFooter.propTypes = {
   id: PropTypes.string,
-  quest: PropTypes.object,
+  ids: PropTypes.array,
+  errorMsg: PropTypes.string,
 };
 
-export default QuestionFooter;
+export default memo(QuestionFooter);

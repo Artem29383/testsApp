@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import nanoid from 'nanoid';
+import React, { useEffect, useRef } from 'react';
+import routes from 'constants/routes';
 import useSelector from 'hooks/useSelector';
 import {
   getQuestionsIdsSelector,
@@ -13,15 +13,17 @@ import {
 } from 'models/test/reducer';
 import FooterTest from 'pages/CreateEditTestPage/FooterTest';
 import TestTitle from 'pages/CreateEditTestPage/TestTitle';
-import DraggableQuestion from 'pages/CreateEditTestPage/DraggableQuestion';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import Question from 'pages/CreateEditTestPage/Question';
+import { getIsInit } from 'models/tests/selectors';
+import { Redirect } from 'react-router-dom';
 import S from './CreateEditTestPage.styled';
 
 const CreateEditTestPage = () => {
   const questionsIds = useSelector(getQuestionsIdsSelector);
   const scrollPageToBottomTest = useRef(null);
-  const [uniqId, setUniqId] = useState(nanoid());
   const removeTest = useAction(deleteTest);
+  const testsIsInit = useSelector(getIsInit);
   const questionsEntities = useSelector(getQuestionsSelector);
   const setDndIds = useAction(setDragAndDropArrayQuests);
   const setDNDNewIds = useAction(setDragAndDropArrayAnswers);
@@ -57,12 +59,7 @@ const CreateEditTestPage = () => {
     }
   };
 
-  useEffect(() => {
-    scrollPageToBottomTest.current.scrollIntoView({
-      block: 'end',
-      behavior: 'smooth',
-    });
-  }, [uniqId]);
+  if (!testsIsInit) return <Redirect to={routes.testPage} />;
 
   return (
     <S.PageTest>
@@ -73,7 +70,7 @@ const CreateEditTestPage = () => {
             {provided => (
               <S.DragZone ref={provided.innerRef} {...provided.droppableProps}>
                 {questionsIds.map((id, index) => (
-                  <DraggableQuestion
+                  <Question
                     id={id}
                     key={id}
                     quest={questionsEntities[id]}
@@ -85,7 +82,7 @@ const CreateEditTestPage = () => {
             )}
           </Droppable>
         </DragDropContext>
-        <FooterTest setUniqId={setUniqId} uniqId={uniqId} />
+        <FooterTest scrollPageToBottomTest={scrollPageToBottomTest} />
       </S.Content>
     </S.PageTest>
   );

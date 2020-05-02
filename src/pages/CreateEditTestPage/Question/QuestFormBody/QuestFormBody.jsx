@@ -7,17 +7,16 @@ import CheckBoxQuestions from 'pages/CreateEditTestPage/Question/CheckBoxQuestio
 import S from './QuestFormBody.styled';
 
 const QuestFormBody = ({ questType, quest, id, errorMsg }) => {
-  console.log(123);
   return (
     <S.QuestFormBody>
       {questType === questionVariable.one && (
-        <RadioQuestions id={id} quest={quest} />
+        <RadioQuestions id={id} quest={quest} errorMsg={errorMsg} />
       )}
       {questType === questionVariable.number && (
-        <NumberQuestion id={id} quest={quest} />
+        <NumberQuestion id={id} quest={quest} errorMsg={errorMsg} />
       )}
       {questType === questionVariable.some && (
-        <CheckBoxQuestions id={id} quest={quest} />
+        <CheckBoxQuestions id={id} quest={quest} errorMsg={errorMsg} />
       )}
       <S.WrapInput>
         <S.Error>{errorMsg}</S.Error>

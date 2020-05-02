@@ -9,12 +9,6 @@ export const getQuestionsSelector = createSelector(
   entities => entities
 );
 
-export const getQuestionErrorMsg = createSelector(
-  getQuestions,
-  (_, id) => id,
-  (state, id) => state[id].errorMsg
-);
-
 export const getQuestionsIdsSelector = createSelector(
   getQuestionsIds,
   ids => ids

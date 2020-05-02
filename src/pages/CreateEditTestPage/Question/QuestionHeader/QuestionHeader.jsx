@@ -11,15 +11,13 @@ import Portal from 'components/Portal';
 import useToggle from 'hooks/useToggle';
 import S from './QuestionHeader.styled';
 
-const QuestionHeader = ({ setValue, id, value, quest }) => {
-  const { questName } = quest;
+const QuestionHeader = ({ setValue, id, value, questName }) => {
   const setQuestionName = useAction(setQuestName);
   const deleteQuest = useAction(removeQuest);
   const [showModal, setShowModal] = useToggle(false);
   const removeQuestion = () => {
     deleteQuest(id);
   };
-
   const setQuestionNameHandler = useCallback(
     e => {
       setQuestionName({ id, questionName: e.currentTarget.value });
@@ -80,7 +78,7 @@ const QuestionHeader = ({ setValue, id, value, quest }) => {
 QuestionHeader.propTypes = {
   setValue: PropTypes.func,
   id: PropTypes.string,
-  quest: PropTypes.object,
+  questName: PropTypes.string,
   value: PropTypes.string,
 };
 

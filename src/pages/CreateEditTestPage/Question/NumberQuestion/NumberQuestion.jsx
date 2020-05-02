@@ -7,7 +7,7 @@ import { questionVariable } from 'styles/constants';
 import S from './NumberQuestion.styled';
 
 const NumberQuestion = ({ id, quest }) => {
-  const { entities, ids } = quest.answer;
+  const { entities, ids } = quest;
   const numberId = ids[0];
   const [temp, setTemp] = useState('');
   const [value, setValue] = useState(entities[numberId].value);
