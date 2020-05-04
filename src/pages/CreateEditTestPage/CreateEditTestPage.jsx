@@ -1,10 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import routes from 'constants/routes';
 import useSelector from 'hooks/useSelector';
-import {
-  getQuestionsIdsSelector,
-  getQuestionsSelector,
-} from 'models/test/selectors';
+import { getQuestionsIdsSelector } from 'models/test/selectors';
 import useAction from 'hooks/useAction';
 import {
   deleteTest,
@@ -24,7 +21,6 @@ const CreateEditTestPage = () => {
   const scrollPageToBottomTest = useRef(null);
   const removeTest = useAction(deleteTest);
   const testsIsInit = useSelector(getIsInit);
-  const questionsEntities = useSelector(getQuestionsSelector);
   const setDndIds = useAction(setDragAndDropArrayQuests);
   const setDNDNewIds = useAction(setDragAndDropArrayAnswers);
 
@@ -32,32 +28,36 @@ const CreateEditTestPage = () => {
     return () => removeTest();
   }, []);
 
-  const onDragEnd = result => {
-    const { destination, source, draggableId } = result;
-    if (!destination) return;
+  const onDragEnd = useCallback(
+    result => {
+      const { destination, source, draggableId } = result;
+      if (!destination) return;
 
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
+      if (
+        destination.droppableId === source.droppableId &&
+        destination.index === source.index
+      ) {
+        return;
+      }
 
-    if (destination.droppableId !== source.droppableId) return;
+      if (destination.droppableId !== source.droppableId) return;
 
-    if (destination.droppableId === 'questDrop') {
-      const copyIds = [...questionsIds];
-      copyIds.splice(source.index, 1);
-      copyIds.splice(destination.index, 0, draggableId);
-      setDndIds(copyIds);
-    } else {
-      const quests = questionsEntities[source.droppableId];
-      const copyIds = [...quests.answer.ids];
-      copyIds.splice(source.index, 1);
-      copyIds.splice(destination.index, 0, draggableId);
-      setDNDNewIds({ id: destination.droppableId, ids: copyIds });
-    }
-  };
+      if (destination.droppableId === 'questDrop') {
+        const copyIds = [...questionsIds];
+        copyIds.splice(source.index, 1);
+        copyIds.splice(destination.index, 0, draggableId);
+        setDndIds(copyIds);
+      } else {
+        setDNDNewIds({
+          questId: source.droppableId,
+          id: destination.index,
+          removeIndex: source.index,
+          pasteDraggableId: draggableId,
+        });
+      }
+    },
+    [questionsIds, setDNDNewIds, setDndIds]
+  );
 
   if (!testsIsInit) return <Redirect to={routes.testPage} />;
 
@@ -70,12 +70,7 @@ const CreateEditTestPage = () => {
             {provided => (
               <S.DragZone ref={provided.innerRef} {...provided.droppableProps}>
                 {questionsIds.map((id, index) => (
-                  <Question
-                    id={id}
-                    key={id}
-                    quest={questionsEntities[id]}
-                    index={index}
-                  />
+                  <Question id={id} key={id} index={index} />
                 ))}
                 {provided.placeholder}
               </S.DragZone>

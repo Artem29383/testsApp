@@ -11,15 +11,19 @@ import QuestionHeader from 'pages/CreateEditTestPage/Question/QuestionHeader';
 import QuestionFooter from 'pages/CreateEditTestPage/Question/QuestionFooter';
 import QuestFormBody from 'pages/CreateEditTestPage/Question/QuestFormBody';
 import { Draggable } from 'react-beautiful-dnd';
+import { getQuestSelector } from 'models/test/selectors';
+import useSelector from 'hooks/useSelector';
 import S from './Question.styled';
 
-const Question = ({ id, quest, index }) => {
+const Question = ({ id, index }) => {
+  const quest = useSelector(getQuestSelector, id);
   const { type, errorMsg, isValid } = quest;
   const [value, setValue] = useState(type || questionVariable.one);
   const [temp, setTemp] = useState(type);
   const [questType, setQuestType] = useState(value);
   const setInitAnswer = useAction(setInitialRadioOrCheckBox);
   const setNumeric = useAction(setNumericAnswer);
+
   useEffect(() => {
     if (!isValid || value !== temp) {
       setTemp(value);
@@ -91,7 +95,6 @@ const Question = ({ id, quest, index }) => {
 
 Question.propTypes = {
   id: PropTypes.string,
-  quest: PropTypes.object,
   index: PropTypes.number,
 };
 

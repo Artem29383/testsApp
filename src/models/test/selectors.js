@@ -21,6 +21,12 @@ export const getTestNameSelector = createSelector(
   testName => testName
 );
 
+export const getQuestSelector = createSelector(
+  getQuestions,
+  (_, id) => id,
+  (state, id) => state[id]
+);
+
 const getLoad = state => state.test.isLoad;
 
 export const getLoadSelector = createSelector(getLoad, isLoad => isLoad);
