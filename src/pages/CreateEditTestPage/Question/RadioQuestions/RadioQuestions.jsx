@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
 import RadioButton from 'pages/CreateEditTestPage/Question/RadioQuestions/RadioButton';
@@ -11,12 +11,15 @@ const RadioQuestions = ({ id, quest, errorMsg }) => {
   const { entities, ids } = quest;
   const toggleRadio = useAction(toggleChecked);
   const resetErrorChange = useCheckChangeQuest(id, errorMsg);
-  const changeRadioHandler = e => {
-    const checkedId = ids.filter(qId => entities[qId].isChecked);
-    const radioId = e.currentTarget.id;
-    toggleRadio({ id, radioId, checkedId });
-    resetErrorChange(ids.length);
-  };
+
+  const handleChange = useCallback(
+    radioId => {
+      const checkedId = ids.filter(qId => entities[qId].isChecked);
+      toggleRadio({ id, radioId, checkedId });
+      resetErrorChange(ids.length);
+    },
+    [entities, ids]
+  );
 
   const radioBtns = ids.map((qId, index) => (
     <RadioButton
@@ -25,7 +28,7 @@ const RadioQuestions = ({ id, quest, errorMsg }) => {
       index={index}
       id={entities[qId].id}
       radioObject={entities[qId]}
-      onChangeHandler={changeRadioHandler}
+      onHandleChange={handleChange}
     />
   ));
 

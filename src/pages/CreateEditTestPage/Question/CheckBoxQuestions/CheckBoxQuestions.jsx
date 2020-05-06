@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
 import CheckBoxButton from 'pages/CreateEditTestPage/Question/CheckBoxQuestions/CheckBoxButton';
@@ -12,15 +12,17 @@ const CheckBoxQuestions = ({ id, quest, errorMsg }) => {
   const setToggleCheckBox = useAction(toggleCheckBox);
   const resetErrorChange = useCheckChangeQuest(id, errorMsg);
 
-  const changeCheckBoxHandler = e => {
-    const checkId = e.currentTarget.id;
-    setToggleCheckBox({
-      id,
-      qId: checkId,
-      isChecked: entities[checkId].isChecked,
-    });
-    resetErrorChange(ids.length);
-  };
+  const handleChange = useCallback(
+    checkId => {
+      setToggleCheckBox({
+        id,
+        qId: checkId,
+        isChecked: entities[checkId].isChecked,
+      });
+      resetErrorChange(ids.length);
+    },
+    [ids, entities]
+  );
 
   const checkBoxVariable = ids.map((qId, index) => {
     return (
@@ -30,7 +32,7 @@ const CheckBoxQuestions = ({ id, quest, errorMsg }) => {
         questionId={id}
         id={entities[qId].id}
         checkBoxObject={entities[qId]}
-        onChangeCheckBoxHandler={changeCheckBoxHandler}
+        onHandleChange={handleChange}
       />
     );
   });

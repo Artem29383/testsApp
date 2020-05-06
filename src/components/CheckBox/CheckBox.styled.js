@@ -136,14 +136,14 @@ export const Label = styled.label`
     color: ${colors.dodjerBlue};
   }
 
+  &.checked ${Span} {
+    animation: ${check} 0.4s 0.3s ease forwards;
+  }
+
   &.checked::before {
     border-color: ${colors.dodjerBlue};
     background-color: ${colors.dodjerBlue};
     animation: ${box} 0.7s ease forwards;
-  }
-
-  &.checked + ${Span} {
-    animation: ${check} 0.4s 0.3s ease forwards;
   }
 `;
 

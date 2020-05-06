@@ -9,13 +9,16 @@ const CheckBoxAnswer = ({ questId, answers, ids, entities }) => {
   const setCheckBox = useAction(toggleCheckBox);
   const setValid = useAction(setStatusValid);
 
-  const handleChange = useCallback(id => {
-    setCheckBox({
-      questId,
-      checkBoxId: id,
-    });
-    setValid(questId);
-  }, []);
+  const handleChange = useCallback(
+    id => {
+      setCheckBox({
+        questId,
+        checkBoxId: id,
+      });
+      setValid(questId);
+    },
+    [setCheckBox, setValid]
+  );
 
   return ids.map(id => {
     return (

@@ -9,13 +9,16 @@ const RadioAnswer = ({ questId, answers, ids, entities }) => {
   const setRadio = useAction(toggleChecked);
   const setValid = useAction(setStatusValid);
 
-  const handleChange = useCallback(id => {
-    setRadio({
-      questId,
-      radioId: id,
-    });
-    setValid(questId);
-  }, []);
+  const handleChange = useCallback(
+    id => {
+      setRadio({
+        questId,
+        radioId: id,
+      });
+      setValid(questId);
+    },
+    [setRadio, setValid]
+  );
 
   return ids.map(id => (
     <S.Radio key={id}>

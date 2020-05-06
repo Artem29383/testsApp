@@ -18,7 +18,7 @@ const CheckBoxButton = ({
   id,
   checkBoxObject,
   index,
-  onChangeCheckBoxHandler,
+  onHandleChange,
 }) => {
   const removeCheckBoxAnswer = useAction(removeAnswerFromRadioOrCheckBox);
   const [edit, setEdit] = useState(false);
@@ -78,7 +78,7 @@ const CheckBoxButton = ({
               <CheckBox
                 id={id}
                 isChecked={checkBoxObject.isChecked}
-                onChangeHandler={onChangeCheckBoxHandler}
+                onHandleChange={onHandleChange}
                 label={checkBoxLabel}
               />
               <Edit.Icon
@@ -108,7 +108,7 @@ CheckBoxButton.propTypes = {
   id: PropTypes.string,
   checkBoxObject: PropTypes.object,
   index: PropTypes.number,
-  onChangeCheckBoxHandler: PropTypes.func,
+  onHandleChange: PropTypes.func,
 };
 
 export default CheckBoxButton;
