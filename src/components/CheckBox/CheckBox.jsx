@@ -1,29 +1,27 @@
 import React, { memo } from 'react';
 import LinesEllipsis from 'react-lines-ellipsis';
 import PropTypes from 'prop-types';
-import S, { Label, Span } from 'components/CheckBox/CheckBox.styled';
+import { Input, Label, Span } from 'components/CheckBox/CheckBox.styled';
 
-const CheckBox = ({ id, isChecked, label, onChangeHandler }) => (
-  <>
-    <S.Input
-      type="checkbox"
-      id={id}
-      onChange={onChangeHandler}
-      checked={isChecked}
-      value={label}
-    />
-    <Label htmlFor={id} id={id} onTouchEnd={onChangeHandler}>
+const CheckBox = ({ isChecked, onHandleChange, label, id }) => {
+  return (
+    <Label
+      onTouchEnd={() => onHandleChange(id)}
+      onClick={() => onHandleChange(id)}
+      className={isChecked && 'checked'}
+    >
+      <Input type="checkbox" />
       <LinesEllipsis maxLine="7" text={label} />
       <Span />
     </Label>
-  </>
-);
+  );
+};
 
 CheckBox.propTypes = {
-  id: PropTypes.string,
   isChecked: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
-  onChangeHandler: PropTypes.func.isRequired,
+  onHandleChange: PropTypes.func.isRequired,
+  id: PropTypes.string,
 };
 
 export default memo(CheckBox);

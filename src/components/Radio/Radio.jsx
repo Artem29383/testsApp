@@ -3,19 +3,11 @@ import PropTypes from 'prop-types';
 import { Input, Label } from 'components/Radio/Radio.styled';
 import LinesEllipsis from 'react-lines-ellipsis';
 
-const Radio = ({ id, isChecked, label, setValid, setRadio, questId }) => {
-  const changeHandler = () => {
-    setRadio({
-      questId,
-      radioId: id,
-    });
-    setValid(questId);
-  };
-
+const Radio = ({ isChecked, label, id, onHandleChange }) => {
   return (
     <Label
-      onTouchEnd={changeHandler}
-      onClick={changeHandler}
+      onTouchEnd={() => onHandleChange(id)}
+      onClick={() => onHandleChange(id)}
       className={isChecked && 'checked'}
     >
       <Input type="radio" />
@@ -25,12 +17,10 @@ const Radio = ({ id, isChecked, label, setValid, setRadio, questId }) => {
 };
 
 Radio.propTypes = {
-  id: PropTypes.string,
   isChecked: PropTypes.bool.isRequired,
   label: PropTypes.string,
-  setValid: PropTypes.func,
-  setRadio: PropTypes.func.isRequired,
-  questId: PropTypes.string,
+  id: PropTypes.string,
+  onHandleChange: PropTypes.func.isRequired,
 };
 
 export default Radio;

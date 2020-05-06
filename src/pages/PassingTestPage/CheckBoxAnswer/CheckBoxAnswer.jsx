@@ -1,33 +1,30 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import CheckBox from 'components/CheckBox';
 import useAction from 'hooks/useAction';
 import { setStatusValid, toggleCheckBox } from 'models/passTest/reducer';
-import useSelector from 'hooks/useSelector';
-import { getEntitiesQuestionsSel } from 'models/passTest/selectors';
 import S from './CheckBoxAnswer.styled';
 
-const CheckBoxAnswer = ({ questId, answers }) => {
-  const questions = useSelector(getEntitiesQuestionsSel);
+const CheckBoxAnswer = ({ questId, answers, ids, entities }) => {
   const setCheckBox = useAction(toggleCheckBox);
   const setValid = useAction(setStatusValid);
 
-  const onCheckBoxChange = e => {
+  const handleChange = useCallback(id => {
     setCheckBox({
       questId,
-      checkBoxId: e.currentTarget.id,
+      checkBoxId: id,
     });
     setValid(questId);
-  };
+  }, []);
 
-  return questions[questId].answer.ids.map(id => {
+  return ids.map(id => {
     return (
       <S.CheckBox key={id}>
         <CheckBox
-          label={questions[questId].answer.entities[id].value}
+          label={entities[id].value}
           id={id}
+          onHandleChange={handleChange}
           isChecked={!!answers.answer[id]}
-          onChangeHandler={onCheckBoxChange}
         />
       </S.CheckBox>
     );
@@ -37,6 +34,8 @@ const CheckBoxAnswer = ({ questId, answers }) => {
 CheckBoxAnswer.propTypes = {
   questId: PropTypes.string,
   answers: PropTypes.object,
+  entities: PropTypes.object,
+  ids: PropTypes.array,
 };
 
 export default CheckBoxAnswer;

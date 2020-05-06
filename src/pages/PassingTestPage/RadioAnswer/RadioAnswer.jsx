@@ -1,26 +1,29 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Radio from 'components/Radio';
 import useAction from 'hooks/useAction';
 import { setStatusValid, toggleChecked } from 'models/passTest/reducer';
-import useSelector from 'hooks/useSelector';
-import { getEntitiesQuestionsSel } from 'models/passTest/selectors';
 import S from './RadioAnswer.styled';
 
-const RadioAnswer = ({ questId, answers }) => {
-  const questions = useSelector(getEntitiesQuestionsSel);
+const RadioAnswer = ({ questId, answers, ids, entities }) => {
   const setRadio = useAction(toggleChecked);
   const setValid = useAction(setStatusValid);
 
-  return questions[questId].answer.ids.map(id => (
+  const handleChange = useCallback(id => {
+    setRadio({
+      questId,
+      radioId: id,
+    });
+    setValid(questId);
+  }, []);
+
+  return ids.map(id => (
     <S.Radio key={id}>
       <Radio
-        questId={questId}
-        id={questions[questId].answer.entities[id].id}
-        label={questions[questId].answer.entities[id].value}
+        id={entities[id].id}
+        label={entities[id].value}
         isChecked={answers.answer[0] === id}
-        setRadio={setRadio}
-        setValid={setValid}
+        onHandleChange={handleChange}
       />
     </S.Radio>
   ));
@@ -29,6 +32,8 @@ const RadioAnswer = ({ questId, answers }) => {
 RadioAnswer.propTypes = {
   questId: PropTypes.string,
   answers: PropTypes.object,
+  entities: PropTypes.object,
+  ids: PropTypes.array,
 };
 
 export default RadioAnswer;

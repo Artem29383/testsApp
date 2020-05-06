@@ -81,6 +81,10 @@ const PassingTestPage = () => {
                 <RadioAnswer
                   questId={ids[questIndex]}
                   answers={state.answers[ids[questIndex]] || { answer: [] }}
+                  ids={state.questions.entities[ids[questIndex]].answer.ids}
+                  entities={
+                    state.questions.entities[ids[questIndex]].answer.entities
+                  }
                 />
               )}
               {currentQuest.type === questionVariable.number && (
@@ -92,8 +96,13 @@ const PassingTestPage = () => {
               )}
               {currentQuest.type === questionVariable.some && (
                 <CheckBoxAnswer
+                  questions={state.questions.entities}
                   questId={ids[questIndex]}
                   answers={state.answers[ids[questIndex]] || { answer: [] }}
+                  ids={state.questions.entities[ids[questIndex]].answer.ids}
+                  entities={
+                    state.questions.entities[ids[questIndex]].answer.entities
+                  }
                 />
               )}
             </S.QuestBody>
