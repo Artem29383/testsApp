@@ -20,5 +20,5 @@ export const sortByData = (array, col, type = 'asc') => {
           convertDataToMS(a[col]) > convertDataToMS(b[col]) ? -1 : 0
         );
 
-  return sortArray.reduce((obj, item) => [...obj, item], []);
+  return [...sortArray];
 };
