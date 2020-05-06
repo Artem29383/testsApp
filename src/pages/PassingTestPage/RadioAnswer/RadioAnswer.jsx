@@ -26,7 +26,7 @@ const RadioAnswer = ({ questId, answers, ids, entities }) => {
         id={entities[id].id}
         label={entities[id].value}
         isChecked={answers.answer[0] === id}
-        onHandleChange={handleChange}
+        onChange={handleChange}
       />
     </S.Radio>
   ));

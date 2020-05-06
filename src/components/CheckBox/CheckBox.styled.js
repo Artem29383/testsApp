@@ -33,7 +33,6 @@ const box = keyframes`
   }
 `;
 
-// eslint-disable-next-line no-unused-vars
 const check = keyframes`
   0% {
     transform: rotate(45deg) scale(1) translateY(-50%);
