@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import nanoid from 'nanoid';
 import PropTypes from 'prop-types';
-import RadioQuestions from 'pages/CreateEditTestPage/Question/RadioQuestions';
-import NumberQuestion from 'pages/CreateEditTestPage/Question/NumberQuestion';
-import CheckBoxQuestions from 'pages/CreateEditTestPage/Question/CheckBoxQuestions';
-import useSelector from 'hooks/useSelector';
-import { getErrorMsgSelector, getQuestSelector } from 'models/test/selectors';
 import useAction from 'hooks/useAction';
 import {
   setInitialRadioOrCheckBox,
@@ -14,21 +9,23 @@ import {
 import { questionVariable } from 'styles/constants';
 import QuestionHeader from 'pages/CreateEditTestPage/Question/QuestionHeader';
 import QuestionFooter from 'pages/CreateEditTestPage/Question/QuestionFooter';
+import QuestFormBody from 'pages/CreateEditTestPage/Question/QuestFormBody';
 import { Draggable } from 'react-beautiful-dnd';
+import { questSelector } from 'models/test/selectors';
+import useSelector from 'hooks/useSelector';
 import S from './Question.styled';
 
 const Question = ({ id, index }) => {
-  const errorMsg = useSelector(getErrorMsgSelector)(id);
-  const quest = useSelector(getQuestSelector)(id);
-  const [value, setValue] = useState(quest.type || questionVariable.one);
-  const [temp, setTemp] = useState(quest.type);
+  const quest = useSelector(questSelector, id);
+  const { type, errorMsg, isValid } = quest;
+  const [value, setValue] = useState(type || questionVariable.one);
+  const [temp, setTemp] = useState(type);
   const [questType, setQuestType] = useState(value);
-  const nameRadio = nanoid();
   const setInitAnswer = useAction(setInitialRadioOrCheckBox);
   const setNumeric = useAction(setNumericAnswer);
 
   useEffect(() => {
-    if (!quest.isValid || value !== temp) {
+    if (!isValid || value !== temp) {
       setTemp(value);
       const uniqId = nanoid();
       if (value === questionVariable.one || value === questionVariable.some) {
@@ -64,48 +61,30 @@ const Question = ({ id, index }) => {
     <Draggable draggableId={id} index={index}>
       {provided => (
         <S.QuestionForm
-          isValid={errorMsg}
+          isValid={quest.errorMsg}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
           <S.QuestionContent>
             <QuestionHeader
-              quest={quest}
               setValue={setValue}
               id={id}
               value={value}
+              questName={quest.questName}
             />
-            <S.QuestFormBody>
-              {questType === questionVariable.one && (
-                <RadioQuestions
-                  name={nameRadio}
-                  entities={quest.answer.entities}
-                  ids={quest.answer.ids}
-                  id={id}
-                />
-              )}
-              {questType === questionVariable.number && (
-                <NumberQuestion
-                  id={id}
-                  ids={quest.answer.ids}
-                  entities={quest.answer.entities}
-                  numberId={quest.answer.ids[0]}
-                />
-              )}
-              {questType === questionVariable.some && (
-                <CheckBoxQuestions
-                  entities={quest.answer.entities}
-                  ids={quest.answer.ids}
-                  id={id}
-                />
-              )}
-              <S.WrapInput>
-                <S.Error>{errorMsg}</S.Error>
-              </S.WrapInput>
-            </S.QuestFormBody>
+            <QuestFormBody
+              quest={quest.answer}
+              errorMsg={errorMsg}
+              id={id}
+              questType={type}
+            />
             {questType !== questionVariable.number && (
-              <QuestionFooter ids={quest.answer.ids} id={id} />
+              <QuestionFooter
+                id={id}
+                ids={quest.answer.ids}
+                errorMsg={quest.errorMsg}
+              />
             )}
           </S.QuestionContent>
         </S.QuestionForm>
@@ -114,8 +93,9 @@ const Question = ({ id, index }) => {
   );
 };
 
-export default Question;
 Question.propTypes = {
   id: PropTypes.string,
   index: PropTypes.number,
 };
+
+export default memo(Question);

@@ -48,3 +48,7 @@ export const updateTestApi = ({ id, testName, entities, ids, created }) => {
 };
 
 export const deleteTestApi = id => axios.delete(`${baseURL}/tests/${id}`);
+
+export const getTestForPassingTestApi = id => {
+  return axios.get(`${baseURL}/tests/${id}`);
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Input/Input';
 import DropDown from 'components/DropDown';
@@ -11,18 +11,19 @@ import Portal from 'components/Portal';
 import useToggle from 'hooks/useToggle';
 import S from './QuestionHeader.styled';
 
-const QuestionHeader = ({ quest, setValue, id, value }) => {
+const QuestionHeader = ({ setValue, id, value, questName }) => {
   const setQuestionName = useAction(setQuestName);
   const deleteQuest = useAction(removeQuest);
   const [showModal, setShowModal] = useToggle(false);
-
   const removeQuestion = () => {
     deleteQuest(id);
   };
-
-  const setQuestionNameHandler = e => {
-    setQuestionName({ id, questionName: e.currentTarget.value });
-  };
+  const setQuestionNameHandler = useCallback(
+    e => {
+      setQuestionName({ id, questionName: e.currentTarget.value });
+    },
+    [questName]
+  );
 
   return (
     <>
@@ -43,7 +44,7 @@ const QuestionHeader = ({ quest, setValue, id, value }) => {
             <Input
               label="Вопрос"
               onChange={setQuestionNameHandler}
-              value={quest.questName}
+              value={questName}
             />
           </S.WrapInput>
         </S.QuestFormHeaderTitle>
@@ -75,9 +76,9 @@ const QuestionHeader = ({ quest, setValue, id, value }) => {
 };
 
 QuestionHeader.propTypes = {
-  quest: PropTypes.object,
   setValue: PropTypes.func,
   id: PropTypes.string,
+  questName: PropTypes.string,
   value: PropTypes.string,
 };
 

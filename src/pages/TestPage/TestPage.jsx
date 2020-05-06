@@ -6,10 +6,10 @@ import { getAllTests, setLoading } from 'models/tests/reducer';
 import Loader from 'components/Loader';
 import useSelector from 'hooks/useSelector';
 import {
-  getDenormalizedDataSelector,
-  getLoadingSelector,
+  denormalizedDataSelector,
+  loadingSelector,
 } from 'models/tests/selectors';
-import { getIsAdminSelector } from 'models/user/selectors';
+import { adminStatusSelector } from 'models/user/selectors';
 import useToggle from 'hooks/useToggle';
 import ModalOverlay from 'components/ModalOverlay';
 import routes from 'constants/routes';
@@ -22,14 +22,14 @@ const TestPage = () => {
   const { error, resetError, idError } = useFetchingError();
   const setLoad = useAction(setLoading);
   const getTests = useAction(getAllTests);
-  const isLoading = useSelector(getLoadingSelector);
-  const { tests } = useSelector(getDenormalizedDataSelector)('tests');
-  const isAdmin = useSelector(getIsAdminSelector);
+  const isLoading = useSelector(loadingSelector);
+  const { tests } = useSelector(denormalizedDataSelector)('tests');
+  const isAdmin = useSelector(adminStatusSelector);
   const [showModal, setShowModal] = useToggle(false);
 
   const fetchAllTests = () => {
     setLoad(true);
-    resetError('');
+    resetError();
     getTests();
   };
 

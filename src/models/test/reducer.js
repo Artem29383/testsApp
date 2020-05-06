@@ -105,17 +105,18 @@ const testReducer = createSlice({
       state.questions.entities[id].isValid = false;
     },
     setDragAndDropArrayAnswers(state, { payload }) {
-      const { id, ids } = payload;
-      state.questions.entities[id].answer.ids = ids;
+      const { questId, id, removeIndex, pasteDraggableId } = payload;
+      const quests = state.questions.entities[questId];
+      const copyIds = [...quests.answer.ids];
+      copyIds.splice(removeIndex, 1);
+      copyIds.splice(id, 0, pasteDraggableId);
+      state.questions.entities[questId].answer.ids = copyIds;
     },
     setDragAndDropArrayQuests(state, { payload }) {
       state.questions.ids = payload;
     },
     setFetchTestData(state, { payload }) {
-      const { testName, questions, created } = payload;
-      state.testName = testName;
-      state.questions = questions;
-      state.created = created;
+      Object.assign(state, payload);
     },
     setLoad(state, { payload }) {
       state.isLoad = payload;

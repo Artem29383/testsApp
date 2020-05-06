@@ -1,30 +1,26 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import S, { Label } from 'components/Radio/Radio.styled';
+import { Input, Label } from 'components/Radio/Radio.styled';
 import LinesEllipsis from 'react-lines-ellipsis';
 
-const Radio = ({ id, name, isChecked, label, onChangeHandler }) => (
-  <>
-    <S.Input
-      id={id}
-      name={name}
-      type="radio"
-      checked={isChecked}
-      value={label}
-      onChange={onChangeHandler}
-    />
-    <Label htmlFor={id} id={id} onTouchEnd={onChangeHandler}>
+const Radio = ({ isChecked, label, id, onChange }) => {
+  const handleChange = useCallback(() => {
+    onChange(id);
+  }, [id, onChange]);
+
+  return (
+    <Label className={isChecked && 'checked'}>
+      <Input type="radio" onChange={handleChange} onTouchEnd={handleChange} />
       <LinesEllipsis maxLine="7" text={label} />
     </Label>
-  </>
-);
+  );
+};
 
 Radio.propTypes = {
-  id: PropTypes.string,
-  name: PropTypes.string.isRequired,
   isChecked: PropTypes.bool.isRequired,
   label: PropTypes.string,
-  onChangeHandler: PropTypes.func.isRequired,
+  id: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default Radio;

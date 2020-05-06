@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 
-const useModal = (toggle, isOpen) => {
+const useModal = (toggle, isOpen, isClosable) => {
+  if (!isClosable) return;
+
   const hideWindowHandlerKey = e => {
     if (e.key === 'Escape') {
       toggle();

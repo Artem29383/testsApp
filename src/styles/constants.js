@@ -28,6 +28,7 @@ export const colors = {
   lavenderPurple: '#9d83b7',
   gallery: '#ebebeb',
   windSand: '#f4f4f4',
+  gold: '#f3ec18',
 };
 
 export const questionVariable = {

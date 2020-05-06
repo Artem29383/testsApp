@@ -5,12 +5,12 @@ import routes from 'constants/routes';
 import edit from 'assets/images/edit.svg';
 import Edit from 'assets/images/edit.styled';
 import { colors } from 'styles/constants';
-import { getIsAdminSelector } from 'models/user/selectors';
+import { adminStatusSelector } from 'models/user/selectors';
 import useSelector from 'hooks/useSelector';
 import S from './TableFields.styled';
 
 const TableFields = ({ id }) => {
-  const isAdmin = useSelector(getIsAdminSelector);
+  const isAdmin = useSelector(adminStatusSelector);
   const fields = [
     ['testName', 'Название теста'],
     ['created', 'Дата создания'],

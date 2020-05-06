@@ -8,21 +8,16 @@ const getIds = state => state.tests.tests.ids;
 
 const getTests = state => state.tests.tests.entities;
 
-const getCurrentTest = state => state.tests.currentTest;
+export const getIsInit = state => state.tests.isInit;
 
-export const getCurrentTestSelector = createSelector(
-  getCurrentTest,
-  currentTest => currentTest
-);
+export const testsSelector = createSelector(getTests, entities => entities);
 
-export const getTestsSelector = createSelector(getTests, entities => entities);
-
-export const getLoadingSelector = createSelector(
+export const loadingSelector = createSelector(
   getLoading,
   isLoading => isLoading
 );
 
-export const getDenormalizedDataSelector = createSelector(
+export const denormalizedDataSelector = createSelector(
   [getTests, getIds],
   (entities, ids) => {
     return memoize(field => {

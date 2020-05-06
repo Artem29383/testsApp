@@ -3,11 +3,11 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import AuthPage from 'pages/AuthPage';
 import routes from 'constants/routes';
 import useSelector from 'hooks/useSelector';
-import { getAuth, getIsAdminSelector } from 'models/user/selectors';
+import { getAuth, adminStatusSelector } from 'models/user/selectors';
 import routers from '../../routes';
 
 const appRoutes = () => {
-  const isAdminMode = useSelector(getIsAdminSelector);
+  const isAdminMode = useSelector(adminStatusSelector);
   const isAuthApp = useSelector(getAuth);
   if (!isAuthApp) {
     return (

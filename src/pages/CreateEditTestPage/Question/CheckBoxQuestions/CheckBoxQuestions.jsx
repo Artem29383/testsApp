@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
 import CheckBoxButton from 'pages/CreateEditTestPage/Question/CheckBoxQuestions/CheckBoxButton';
@@ -7,19 +7,22 @@ import { toggleCheckBox } from 'models/test/reducer';
 import useCheckChangeQuest from 'hooks/useCheckChangeQuest';
 import S from './CheckBoxQuestions.styled';
 
-const CheckBoxQuestions = ({ entities, ids, id }) => {
+const CheckBoxQuestions = ({ id, quest, errorMsg }) => {
+  const { entities, ids } = quest;
   const setToggleCheckBox = useAction(toggleCheckBox);
-  const resetErrorChange = useCheckChangeQuest(id);
+  const resetErrorChange = useCheckChangeQuest(id, errorMsg);
 
-  const changeCheckBoxHandler = e => {
-    const checkId = e.currentTarget.id;
-    setToggleCheckBox({
-      id,
-      qId: checkId,
-      isChecked: entities[checkId].isChecked,
-    });
-    resetErrorChange(ids.length);
-  };
+  const handleChange = useCallback(
+    checkId => {
+      setToggleCheckBox({
+        id,
+        qId: checkId,
+        isChecked: entities[checkId].isChecked,
+      });
+      resetErrorChange(ids.length);
+    },
+    [ids, entities]
+  );
 
   const checkBoxVariable = ids.map((qId, index) => {
     return (
@@ -29,13 +32,13 @@ const CheckBoxQuestions = ({ entities, ids, id }) => {
         questionId={id}
         id={entities[qId].id}
         checkBoxObject={entities[qId]}
-        onChangeCheckBoxHandler={changeCheckBoxHandler}
+        onHandleChange={handleChange}
       />
     );
   });
 
   return (
-    <Droppable droppableId={id} type="subItem">
+    <Droppable droppableId={id} type={id}>
       {provided => (
         <S.DragZone ref={provided.innerRef} {...provided.droppableProps}>
           {checkBoxVariable}
@@ -48,7 +51,7 @@ const CheckBoxQuestions = ({ entities, ids, id }) => {
 
 export default CheckBoxQuestions;
 CheckBoxQuestions.propTypes = {
-  entities: PropTypes.any,
-  ids: PropTypes.array,
   id: PropTypes.string,
+  quest: PropTypes.object,
+  errorMsg: PropTypes.string,
 };

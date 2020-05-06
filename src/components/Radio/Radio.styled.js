@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import { colors } from 'styles/constants';
 import { device } from 'constants/device';
 
+export const Input = styled.input`
+  opacity: 0;
+  position: absolute;
+`;
+
 export const Label = styled.label`
   position: relative;
   cursor: pointer;
@@ -32,20 +37,13 @@ export const Label = styled.label`
     text-align: center;
     transition: background-color 250ms ease, box-shadow 250ms ease;
   }
+
+  &.checked + ${Input} {
+    color: ${colors.dodjerBlue};
+  }
+
+  &.checked::before {
+    background-color: ${colors.pictonBlue};
+    box-shadow: inset 0 0 0 4px ${colors.windSand};
+  }
 `;
-
-export default {
-  Input: styled.input`
-    opacity: 0;
-    position: absolute;
-
-    &:checked + ${Label} {
-      color: ${colors.dodjerBlue};
-
-      &::before {
-        background-color: ${colors.pictonBlue};
-        box-shadow: inset 0 0 0 4px ${colors.windSand};
-      }
-    }
-  `,
-};

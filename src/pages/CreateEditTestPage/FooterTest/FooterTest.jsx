@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import PropTypes from 'prop-types';
 import ButtonRipple from 'components/ButtonRipple';
 import ModalOverlay from 'components/ModalOverlay/ModalOverlay';
@@ -16,10 +16,10 @@ import {
 import { checkValidationTest } from 'utils/checkValidationTest';
 import useSelector from 'hooks/useSelector';
 import {
-  getCreatedDataSelector,
-  getQuestionsIdsSelector,
-  getQuestionsSelector,
-  getTestNameSelector,
+  createdDataSelector,
+  questionsIdsSelector,
+  questionsSelector,
+  testNameSelector,
 } from 'models/test/selectors';
 import { useParams } from 'react-router-dom';
 import useToggle from 'hooks/useToggle';
@@ -28,19 +28,20 @@ import { colors } from 'styles/constants';
 import useFetchingError from 'hooks/useFetchingError';
 import S from './FooterTest.styled';
 
-const FooterTest = ({ setUniqId, uniqId }) => {
-  const testName = useSelector(getTestNameSelector);
+const FooterTest = ({ scrollPageToBottomTest }) => {
+  const testName = useSelector(testNameSelector);
   const editId = useParams().id;
   const pushQuest = useAction(pushQuestion);
   const setValidQuest = useAction(setValidQuestion);
   const setInvalidQuest = useAction(setQuestError);
   const deployTest = useAction(createTest);
   const updateThisTest = useAction(updateTestById);
-  const created = useSelector(getCreatedDataSelector);
+  const created = useSelector(createdDataSelector);
+  const [uniqId, setUniqId] = useState(nanoid());
   const deleteThisTest = useAction(removeTestById);
   const [isValidTest, setIsValidTest] = useState(false);
-  const questionsIds = useSelector(getQuestionsIdsSelector);
-  const questionsEntities = useSelector(getQuestionsSelector);
+  const questionsIds = useSelector(questionsIdsSelector);
+  const questionsEntities = useSelector(questionsSelector);
   const [showModalSave, setShowModalSave] = useToggle(false);
   const {
     load,
@@ -64,6 +65,13 @@ const FooterTest = ({ setUniqId, uniqId }) => {
       setIsValidTest(true);
     }
   };
+
+  useEffect(() => {
+    scrollPageToBottomTest.current.scrollIntoView({
+      block: 'end',
+      behavior: 'smooth',
+    });
+  }, [uniqId]);
 
   useEffect(() => {
     if (error && load) {
@@ -177,8 +185,7 @@ const FooterTest = ({ setUniqId, uniqId }) => {
 };
 
 FooterTest.propTypes = {
-  setUniqId: PropTypes.func,
-  uniqId: PropTypes.string,
+  scrollPageToBottomTest: PropTypes.any,
 };
 
-export default FooterTest;
+export default memo(FooterTest);

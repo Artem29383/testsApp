@@ -15,11 +15,10 @@ import S from './RadioButton.styled';
 
 const RadioButton = ({
   id,
-  name,
   radioObject,
   questionId,
   index,
-  onChangeHandler,
+  onHandleChange,
 }) => {
   const [radioLabel, setRadioLabel] = useState(radioObject.value);
   const [edit, setEdit] = useState(false);
@@ -78,11 +77,10 @@ const RadioButton = ({
           ) : (
             <>
               <Radio
-                name={name}
                 id={id}
                 isChecked={radioObject.isChecked}
                 label={radioLabel}
-                onChangeHandler={onChangeHandler}
+                onHandleChange={onHandleChange}
               />
               <Edit.Icon onClick={startEdit} onTouchEnd={startEdit}>
                 <use xlinkHref={`${editSvg}#edit`} />
@@ -106,10 +104,8 @@ const RadioButton = ({
 export default RadioButton;
 RadioButton.propTypes = {
   id: PropTypes.string,
-  name: PropTypes.string,
   radioObject: PropTypes.object,
   questionId: PropTypes.string,
-  setCheckedId: PropTypes.func,
   index: PropTypes.number,
-  onChangeHandler: PropTypes.func,
+  onHandleChange: PropTypes.func,
 };

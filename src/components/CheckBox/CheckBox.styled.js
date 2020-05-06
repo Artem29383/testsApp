@@ -81,6 +81,12 @@ export const Span = styled.span`
   }
 `;
 
+export const Input = styled.input`
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+`;
+
 export const Label = styled.label`
   cursor: pointer;
   position: relative;
@@ -124,6 +130,20 @@ export const Label = styled.label`
       left: -26px;
     }
   }
+
+  &.checked + ${Input} {
+    color: ${colors.dodjerBlue};
+  }
+
+  &.checked ${Span} {
+    animation: ${check} 0.4s 0.3s ease forwards;
+  }
+
+  &.checked::before {
+    border-color: ${colors.dodjerBlue};
+    background-color: ${colors.dodjerBlue};
+    animation: ${box} 0.7s ease forwards;
+  }
 `;
 
 export default {
@@ -132,24 +152,6 @@ export default {
     padding: 10px 50px 10px 55px;
     display: flex;
     align-items: center;
-  `,
-  Input: styled.input`
-    cursor: pointer;
-    opacity: 0;
-    position: absolute;
-
-    &:checked + ${Label} {
-      color: ${colors.dodjerBlue};
-      &::before {
-        border-color: ${colors.dodjerBlue};
-        background-color: ${colors.dodjerBlue};
-        animation: ${box} 0.7s ease forwards;
-      }
-
-      & ${Span} {
-        animation: ${check} 0.4s 0.3s ease forwards;
-      }
-    }
   `,
 };
 /* stylelint-enable */

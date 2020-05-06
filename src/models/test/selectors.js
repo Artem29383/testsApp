@@ -1,52 +1,36 @@
 import { createSelector } from '@reduxjs/toolkit';
-import memoize from 'lodash.memoize';
 
 const getQuestions = state => state.test.questions.entities;
 
 const getQuestionsIds = state => state.test.questions.ids;
 
-export const getQuestionsSelector = createSelector(
+export const questionsSelector = createSelector(
   getQuestions,
   entities => entities
 );
 
-export const getQuestionsIdsSelector = createSelector(
-  getQuestionsIds,
-  ids => ids
-);
-
-export const getQuestSelector = createSelector(
-  [getQuestionsSelector, getQuestionsIdsSelector],
-  entities => {
-    return memoize(dinamId => {
-      return entities[dinamId];
-    });
-  }
-);
-
-export const getErrorMsgSelector = createSelector(
-  [getQuestionsSelector, getQuestionsIdsSelector],
-  entities => {
-    return memoize(dinamId => {
-      return entities[dinamId].errorMsg;
-    });
-  }
-);
+export const questionsIdsSelector = createSelector(getQuestionsIds, ids => ids);
 
 const getTestName = state => state.test.testName;
 
-export const getTestNameSelector = createSelector(
+export const testNameSelector = createSelector(
   getTestName,
   testName => testName
 );
 
+export const questSelector = createSelector(
+  getQuestions,
+  (_, id) => id,
+  (state, id) => state[id]
+);
+
 const getLoad = state => state.test.isLoad;
 
-export const getLoadSelector = createSelector(getLoad, isLoad => isLoad);
+export const loadSelector = createSelector(getLoad, isLoad => isLoad);
 
 const getCreatedData = state => state.test.created;
 
-export const getCreatedDataSelector = createSelector(
+export const createdDataSelector = createSelector(
   getCreatedData,
   created => created
 );

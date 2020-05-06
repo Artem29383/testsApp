@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
 import RadioButton from 'pages/CreateEditTestPage/Question/RadioQuestions/RadioButton';
@@ -7,15 +7,19 @@ import { toggleChecked } from 'models/test/reducer';
 import useCheckChangeQuest from 'hooks/useCheckChangeQuest';
 import S from './RadioQuestions.styled';
 
-const RadioQuestions = ({ name, entities, ids, id }) => {
+const RadioQuestions = ({ id, quest, errorMsg }) => {
+  const { entities, ids } = quest;
   const toggleRadio = useAction(toggleChecked);
-  const resetErrorChange = useCheckChangeQuest(id);
-  const changeRadioHandler = e => {
-    const checkedId = ids.filter(qId => entities[qId].isChecked);
-    const radioId = e.currentTarget.id;
-    toggleRadio({ id, radioId, checkedId });
-    resetErrorChange(ids.length);
-  };
+  const resetErrorChange = useCheckChangeQuest(id, errorMsg);
+
+  const handleChange = useCallback(
+    radioId => {
+      const checkedId = ids.filter(qId => entities[qId].isChecked);
+      toggleRadio({ id, radioId, checkedId });
+      resetErrorChange(ids.length);
+    },
+    [entities, ids, toggleRadio]
+  );
 
   const radioBtns = ids.map((qId, index) => (
     <RadioButton
@@ -23,14 +27,13 @@ const RadioQuestions = ({ name, entities, ids, id }) => {
       questionId={id}
       index={index}
       id={entities[qId].id}
-      name={name}
       radioObject={entities[qId]}
-      onChangeHandler={changeRadioHandler}
+      onHandleChange={handleChange}
     />
   ));
 
   return (
-    <Droppable droppableId={id} type="subItem">
+    <Droppable droppableId={id} type={id}>
       {provided => (
         <S.DragZone ref={provided.innerRef} {...provided.droppableProps}>
           {radioBtns}
@@ -42,8 +45,7 @@ const RadioQuestions = ({ name, entities, ids, id }) => {
 };
 export default RadioQuestions;
 RadioQuestions.propTypes = {
-  name: PropTypes.string,
-  entities: PropTypes.any,
-  ids: PropTypes.array,
   id: PropTypes.string,
+  quest: PropTypes.object,
+  errorMsg: PropTypes.string,
 };

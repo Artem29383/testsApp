@@ -1,89 +1,85 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Question from 'pages/CreateEditTestPage/Question';
-import nanoid from 'nanoid';
+import React, { useEffect, useRef, useCallback } from 'react';
+import routes from 'constants/routes';
 import useSelector from 'hooks/useSelector';
-import {
-  getQuestionsIdsSelector,
-  getQuestionsSelector,
-} from 'models/test/selectors';
+import { questionsIdsSelector } from 'models/test/selectors';
 import useAction from 'hooks/useAction';
 import {
   deleteTest,
   setDragAndDropArrayAnswers,
   setDragAndDropArrayQuests,
 } from 'models/test/reducer';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import FooterTest from 'pages/CreateEditTestPage/FooterTest';
 import TestTitle from 'pages/CreateEditTestPage/TestTitle';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import Question from 'pages/CreateEditTestPage/Question';
+import { getIsInit } from 'models/tests/selectors';
+import { Redirect } from 'react-router-dom';
 import S from './CreateEditTestPage.styled';
 
 const CreateEditTestPage = () => {
-  const questionsIds = useSelector(getQuestionsIdsSelector);
+  const questionsIds = useSelector(questionsIdsSelector);
   const scrollPageToBottomTest = useRef(null);
-  const [uniqId, setUniqId] = useState(nanoid());
   const removeTest = useAction(deleteTest);
+  const testsIsInit = useSelector(getIsInit);
   const setDndIds = useAction(setDragAndDropArrayQuests);
-  const questionsEntities = useSelector(getQuestionsSelector);
   const setDNDNewIds = useAction(setDragAndDropArrayAnswers);
+
   useEffect(() => {
     return () => removeTest();
   }, []);
 
-  useEffect(() => {
-    scrollPageToBottomTest.current.scrollIntoView({
-      block: 'end',
-      behavior: 'smooth',
-    });
-  }, [uniqId]);
+  const dragEnd = useCallback(
+    result => {
+      const { destination, source, draggableId } = result;
+      if (!destination) return;
 
-  const onDragEnd = result => {
-    const { destination, source, draggableId } = result;
-    if (!destination) return;
+      if (
+        destination.droppableId === source.droppableId &&
+        destination.index === source.index
+      ) {
+        return;
+      }
 
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
+      if (destination.droppableId !== source.droppableId) return;
 
-    if (destination.droppableId !== source.droppableId) return;
+      if (destination.droppableId === 'questDrop') {
+        const copyIds = [...questionsIds];
+        copyIds.splice(source.index, 1);
+        copyIds.splice(destination.index, 0, draggableId);
+        setDndIds(copyIds);
+      } else {
+        setDNDNewIds({
+          questId: source.droppableId,
+          id: destination.index,
+          removeIndex: source.index,
+          pasteDraggableId: draggableId,
+        });
+      }
+    },
+    [questionsIds, setDNDNewIds, setDndIds]
+  );
 
-    if (destination.droppableId === 'questDrop') {
-      const copyIds = [...questionsIds];
-      copyIds.splice(source.index, 1);
-      copyIds.splice(destination.index, 0, draggableId);
-      setDndIds(copyIds);
-    } else {
-      const quests = questionsEntities[source.droppableId];
-      const copyIds = [...quests.answer.ids];
-      copyIds.splice(source.index, 1);
-      copyIds.splice(destination.index, 0, draggableId);
-      setDNDNewIds({ id: destination.droppableId, ids: copyIds });
-    }
-  };
-
-  const questions = questionsIds.map((id, index) => (
-    <Question key={id} id={id} index={index} />
-  ));
+  if (!testsIsInit) return <Redirect to={routes.testPage} />;
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <S.PageTest>
-        <S.Content ref={scrollPageToBottomTest}>
-          <TestTitle />
+    <S.PageTest>
+      <S.Content ref={scrollPageToBottomTest}>
+        <TestTitle />
+        <DragDropContext onDragEnd={dragEnd}>
           <Droppable droppableId="questDrop" type="questItem">
             {provided => (
               <S.DragZone ref={provided.innerRef} {...provided.droppableProps}>
-                {questions}
+                {questionsIds.map((id, index) => (
+                  <Question id={id} key={id} index={index} />
+                ))}
                 {provided.placeholder}
               </S.DragZone>
             )}
           </Droppable>
-          <FooterTest setUniqId={setUniqId} uniqId={uniqId} />
-        </S.Content>
-      </S.PageTest>
-    </DragDropContext>
+        </DragDropContext>
+        <FooterTest scrollPageToBottomTest={scrollPageToBottomTest} />
+      </S.Content>
+    </S.PageTest>
   );
 };
 

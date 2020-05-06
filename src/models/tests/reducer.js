@@ -12,6 +12,7 @@ const testsReducer = createSlice({
     },
     isLoading: false,
     currentTest: {},
+    isInit: false,
   },
   reducers: {
     updateTestName(state, { payload }) {
@@ -34,6 +35,7 @@ const testsReducer = createSlice({
     },
     setTests(state, { payload }) {
       state.tests = payload;
+      state.isInit = true;
     },
     setCurrentTest(state, { payload }) {
       state.currentTest = payload;
