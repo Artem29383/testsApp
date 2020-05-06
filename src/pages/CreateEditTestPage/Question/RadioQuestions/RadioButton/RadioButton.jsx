@@ -80,7 +80,7 @@ const RadioButton = ({
                 id={id}
                 isChecked={radioObject.isChecked}
                 label={radioLabel}
-                onHandleChange={onHandleChange}
+                onChange={onHandleChange}
               />
               <Edit.Icon onClick={startEdit} onTouchEnd={startEdit}>
                 <use xlinkHref={`${editSvg}#edit`} />

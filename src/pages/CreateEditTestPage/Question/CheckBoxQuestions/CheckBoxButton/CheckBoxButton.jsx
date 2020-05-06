@@ -78,7 +78,7 @@ const CheckBoxButton = ({
               <CheckBox
                 id={id}
                 isChecked={checkBoxObject.isChecked}
-                onHandleChange={onHandleChange}
+                onChange={onHandleChange}
                 label={checkBoxLabel}
               />
               <Edit.Icon
