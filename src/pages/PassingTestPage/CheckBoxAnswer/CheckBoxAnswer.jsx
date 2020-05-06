@@ -4,15 +4,11 @@ import CheckBox from 'components/CheckBox';
 import useAction from 'hooks/useAction';
 import { setStatusValid, toggleCheckBox } from 'models/passTest/reducer';
 import useSelector from 'hooks/useSelector';
-import {
-  getAnswerQuestSel,
-  getEntitiesQuestionsSel,
-} from 'models/passTest/selectors';
+import { getEntitiesQuestionsSel } from 'models/passTest/selectors';
 import S from './CheckBoxAnswer.styled';
 
-const CheckBoxAnswer = ({ questId }) => {
+const CheckBoxAnswer = ({ questId, answers }) => {
   const questions = useSelector(getEntitiesQuestionsSel);
-  const answers = useSelector(getAnswerQuestSel, questId) || { answer: {} };
   const setCheckBox = useAction(toggleCheckBox);
   const setValid = useAction(setStatusValid);
 
@@ -40,6 +36,7 @@ const CheckBoxAnswer = ({ questId }) => {
 
 CheckBoxAnswer.propTypes = {
   questId: PropTypes.string,
+  answers: PropTypes.object,
 };
 
 export default CheckBoxAnswer;

@@ -3,11 +3,8 @@ import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
 import { useParams } from 'react-router-dom';
 import {
-  getErrorSel,
-  getIdsQuestionsSel,
   getLoadSelector,
-  getQuestSelector,
-  getTestNameSelector,
+  passingTestSelector,
 } from 'models/passTest/selectors';
 import Loader from 'components/Loader';
 import RadioAnswer from 'pages/PassingTestPage/RadioAnswer/RadioAnswer';
@@ -30,13 +27,14 @@ const PassingTestPage = () => {
   const { error, resetError, idError } = useFetchingError();
   const fetchTest = useAction(getTestData);
   const testId = useParams().id;
+  const state = useSelector(passingTestSelector);
   const isLoad = useSelector(getLoadSelector);
   const setLoad = useAction(setLoading);
-  const testName = useSelector(getTestNameSelector);
-  const ids = useSelector(getIdsQuestionsSel);
+  const { testName } = state;
+  const { ids } = state.questions;
   const [questIndex, setQuestIndex] = useState(0);
-  const currentQuest = useSelector(getQuestSelector, questIndex);
-  const errorMessage = useSelector(getErrorSel);
+  const currentQuest = state.questions.entities[ids[questIndex]];
+  const { errorMessage } = state;
   const setThisQuest = useAction(setDataCurrentQuest);
   const resetTest = useAction(reset);
 
@@ -80,20 +78,31 @@ const PassingTestPage = () => {
             <S.QuestTitle>Вопрос: {currentQuest.questName}</S.QuestTitle>
             <S.QuestBody>
               {currentQuest.type === questionVariable.one && (
-                <RadioAnswer questId={ids[questIndex]} />
+                <RadioAnswer
+                  questId={ids[questIndex]}
+                  answers={state.answers[ids[questIndex]] || { answer: [] }}
+                />
               )}
               {currentQuest.type === questionVariable.number && (
                 <NumberAnswer
                   questId={ids[questIndex]}
                   numberId={currentQuest.answer.ids[0]}
+                  answers={state.answers[ids[questIndex]]}
                 />
               )}
               {currentQuest.type === questionVariable.some && (
-                <CheckBoxAnswer questId={ids[questIndex]} />
+                <CheckBoxAnswer
+                  questId={ids[questIndex]}
+                  answers={state.answers[ids[questIndex]] || { answer: [] }}
+                />
               )}
             </S.QuestBody>
             {errorMessage && <S.Error>{errorMessage}</S.Error>}
-            <PassingTestFooter />
+            <PassingTestFooter
+              questions={state.questions.entities}
+              ids={ids}
+              userAnswers={state.answers}
+            />
           </S.PassQuest>
           <S.AllQuestions>
             <S.AllQuestTitle>Вопросы</S.AllQuestTitle>
@@ -101,6 +110,7 @@ const PassingTestPage = () => {
               <AllQuestions
                 questId={ids[questIndex]}
                 onQuestChange={setQuestIndex}
+                ids={ids}
               />
             </S.AllQuestList>
           </S.AllQuestions>

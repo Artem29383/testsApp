@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 import InputEdit from 'components/InputEdit';
 import useAction from 'hooks/useAction';
 import { setNumericAnswer, setStatusValid } from 'models/passTest/reducer';
-import useSelector from 'hooks/useSelector';
-import { getAnswerQuestSel } from 'models/passTest/selectors';
 import S from './NumberAnswer.styled';
 
-const NumberAnswer = ({ questId, numberId }) => {
+const NumberAnswer = ({ questId, numberId, answers }) => {
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState('');
-  const answers = useSelector(getAnswerQuestSel, questId);
   const setNumberAnswer = useAction(setNumericAnswer);
   const setValid = useAction(setStatusValid);
 
@@ -77,6 +74,7 @@ const NumberAnswer = ({ questId, numberId }) => {
 NumberAnswer.propTypes = {
   questId: PropTypes.string,
   numberId: PropTypes.string,
+  answers: PropTypes.object,
 };
 
 export default NumberAnswer;

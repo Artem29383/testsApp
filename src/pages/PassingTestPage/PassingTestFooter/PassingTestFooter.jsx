@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import ButtonRipple from 'components/ButtonRipple';
 import { testResult } from 'utils/testResult';
-import useSelector from 'hooks/useSelector';
-import {
-  getAnswersQuest,
-  getEntitiesQuestionsSel,
-  getIdsQuestionsSel,
-} from 'models/passTest/selectors';
 import ModalOverlay from 'components/ModalOverlay/ModalOverlay';
 import routes from 'constants/routes';
 import Portal from 'components/Portal';
@@ -15,10 +10,7 @@ import useAction from 'hooks/useAction';
 import { setStatusInvalid } from 'models/passTest/reducer';
 import S from './PassingTestFooter.styled';
 
-const PassingTestFooter = () => {
-  const questions = useSelector(getEntitiesQuestionsSel);
-  const ids = useSelector(getIdsQuestionsSel);
-  const userAnswers = useSelector(getAnswersQuest);
+const PassingTestFooter = ({ questions, ids, userAnswers }) => {
   const [showResult, setShowResult] = useToggle(false);
   const [result, setResult] = useState(0);
   const setInvalidQuest = useAction(setStatusInvalid);
@@ -56,6 +48,12 @@ const PassingTestFooter = () => {
       </Portal>
     </>
   );
+};
+
+PassingTestFooter.propTypes = {
+  questions: PropTypes.object,
+  ids: PropTypes.array,
+  userAnswers: PropTypes.object,
 };
 
 export default PassingTestFooter;
