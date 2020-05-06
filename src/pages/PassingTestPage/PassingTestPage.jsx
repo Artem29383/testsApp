@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
 import { useParams } from 'react-router-dom';
-import { loadSelector, passingTestSelector } from 'models/passTest/selectors';
+import { passingTestSelector } from 'models/passTest/selectors';
 import Loader from 'components/Loader';
 import RadioAnswer from 'pages/PassingTestPage/RadioAnswer/RadioAnswer';
 import { questionVariable } from 'styles/constants';
@@ -25,7 +25,7 @@ const PassingTestPage = () => {
   const fetchTest = useAction(getTestData);
   const testId = useParams().id;
   const state = useSelector(passingTestSelector);
-  const isLoad = useSelector(loadSelector);
+  const isLoad = state.isLoading;
   const setLoad = useAction(setLoading);
   const { testName } = state;
   const { ids } = state.questions;

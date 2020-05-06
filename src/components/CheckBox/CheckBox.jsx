@@ -20,8 +20,8 @@ const CheckBox = ({ isChecked, label, id, onHandleChange }) => {
 CheckBox.propTypes = {
   isChecked: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
-  onHandleChange: PropTypes.func.isRequired,
   id: PropTypes.string,
+  onHandleChange: PropTypes.func.isRequired,
 };
 
 export default memo(CheckBox);
