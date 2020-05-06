@@ -17,7 +17,7 @@ const RadioAnswer = ({ questId, answers, ids, entities }) => {
       });
       setValid(questId);
     },
-    [setRadio, setValid]
+    [setRadio, setValid, questId]
   );
 
   return ids.map(id => (

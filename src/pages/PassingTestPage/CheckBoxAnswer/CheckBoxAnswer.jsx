@@ -17,7 +17,7 @@ const CheckBoxAnswer = ({ questId, answers, ids, entities }) => {
       });
       setValid(questId);
     },
-    [setCheckBox, setValid]
+    [setCheckBox, setValid, questId]
   );
 
   return ids.map(id => {
@@ -26,8 +26,8 @@ const CheckBoxAnswer = ({ questId, answers, ids, entities }) => {
         <CheckBox
           label={entities[id].value}
           id={id}
-          onHandleChange={handleChange}
           isChecked={!!answers.answer[id]}
+          onHandleChange={handleChange}
         />
       </S.CheckBox>
     );

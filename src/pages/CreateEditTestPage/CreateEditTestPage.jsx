@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import routes from 'constants/routes';
 import useSelector from 'hooks/useSelector';
-import { getQuestionsIdsSelector } from 'models/test/selectors';
+import { questionsIdsSelector } from 'models/test/selectors';
 import useAction from 'hooks/useAction';
 import {
   deleteTest,
@@ -17,7 +17,7 @@ import { Redirect } from 'react-router-dom';
 import S from './CreateEditTestPage.styled';
 
 const CreateEditTestPage = () => {
-  const questionsIds = useSelector(getQuestionsIdsSelector);
+  const questionsIds = useSelector(questionsIdsSelector);
   const scrollPageToBottomTest = useRef(null);
   const removeTest = useAction(deleteTest);
   const testsIsInit = useSelector(getIsInit);

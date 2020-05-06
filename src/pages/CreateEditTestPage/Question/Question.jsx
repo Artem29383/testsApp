@@ -11,12 +11,12 @@ import QuestionHeader from 'pages/CreateEditTestPage/Question/QuestionHeader';
 import QuestionFooter from 'pages/CreateEditTestPage/Question/QuestionFooter';
 import QuestFormBody from 'pages/CreateEditTestPage/Question/QuestFormBody';
 import { Draggable } from 'react-beautiful-dnd';
-import { getQuestSelector } from 'models/test/selectors';
+import { questSelector } from 'models/test/selectors';
 import useSelector from 'hooks/useSelector';
 import S from './Question.styled';
 
 const Question = ({ id, index }) => {
-  const quest = useSelector(getQuestSelector, id);
+  const quest = useSelector(questSelector, id);
   const { type, errorMsg, isValid } = quest;
   const [value, setValue] = useState(type || questionVariable.one);
   const [temp, setTemp] = useState(type);

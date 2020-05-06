@@ -5,7 +5,7 @@ import useAction from 'hooks/useAction';
 import { useParams } from 'react-router-dom';
 import { getTest, setLoad } from 'models/test/reducer';
 import useSelector from 'hooks/useSelector';
-import { getLoadSelector } from 'models/test/selectors';
+import { loadSelector } from 'models/test/selectors';
 import useFetchingError from 'hooks/useFetchingError';
 import ButtonRipple from 'components/ButtonRipple';
 import S from './EditTestPage.styled';
@@ -14,7 +14,7 @@ const EditTestPage = () => {
   const { error, resetError, idError } = useFetchingError();
   const fetchTest = useAction(getTest);
   const setLoading = useAction(setLoad);
-  const isLoad = useSelector(getLoadSelector);
+  const isLoad = useSelector(loadSelector);
   const editId = useParams().id;
   const fetchTestById = () => {
     setLoading(true);

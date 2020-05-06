@@ -1,11 +1,11 @@
 import React from 'react';
 import useSelector from 'hooks/useSelector';
 import PropTypes from 'prop-types';
-import { getEntitiesQuestionsSel } from 'models/passTest/selectors';
+import { entitiesQuestionsSelector } from 'models/passTest/selectors';
 import S from './QuestItem.styled';
 
 const QuestItem = ({ answerId, questId, index, onQuestChange }) => {
-  const questions = useSelector(getEntitiesQuestionsSel);
+  const questions = useSelector(entitiesQuestionsSelector);
 
   const onQuestClick = () => {
     onQuestChange(index);

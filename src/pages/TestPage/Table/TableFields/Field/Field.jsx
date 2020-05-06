@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useSelector from 'hooks/useSelector';
-import { getTestsSelector } from 'models/tests/selectors';
+import { testsSelector } from 'models/tests/selectors';
 import routes from 'constants/routes';
 import S from './Field.styled';
 
 const Field = ({ id, f, label }) => {
-  const tests = useSelector(getTestsSelector);
+  const tests = useSelector(testsSelector);
   return (
     <S.ThText data-label={label}>
       <S.Link to={`${routes.testPage}/${id}${routes.passing}`}>

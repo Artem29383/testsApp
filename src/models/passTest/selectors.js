@@ -2,11 +2,11 @@ import { createSelector } from '@reduxjs/toolkit';
 
 const getLoad = state => state.passingTest.isLoading;
 
-export const getLoadSelector = createSelector(getLoad, isLoading => isLoading);
+export const loadSelector = createSelector(getLoad, isLoading => isLoading);
 
 const getEntitiesQuestions = state => state.passingTest.questions.entities;
 
-export const getEntitiesQuestionsSel = createSelector(
+export const entitiesQuestionsSelector = createSelector(
   getEntitiesQuestions,
   entities => entities
 );

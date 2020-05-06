@@ -3,11 +3,11 @@ import Input from 'components/Input';
 import useAction from 'hooks/useAction';
 import { setTestName } from 'models/test/reducer';
 import { useSelector } from 'hooks/index';
-import { getTestNameSelector } from 'models/test/selectors';
+import { testNameSelector } from 'models/test/selectors';
 import S from './TestTitle.styled';
 
 const TestTitle = () => {
-  const testName = useSelector(getTestNameSelector);
+  const testName = useSelector(testNameSelector);
   const acceptTestName = useAction(setTestName);
 
   const editChangeHandler = e => {

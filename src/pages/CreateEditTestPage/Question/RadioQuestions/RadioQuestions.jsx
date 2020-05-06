@@ -18,7 +18,7 @@ const RadioQuestions = ({ id, quest, errorMsg }) => {
       toggleRadio({ id, radioId, checkedId });
       resetErrorChange(ids.length);
     },
-    [entities, ids]
+    [entities, ids, toggleRadio]
   );
 
   const radioBtns = ids.map((qId, index) => (

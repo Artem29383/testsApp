@@ -10,21 +10,14 @@ const getTests = state => state.tests.tests.entities;
 
 export const getIsInit = state => state.tests.isInit;
 
-const getCurrentTest = state => state.tests.currentTest;
+export const testsSelector = createSelector(getTests, entities => entities);
 
-export const getCurrentTestSelector = createSelector(
-  getCurrentTest,
-  currentTest => currentTest
-);
-
-export const getTestsSelector = createSelector(getTests, entities => entities);
-
-export const getLoadingSelector = createSelector(
+export const loadingSelector = createSelector(
   getLoading,
   isLoading => isLoading
 );
 
-export const getDenormalizedDataSelector = createSelector(
+export const denormalizedDataSelector = createSelector(
   [getTests, getIds],
   (entities, ids) => {
     return memoize(field => {

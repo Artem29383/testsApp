@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TableFields from 'pages/TestPage/Table/TableFields';
 import { useSelector } from 'hooks/index';
-import { getIsAdminSelector } from 'models/user/selectors';
+import { adminStatusSelector } from 'models/user/selectors';
 import S from './Table.styled';
 
 const Table = ({ tests }) => {
-  const isAdmin = useSelector(getIsAdminSelector);
+  const isAdmin = useSelector(adminStatusSelector);
   const tableList = tests.map(t => <TableFields key={t.id} id={t.id} />);
 
   return (

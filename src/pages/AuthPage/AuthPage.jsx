@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import ButtonRipple from 'components/ButtonRipple';
 import useSelector from 'hooks/useSelector';
-import { getErrorSelector } from 'models/user/selectors';
+import { errorSelector } from 'models/user/selectors';
 import useAction from 'hooks/useAction';
 import { loginUser, loginUserFailure } from 'models/user/reducer';
 import Input from 'components/Input';
@@ -21,7 +21,7 @@ const AuthPage = () => {
   });
   const login = useAction(loginUser);
   const setError = useAction(loginUserFailure);
-  const error = useSelector(getErrorSelector);
+  const error = useSelector(errorSelector);
   const watchLogin = watch('login');
   const watchPassword = watch('password');
 

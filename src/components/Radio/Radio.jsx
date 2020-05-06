@@ -6,9 +6,9 @@ import LinesEllipsis from 'react-lines-ellipsis';
 const Radio = ({ isChecked, label, id, onHandleChange }) => {
   return (
     <Label
-      onTouchEnd={() => onHandleChange(id)}
-      onClick={() => onHandleChange(id)}
       className={isChecked && 'checked'}
+      onTouchEnd={() => onHandleChange(id)}
+      onMouseUp={() => onHandleChange(id)}
     >
       <Input type="radio" />
       <LinesEllipsis maxLine="7" text={label} />
