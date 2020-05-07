@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash.debounce';
 import TableFields from 'pages/TestPage/Table/TableFields';
 import { useSelector } from 'hooks/index';
 import { useHistory } from 'react-router-dom';
@@ -27,6 +28,15 @@ const Table = ({ testIds, tests, isAdmin }) => {
   const [chunksArray, setChunksArray] = useState([]);
   const [currentChunk, setCurrentChunk] = useState([]);
   const [chunksArrayLength, setChunksArrayLength] = useState(0);
+  const [debounceCall] = useState(() =>
+    debounce(str => {
+      if (str.trim()) {
+        history.push(`${routes.testPage}/?search=${str.toLowerCase()}`);
+      } else {
+        history.push(routes.testPage);
+      }
+    }, 300)
+  );
 
   useEffect(() => {
     setChunksArray(filteredArray);
@@ -69,16 +79,10 @@ const Table = ({ testIds, tests, isAdmin }) => {
     e => {
       const str = e.currentTarget.value;
       setValue(str);
-      history.push(`${routes.testPage}/?search=${str.toLowerCase()}`);
+      debounceCall(str);
     },
     [value]
   );
-
-  useEffect(() => {
-    if (!value.trim()) {
-      history.push(routes.testPage);
-    }
-  }, [value]);
 
   useEffect(() => {
     sortData('created', 'asc');
