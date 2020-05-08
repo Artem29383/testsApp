@@ -24,7 +24,6 @@ const PassingTestFooter = ({ questions, ids, userAnswers }) => {
       setShowResult(true);
     }
   };
-
   return (
     <>
       <S.QuestFooter>

@@ -6,7 +6,6 @@ import S from './QuestItem.styled';
 
 const QuestItem = ({ answerId, questId, index, onQuestChange }) => {
   const questions = useSelector(entitiesQuestionsSelector);
-
   const onQuestClick = () => {
     onQuestChange(index);
   };

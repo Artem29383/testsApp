@@ -38,7 +38,10 @@ const testReducer = createSlice({
       state.questions.ids.push(id);
     },
     toggleChecked(state, { payload }) {
-      const { id, radioId, checkedId } = payload;
+      const { id, radioId } = payload;
+      const checkedId = state.questions.entities[id].answer.ids.filter(
+        qId => state.questions.entities[id].answer.entities[qId].isChecked
+      );
       if (checkedId.length !== 0) {
         state.questions.entities[id].answer.entities[
           checkedId
@@ -47,8 +50,8 @@ const testReducer = createSlice({
       state.questions.entities[id].answer.entities[radioId].isChecked = true;
     },
     updateFieldAnswer(state, { payload }) {
-      const { id, qId, value } = payload;
-      state.questions.entities[id].answer.entities[qId].value = value;
+      const { id, answerId, value } = payload;
+      state.questions.entities[id].answer.entities[answerId].value = value;
     },
     setNumericAnswer(state, { payload }) {
       const { id, qId, value, isChecked, type, isValid, errorMsg } = payload;
@@ -71,19 +74,20 @@ const testReducer = createSlice({
       state.questions.entities[id].answer.ids = [qId];
     },
     removeAnswerFromRadioOrCheckBox(state, { payload }) {
-      const { id, qId } = payload;
+      const { id, answerId } = payload;
       state.questions.entities[id].answer.entities = removePropFromObject(
         state.questions.entities[id].answer.entities,
-        qId
+        answerId
       );
       state.questions.entities[id].answer.ids = removeArrayElement(
         state.questions.entities[id].answer.ids,
-        qId
+        answerId
       );
     },
     toggleCheckBox(state, { payload }) {
-      const { id, qId, isChecked } = payload;
-      state.questions.entities[id].answer.entities[qId].isChecked = !isChecked;
+      const { id, checkedId } = payload;
+      state.questions.entities[id].answer.entities[checkedId].isChecked = !state
+        .questions.entities[id].answer.entities[checkedId].isChecked;
     },
     removeQuest(state, { payload }) {
       state.questions.entities = removePropFromObject(

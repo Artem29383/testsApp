@@ -44,7 +44,6 @@ const TestPage = () => {
         <ButtonRipple onClickHandler={fetchAllTests}>Повторить</ButtonRipple>
       </S.Error>
     );
-
   return (
     <S.Content>
       <Table testIds={ids} isAdmin={isAdmin} tests={state.tests.entities} />

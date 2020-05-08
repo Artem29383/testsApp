@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ButtonRipple from 'components/ButtonRipple';
 import Cross from 'components/Cross';
@@ -25,7 +25,6 @@ const ModalOverlay = ({
   action,
 }) => {
   useModal(toggle, isOpen, isClosable);
-
   return (
     <S.OverlayM unmountOnExit in={isOpen} timeout={100}>
       {isClosable && <S.BackDrop onClick={toggle} />}
@@ -106,4 +105,4 @@ ModalOverlay.defaultProps = {
   headerText: 'just modal window',
 };
 
-export default memo(ModalOverlay);
+export default ModalOverlay;

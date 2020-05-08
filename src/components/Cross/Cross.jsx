@@ -14,25 +14,23 @@ const Cross = ({
   margin,
   touched,
   onClickHandler,
-}) => {
-  return (
-    <S.Div
-      rotate={rotate}
-      onClick={onClickHandler}
-      onTouchEnd={touched ? onClickHandler : undefined}
-      position={position}
-      top={top}
-      left={left}
-      right={right}
-      bottom={bottom}
-      hover={hover}
-      margin={margin}
-    >
-      <S.line1 color={color} />
-      <S.line2 color={color} />
-    </S.Div>
-  );
-};
+}) => (
+  <S.Div
+    rotate={rotate}
+    onClick={onClickHandler}
+    onTouchEnd={touched ? onClickHandler : undefined}
+    position={position}
+    top={top}
+    left={left}
+    right={right}
+    bottom={bottom}
+    hover={hover}
+    margin={margin}
+  >
+    <S.line1 color={color} />
+    <S.line2 color={color} />
+  </S.Div>
+);
 
 Cross.propTypes = {
   color: PropTypes.string,

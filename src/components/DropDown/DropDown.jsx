@@ -7,7 +7,6 @@ const DropDown = ({ options, value, setValue, className, label }) => {
   const { ref, active, toggle } = useClickAway();
   const [temp, setTemp] = useState(value);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
-
   const setCoords = e => {
     const x = e.clientX - e.currentTarget.getBoundingClientRect().left;
     const y = e.clientY - e.currentTarget.getBoundingClientRect().top;

@@ -7,7 +7,6 @@ const CheckBox = ({ isChecked, label, id, onChange }) => {
   const handleChange = useCallback(() => {
     onChange(id);
   }, [id, onChange]);
-
   return (
     <Label className={isChecked && 'checked'}>
       <Input

@@ -47,7 +47,6 @@ const Paginate = ({ currentPage, chunkArrayLength, setCurrentPage }) => {
       </S.PaginateLi>
     );
   });
-
   return (
     <S.PaginateDiv>
       <S.PaginateUl>

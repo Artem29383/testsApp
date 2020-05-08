@@ -23,7 +23,6 @@ const NumberAnswer = ({ questId, numberId, answers }) => {
     },
     [value]
   );
-
   const stopEditKey = e => {
     if (e.key === 'Escape') {
       setEdit(false);

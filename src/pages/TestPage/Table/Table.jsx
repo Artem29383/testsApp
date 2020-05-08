@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import TableFields from 'pages/TestPage/Table/TableFields';
@@ -136,4 +136,4 @@ Table.propTypes = {
   isAdmin: PropTypes.bool,
 };
 
-export default Table;
+export default memo(Table);

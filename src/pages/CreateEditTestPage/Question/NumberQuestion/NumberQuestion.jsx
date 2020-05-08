@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import InputEdit from 'components/InputEdit';
 import { setNumericAnswer } from 'models/test/reducer';
@@ -13,10 +13,12 @@ const NumberQuestion = ({ id, quest }) => {
   const [value, setValue] = useState(entities[numberId].value);
   const [edit, setEdit] = useState(false);
   const setNumeric = useAction(setNumericAnswer);
-  const setValueHandler = e => {
-    setValue(e.currentTarget.value);
-  };
-
+  const setValueHandler = useCallback(
+    e => {
+      setValue(e.currentTarget.value);
+    },
+    [value]
+  );
   const startEdit = () => {
     setEdit(true);
     setTemp(value);

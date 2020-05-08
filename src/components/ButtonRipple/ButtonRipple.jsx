@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { memo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import S from './ButtonRipple.styled';
 
@@ -32,4 +32,4 @@ ButtonRipple.propTypes = {
   onClickHandler: PropTypes.func,
 };
 
-export default ButtonRipple;
+export default memo(ButtonRipple);

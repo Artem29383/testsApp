@@ -19,7 +19,6 @@ const CheckBoxAnswer = ({ questId, answers, ids, entities }) => {
     },
     [setCheckBox, setValid, questId]
   );
-
   return ids.map(id => {
     return (
       <S.CheckBox key={id}>

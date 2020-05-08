@@ -1,14 +1,13 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'components/Input/Input';
-import DropDown from 'components/DropDown';
-import { questionVariable } from 'styles/constants';
 import Cross from 'components/Cross/Cross';
 import useAction from 'hooks/useAction';
 import { removeQuest, setQuestName } from 'models/test/reducer';
 import ModalOverlay from 'components/ModalOverlay/ModalOverlay';
 import Portal from 'components/Portal';
 import useToggle from 'hooks/useToggle';
+import DropDownContainer from 'pages/CreateEditTestPage/Question/QuestionHeader/DropDownContainer';
 import S from './QuestionHeader.styled';
 
 const QuestionHeader = ({ setValue, id, value, questName }) => {
@@ -49,17 +48,7 @@ const QuestionHeader = ({ setValue, id, value, questName }) => {
           </S.WrapInput>
         </S.QuestFormHeaderTitle>
         <S.QuestFormHeaderTitle>
-          <S.WrapInput padding="0 25px 0 25px">
-            <DropDown
-              options={[
-                questionVariable.one,
-                questionVariable.some,
-                questionVariable.number,
-              ]}
-              value={value}
-              setValue={setValue}
-            />
-          </S.WrapInput>
+          <DropDownContainer value={value} setValue={setValue} />
         </S.QuestFormHeaderTitle>
         <Cross
           color="#80868b"

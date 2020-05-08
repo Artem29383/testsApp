@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import QuestItem from 'pages/PassingTestPage/AllQuestions/QuestItem';
 
@@ -19,4 +19,4 @@ AllQuestions.propTypes = {
   ids: PropTypes.array,
 };
 
-export default AllQuestions;
+export default memo(AllQuestions);
