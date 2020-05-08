@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, memo } from 'react';
 import throttle from 'lodash.throttle';
+import debounce from 'lodash.debounce';
 import ButtonRipple from 'components/ButtonRipple';
 import routes from 'constants/routes';
 import useAction from 'hooks/useAction';
@@ -13,10 +14,23 @@ const Navigation = () => {
   const headerHeight = useRef();
   const [showNav, setShowNav] = useToggle(false);
   const logOut = useAction(logOutUser);
+  const [windowSize, setWindowSize] = useState(window.innerWidth);
 
   const logoutClick = () => {
     logOut();
   };
+
+  useEffect(() => {
+    const debouncedHandleResize = debounce(() => {
+      setWindowSize(window.innerWidth);
+    }, 1500);
+
+    window.addEventListener('resize', debouncedHandleResize);
+
+    return () => {
+      window.removeEventListener('resize', debouncedHandleResize);
+    };
+  });
 
   const checkScroll = useCallback(
     throttle(() => {
@@ -36,11 +50,14 @@ const Navigation = () => {
     }, 300)
   );
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    window.addEventListener('scroll', checkScroll);
-    return () => {
-      window.removeEventListener('scroll', checkScroll);
-    };
+    if (windowSize <= 550) {
+      window.addEventListener('scroll', checkScroll);
+      return () => {
+        window.removeEventListener('scroll', checkScroll);
+      };
+    }
   }, [checkScroll]);
 
   return (
@@ -70,4 +87,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default memo(Navigation);
