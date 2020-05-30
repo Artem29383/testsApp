@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { colors } from 'styles/constants';
 import { device } from 'constants/device';
-/* stylelint-disable */
 
 export default {
   PaginateDiv: styled.div`
@@ -43,4 +42,3 @@ export default {
     }
   `,
 };
-/* stylelint-enable */

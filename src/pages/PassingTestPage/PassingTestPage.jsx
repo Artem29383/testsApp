@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
 import { useParams } from 'react-router-dom';
@@ -43,11 +43,11 @@ const PassingTestPage = () => {
     }
   }, [currentQuest]);
 
-  const fetchTestDataPassing = () => {
+  const fetchTestDataPassing = useCallback(() => {
     setLoad(true);
     resetError();
     fetchTest(testId);
-  };
+  }, [isLoad, state]);
 
   useEffect(() => {
     fetchTestDataPassing();

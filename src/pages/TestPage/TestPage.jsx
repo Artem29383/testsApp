@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ButtonRipple from 'components/ButtonRipple';
 import Table from 'pages/TestPage/Table';
 import useAction from 'hooks/useAction';
@@ -25,11 +25,11 @@ const TestPage = () => {
   const isAdmin = useSelector(adminStatusSelector);
   const [showModal, setShowModal] = useToggle(false);
 
-  const fetchAllTests = () => {
+  const fetchAllTests = useCallback(() => {
     setLoad(true);
     resetError();
     getTests();
-  };
+  }, [isLoading, state]);
 
   useEffect(() => {
     if (!ids.length) {

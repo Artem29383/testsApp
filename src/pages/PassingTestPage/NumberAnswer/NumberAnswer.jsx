@@ -11,34 +11,37 @@ const NumberAnswer = ({ questId, numberId, answers }) => {
   const setNumberAnswer = useAction(setNumericAnswer);
   const setValid = useAction(setStatusValid);
 
-  const startEdit = () => {
+  const handleStartEditClick = useCallback(() => {
     setEdit(true);
     setValue(answers.answer[0] || '');
     setValid(questId);
-  };
+  }, [edit, value]);
 
-  const changeHandler = useCallback(
+  const handleInputChange = useCallback(
     e => {
       setValue(e.currentTarget.value);
     },
     [value]
   );
-  const stopEditKey = e => {
-    if (e.key === 'Escape') {
-      setEdit(false);
-      setValue(answers.answer[0]);
-    }
-    if (e.key === 'Enter' && value.trim()) {
-      setEdit(false);
-      setNumberAnswer({
-        questId,
-        value,
-        numberId,
-      });
-    }
-  };
+  const handleStopEditKey = useCallback(
+    e => {
+      if (e.key === 'Escape') {
+        setEdit(false);
+        setValue(answers.answer[0]);
+      }
+      if (e.key === 'Enter' && value.trim()) {
+        setEdit(false);
+        setNumberAnswer({
+          questId,
+          value,
+          numberId,
+        });
+      }
+    },
+    [edit, value]
+  );
 
-  const stopEditBlur = () => {
+  const handleStopEditBlur = useCallback(() => {
     if (value.trim()) {
       setEdit(false);
       setNumberAnswer({
@@ -47,7 +50,7 @@ const NumberAnswer = ({ questId, numberId, answers }) => {
         numberId,
       });
     }
-  };
+  }, [edit, value]);
 
   return (
     <S.NumberDiv>
@@ -57,12 +60,12 @@ const NumberAnswer = ({ questId, numberId, answers }) => {
           focus
           type="number"
           value={value}
-          onHandler={changeHandler}
-          onKeyDown={stopEditKey}
-          onBlur={stopEditBlur}
+          onHandler={handleInputChange}
+          onKeyDown={handleStopEditKey}
+          onBlur={handleStopEditBlur}
         />
       ) : (
-        <S.Answer onClick={startEdit}>
+        <S.Answer onClick={handleStartEditClick}>
           Введите ответ: {answers?.answer[0]}
         </S.Answer>
       )}

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import nanoid from 'nanoid';
 import useAction from 'hooks/useAction';
 import { pushAnswer } from 'models/test/reducer';
@@ -10,7 +10,7 @@ const QuestionFooter = ({ id, ids, errorMsg }) => {
   const answerAdd = useAction(pushAnswer);
   const resetErrorChange = useCheckChangeQuest(id, errorMsg);
 
-  const addAnswer = () => {
+  const addAnswer = useCallback(() => {
     const uniqId = nanoid();
     const answer = {
       id: uniqId,
@@ -19,7 +19,7 @@ const QuestionFooter = ({ id, ids, errorMsg }) => {
     };
     answerAdd({ id, qId: uniqId, answer });
     resetErrorChange(ids.length + 1);
-  };
+  }, [ids]);
 
   return <S.AddAnswer onClick={addAnswer}>Добавить вариант</S.AddAnswer>;
 };

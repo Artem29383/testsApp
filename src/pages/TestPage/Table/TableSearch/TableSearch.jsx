@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import Input from 'components/Input';
 import S from './TableSearch.styled';
 
-const TableSearch = ({ value, onChange, label }) => {
+const TableSearch = ({ value, label, onChange }) => {
   return (
     <S.InputWrap>
       <Input
-        value={value}
-        onChange={onChange}
-        label={label}
         className="noText"
+        value={value}
+        label={label}
+        onChange={onChange}
       />
     </S.InputWrap>
   );

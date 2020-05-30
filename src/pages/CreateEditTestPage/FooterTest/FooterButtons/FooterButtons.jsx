@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ButtonRipple from 'components/ButtonRipple/ButtonRipple';
 import Loader from 'components/Loader/Loader';
@@ -40,25 +40,25 @@ const FooterButtons = ({
     }
   }, []);
 
-  const removeThisTest = () => {
+  const handleRemoveTestClick = useCallback(() => {
     resetError('');
     setAction('remove');
     setIsLoading();
     deleteThisTest(editId);
-  };
+  }, [deleteThisTest]);
 
-  const modalSaveHandler = () => {
+  const modalSaveHandler = useCallback(() => {
     setShowModalSave(true);
-  };
+  }, [setShowModalSave]);
 
-  const addNewQuestion = () => {
+  const addNewQuestion = useCallback(() => {
     pushQuest({
       id: uniqId,
       questName: 'Ваш вопрос',
       answer: { entities: [], ids: [] },
     });
     setUniqId(nanoid());
-  };
+  }, [uniqId]);
 
   return (
     <>
@@ -69,16 +69,25 @@ const FooterButtons = ({
         {editId ? 'Обновить тест' : 'Сохранить Тест'}
       </ButtonRipple>
       {editId && (
-        <ButtonRipple className="red" onClickHandler={removeThisTest} isLoader>
-          {/* eslint-disable-next-line no-nested-ternary */}
+        <>
           {load && action === 'remove' ? (
-            <Loader width="35" height="35" color={colors.white} />
-          ) : error && action === 'remove' ? (
-            'Повторить'
+            <ButtonRipple
+              className="red"
+              onClickHandler={handleRemoveTestClick}
+              isLoader
+            >
+              <Loader width="35" height="35" color={colors.white} />
+            </ButtonRipple>
           ) : (
-            'Удалить тест'
+            <ButtonRipple
+              className="red"
+              onClickHandler={handleRemoveTestClick}
+              isLoader
+            >
+              {error && action === 'remove' ? 'Повторить' : 'Удалить тест'}
+            </ButtonRipple>
           )}
-        </ButtonRipple>
+        </>
       )}
     </>
   );

@@ -7,6 +7,7 @@ module.exports = {
     "stylelint-config-styled-components"
   ],
   rules: {
+    "value-list-comma-newline-after": "off",
     "declaration-colon-newline-after": null
   },
   syntax: "scss"

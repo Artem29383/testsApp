@@ -40,38 +40,41 @@ const CheckBoxButton = ({
     [questionId, resetErrorChange, setToggleCheckBox]
   );
 
-  const startEditHandler = () => {
+  const handleInputStartEdit = useCallback(() => {
     setEdit(true);
-  };
+  }, [edit]);
 
-  const changeHandler = useCallback(
+  const handleInputChange = useCallback(
     e => {
       setCheckBoxLabel(e.currentTarget.value);
     },
     [checkBoxLabel]
   );
 
-  const stopEditHandlerBlur = () => {
+  const handleInputBlur = useCallback(() => {
     if (checkBoxLabel.trim()) {
       setEdit(false);
       updateField({ id: questionId, answerId: id, value: checkBoxLabel });
     }
-  };
+  }, [edit, checkBoxLabel]);
 
-  const stopEditHandlerKey = e => {
-    if (e.key === 'Enter' && checkBoxLabel.trim()) {
-      setEdit(false);
-      updateField({ id: questionId, answerId: id, value: checkBoxLabel });
-    }
-    if (e.key === 'Escape') {
-      setEdit(false);
-      setCheckBoxLabel(checkBoxObject.value);
-    }
-  };
+  const handleInputKey = useCallback(
+    e => {
+      if (e.key === 'Enter' && checkBoxLabel.trim()) {
+        setEdit(false);
+        updateField({ id: questionId, answerId: id, value: checkBoxLabel });
+      }
+      if (e.key === 'Escape') {
+        setEdit(false);
+        setCheckBoxLabel(checkBoxObject.value);
+      }
+    },
+    [checkBoxLabel, edit]
+  );
 
-  const deleteAnswer = () => {
+  const handleDeleteAnswerClick = useCallback(() => {
     removeCheckBoxAnswer({ id: questionId, answerId: id });
-  };
+  }, [removeCheckBoxAnswer]);
   return (
     <Draggable shouldRespectForcePress draggableId={id} index={index}>
       {provided => (
@@ -86,32 +89,32 @@ const CheckBoxButton = ({
               type="text"
               focus
               value={checkBoxLabel}
-              onHandler={changeHandler}
-              onBlur={stopEditHandlerBlur}
-              onKeyDown={stopEditHandlerKey}
               checkMark
+              onHandler={handleInputChange}
+              onBlur={handleInputBlur}
+              onKeyDown={handleInputKey}
             />
           ) : (
             <>
               <CheckBox
                 id={id}
                 isChecked={checkBoxObject.isChecked}
-                onChange={handleChange}
                 label={checkBoxLabel}
+                onChange={handleChange}
               />
               <Edit.Icon
-                onClick={startEditHandler}
-                onTouchEnd={startEditHandler}
+                onClick={handleInputStartEdit}
+                onTouchEnd={handleInputStartEdit}
               >
                 <use xlinkHref={`${editSvg}#edit`} />
               </Edit.Icon>
               <Cross
                 color="#80868b"
                 rotate="135deg"
-                touched
                 margin="0 0 0 -20px"
-                onClickHandler={deleteAnswer}
                 hover
+                touched
+                onClickHandler={handleDeleteAnswerClick}
               />
             </>
           )}

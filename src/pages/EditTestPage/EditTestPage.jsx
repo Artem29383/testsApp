@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Loader from 'components/Loader';
 import CreateEditTestPage from 'pages/CreateEditTestPage';
 import useAction from 'hooks/useAction';
@@ -16,11 +16,11 @@ const EditTestPage = () => {
   const setLoading = useAction(setLoad);
   const isLoad = useSelector(loadSelector);
   const editId = useParams().id;
-  const fetchTestById = () => {
+  const fetchTestById = useCallback(() => {
     setLoading(true);
     resetError();
     fetchTest(editId);
-  };
+  }, [isLoad, fetchTest, error]);
 
   useEffect(() => {
     fetchTestById();

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ModalOverlay from 'components/ModalOverlay/ModalOverlay';
 import Portal from 'components/Portal';
@@ -44,7 +44,7 @@ const FooterTest = ({ scrollPageToBottomTest }) => {
     action,
     setAction,
   } = useFetchingError();
-  const saveTestAndCreate = () => {
+  const handleSaveAndCreateTestClick = useCallback(() => {
     const isValid = checkValidationTest(
       questionsEntities,
       questionsIds,
@@ -57,7 +57,7 @@ const FooterTest = ({ scrollPageToBottomTest }) => {
       setIsLoading();
       setIsValidTest(true);
     }
-  };
+  }, [questionsIds, questionsEntities, setValidQuest, setInvalidQuest]);
 
   useEffect(() => {
     if (error && load) {
@@ -108,7 +108,7 @@ const FooterTest = ({ scrollPageToBottomTest }) => {
           load={load}
           action={action}
           error={error}
-          onClickHandler={saveTestAndCreate}
+          onClickHandler={handleSaveAndCreateTestClick}
         />
       </Portal>
       <S.FooterTest editId={editId}>

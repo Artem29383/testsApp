@@ -23,7 +23,7 @@ const RadioButton = ({ id, radioObject, questionId, index, ids, errorMsg }) => {
   const toggleRadio = useAction(toggleChecked);
   const resetErrorChange = useCheckChangeQuest(questionId, errorMsg);
 
-  const handleChange = useCallback(
+  const handleInputChange = useCallback(
     radioId => {
       toggleRadio({ id: questionId, radioId });
       resetErrorChange(ids.length);
@@ -31,38 +31,41 @@ const RadioButton = ({ id, radioObject, questionId, index, ids, errorMsg }) => {
     [ids, toggleRadio, resetErrorChange]
   );
 
-  const changeRadioLabelHandler = useCallback(
+  const handleRadioLabelChange = useCallback(
     e => {
       setRadioLabel(e.currentTarget.value);
     },
     [radioLabel]
   );
 
-  const startEdit = () => {
+  const handleStartEditClick = useCallback(() => {
     setEdit(true);
-  };
+  }, [edit]);
 
-  const endEditBlur = () => {
+  const handleStopEditBlur = useCallback(() => {
     if (radioLabel.trim()) {
       setEdit(false);
       updateField({ id: questionId, answerId: id, value: radioLabel });
     }
-  };
+  }, [edit, radioLabel]);
 
-  const endEditKeyDown = e => {
-    if (e.key === 'Escape') {
-      setRadioLabel(radioObject.value);
-      setEdit(false);
-    }
-    if (e.key === 'Enter' && radioLabel.trim()) {
-      setEdit(false);
-      updateField({ id: questionId, answerId: id, value: radioLabel });
-    }
-  };
+  const handleStopEditKeyDown = useCallback(
+    e => {
+      if (e.key === 'Escape') {
+        setRadioLabel(radioObject.value);
+        setEdit(false);
+      }
+      if (e.key === 'Enter' && radioLabel.trim()) {
+        setEdit(false);
+        updateField({ id: questionId, answerId: id, value: radioLabel });
+      }
+    },
+    [edit, radioLabel]
+  );
 
-  const deleteAnswer = () => {
+  const onDeleteAnswer = useCallback(() => {
     removeAnswer({ id: questionId, answerId: id });
-  };
+  }, [removeAnswer]);
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -77,11 +80,11 @@ const RadioButton = ({ id, radioObject, questionId, index, ids, errorMsg }) => {
             <InputEdit
               type="text"
               focus
-              onHandler={changeRadioLabelHandler}
               value={radioLabel}
-              onBlur={endEditBlur}
-              onKeyDown={endEditKeyDown}
               checkMark
+              onBlur={handleStopEditBlur}
+              onKeyDown={handleStopEditKeyDown}
+              onHandler={handleRadioLabelChange}
             />
           ) : (
             <>
@@ -89,9 +92,12 @@ const RadioButton = ({ id, radioObject, questionId, index, ids, errorMsg }) => {
                 id={id}
                 isChecked={radioObject.isChecked}
                 label={radioLabel}
-                onChange={handleChange}
+                onChange={handleInputChange}
               />
-              <Edit.Icon onClick={startEdit} onTouchEnd={startEdit}>
+              <Edit.Icon
+                onClick={handleStartEditClick}
+                onTouchEnd={handleStartEditClick}
+              >
                 <use xlinkHref={`${editSvg}#edit`} />
               </Edit.Icon>
               <Cross
@@ -99,8 +105,8 @@ const RadioButton = ({ id, radioObject, questionId, index, ids, errorMsg }) => {
                 color="#80868b"
                 rotate="135deg"
                 margin="0 0 0 -20px"
-                onClickHandler={deleteAnswer}
                 hover
+                onClickHandler={onDeleteAnswer}
               />
             </>
           )}

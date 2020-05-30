@@ -13,18 +13,18 @@ const NumberQuestion = ({ id, quest }) => {
   const [value, setValue] = useState(entities[numberId].value);
   const [edit, setEdit] = useState(false);
   const setNumeric = useAction(setNumericAnswer);
-  const setValueHandler = useCallback(
+  const handleValueChange = useCallback(
     e => {
       setValue(e.currentTarget.value);
     },
     [value]
   );
-  const startEdit = () => {
+  const handleStartEditClick = useCallback(() => {
     setEdit(true);
     setTemp(value);
-  };
+  }, [edit, temp]);
 
-  const endEditBlur = () => {
+  const handleStopEditBlur = useCallback(() => {
     if (value.trim()) {
       setEdit(false);
       setNumeric({
@@ -36,44 +36,47 @@ const NumberQuestion = ({ id, quest }) => {
         type: questionVariable.number,
       });
     }
-  };
+  }, [edit, value, setNumeric]);
 
-  const endEditKey = e => {
-    if (value.trim()) {
-      if (e.key === 'Escape') {
-        setEdit(false);
-        setValue(temp);
+  const handleStopEditKey = useCallback(
+    e => {
+      if (value.trim()) {
+        if (e.key === 'Escape') {
+          setEdit(false);
+          setValue(temp);
+        }
+        if (e.key === 'Enter') {
+          setEdit(false);
+          setNumeric({
+            id,
+            qId: numberId,
+            value,
+            isChecked: true,
+            type: questionVariable.number,
+            isValid: false,
+            errorMsg: null,
+          });
+        }
       }
-      if (e.key === 'Enter') {
-        setEdit(false);
-        setNumeric({
-          id,
-          qId: numberId,
-          value,
-          isChecked: true,
-          type: questionVariable.number,
-          isValid: false,
-          errorMsg: null,
-        });
-      }
-    }
-  };
+    },
+    [edit, temp, setNumeric, value]
+  );
 
   return (
     <S.Wrap>
       {edit ? (
         <InputEdit
           label="Правильный ответ"
-          onHandler={setValueHandler}
+          onHandler={handleValueChange}
           value={value}
           focus
           type="number"
-          onBlur={endEditBlur}
-          onKeyDown={endEditKey}
+          onBlur={handleStopEditBlur}
+          onKeyDown={handleStopEditKey}
           checkMark
         />
       ) : (
-        <S.Answer onClick={startEdit}>Ответ: {value}</S.Answer>
+        <S.Answer onClick={handleStartEditClick}>Ответ: {value}</S.Answer>
       )}
     </S.Wrap>
   );

@@ -17,8 +17,6 @@ const Cross = ({
 }) => (
   <S.Div
     rotate={rotate}
-    onClick={onClickHandler}
-    onTouchEnd={touched ? onClickHandler : undefined}
     position={position}
     top={top}
     left={left}
@@ -26,6 +24,8 @@ const Cross = ({
     bottom={bottom}
     hover={hover}
     margin={margin}
+    onClick={onClickHandler}
+    onTouchEnd={touched ? onClickHandler : undefined}
   >
     <S.line1 color={color} />
     <S.line2 color={color} />

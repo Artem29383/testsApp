@@ -10,13 +10,13 @@ import useToggle from 'hooks/useToggle';
 import DropDownContainer from 'pages/CreateEditTestPage/Question/QuestionHeader/DropDownContainer';
 import S from './QuestionHeader.styled';
 
-const QuestionHeader = ({ setValue, id, value, questName }) => {
+const QuestionHeader = ({ id, value, questName, onChange }) => {
   const setQuestionName = useAction(setQuestName);
   const deleteQuest = useAction(removeQuest);
   const [showModal, setShowModal] = useToggle(false);
-  const removeQuestion = () => {
+  const handleQuestionRemoveClick = useCallback(() => {
     deleteQuest(id);
-  };
+  }, [deleteQuest]);
   const setQuestionNameHandler = useCallback(
     e => {
       setQuestionName({ id, questionName: e.currentTarget.value });
@@ -34,7 +34,7 @@ const QuestionHeader = ({ setValue, id, value, questName }) => {
           positiveBtn="Отмена"
           negativeClickHandler="Удалить"
           headerText="Удалить вопрос?"
-          onClickHandler={removeQuestion}
+          onClickHandler={handleQuestionRemoveClick}
         />
       </Portal>
       <S.QuestFormHeader>
@@ -48,7 +48,7 @@ const QuestionHeader = ({ setValue, id, value, questName }) => {
           </S.WrapInput>
         </S.QuestFormHeaderTitle>
         <S.QuestFormHeaderTitle>
-          <DropDownContainer value={value} setValue={setValue} />
+          <DropDownContainer value={value} onChange={onChange} />
         </S.QuestFormHeaderTitle>
         <Cross
           color="#80868b"
@@ -65,10 +65,10 @@ const QuestionHeader = ({ setValue, id, value, questName }) => {
 };
 
 QuestionHeader.propTypes = {
-  setValue: PropTypes.func,
   id: PropTypes.string,
   questName: PropTypes.string,
   value: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 export default QuestionHeader;

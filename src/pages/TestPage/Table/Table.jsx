@@ -28,15 +28,13 @@ const Table = ({ testIds, tests, isAdmin }) => {
   const [chunksArray, setChunksArray] = useState([]);
   const [currentChunk, setCurrentChunk] = useState([]);
   const [chunksArrayLength, setChunksArrayLength] = useState(0);
-  const [debounceCall] = useState(() =>
-    debounce(str => {
-      if (str.trim()) {
-        history.push(`${routes.testPage}/?search=${str.toLowerCase()}`);
-      } else {
-        history.push(routes.testPage);
-      }
-    }, 300)
-  );
+  const historyURLChange = debounce(str => {
+    if (str.trim()) {
+      history.push(`${routes.testPage}/?search=${str.toLowerCase()}`);
+    } else {
+      history.push(routes.testPage);
+    }
+  }, 700);
 
   useEffect(() => {
     setChunksArray(filteredArray);
@@ -54,7 +52,7 @@ const Table = ({ testIds, tests, isAdmin }) => {
     }
   }, [currentPage, chunksArray]);
 
-  const sortData = useCallback((sortCol, sortType) => {
+  const handleSortClick = useCallback((sortCol, sortType) => {
     const displayData = sortByData(tests, sortCol, sortType);
     const dataNormalized = normalized(displayData, 'tests');
     setSort(sortType);
@@ -66,7 +64,7 @@ const Table = ({ testIds, tests, isAdmin }) => {
 
   const sortClick = useCallback(() => {
     const sortType = sort === 'asc' ? 'desc' : 'asc';
-    sortData('created', sortType);
+    handleSortClick('created', sortType);
   }, [sort]);
 
   useEffect(() => {
@@ -75,17 +73,17 @@ const Table = ({ testIds, tests, isAdmin }) => {
     }
   }, []);
 
-  const handleChange = useCallback(
+  const handleSearchURLChange = useCallback(
     e => {
       const str = e.currentTarget.value;
       setValue(str);
-      debounceCall(str);
+      historyURLChange(str);
     },
     [value]
   );
 
   useEffect(() => {
-    sortData('created', 'asc');
+    handleSortClick('created', 'asc');
   }, [testIds.length]);
 
   const tableList = currentChunk.map(t => (
@@ -94,7 +92,11 @@ const Table = ({ testIds, tests, isAdmin }) => {
 
   return (
     <>
-      <TableSearch value={value} onChange={handleChange} label="Найти тест" />
+      <TableSearch
+        value={value}
+        onChange={handleSearchURLChange}
+        label="Найти тест"
+      />
       <S.DivTable>
         <S.TableWrap>
           <S.Table>

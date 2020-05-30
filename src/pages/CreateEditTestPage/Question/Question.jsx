@@ -68,10 +68,10 @@ const Question = ({ id, index }) => {
         >
           <S.QuestionContent>
             <QuestionHeader
-              setValue={setValue}
               id={id}
               value={value}
               questName={quest.questName}
+              onChange={setValue}
             />
             <QuestFormBody
               quest={quest.answer}

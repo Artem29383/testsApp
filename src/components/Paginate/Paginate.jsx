@@ -9,25 +9,25 @@ const Paginate = ({ currentPage, chunkArrayLength, setCurrentPage }) => {
     setPagesArray(paginate(chunkArrayLength, currentPage));
   }, [currentPage, chunkArrayLength]);
 
-  const firstPage = () => {
+  const handleFirstPageClick = useCallback(() => {
     setCurrentPage(0);
-  };
+  }, [currentPage]);
 
-  const lastPage = () => {
+  const handleLastPageClick = useCallback(() => {
     setCurrentPage(chunkArrayLength - 1);
-  };
+  }, [currentPage]);
 
-  const prevPageHandler = () => {
+  const handlePrevPageClick = useCallback(() => {
     if (currentPage >= 2) {
       setCurrentPage(currentPage - 2);
     }
-  };
+  }, [currentPage]);
 
-  const nextPageHandler = () => {
+  const handleNextPageClick = useCallback(() => {
     if (currentPage <= chunkArrayLength - 1) {
       setCurrentPage(currentPage);
     }
-  };
+  }, [currentPage]);
 
   const handleChange = useCallback(
     e => {
@@ -50,19 +50,20 @@ const Paginate = ({ currentPage, chunkArrayLength, setCurrentPage }) => {
   return (
     <S.PaginateDiv>
       <S.PaginateUl>
-        <S.PaginateLi onClick={firstPage}>First</S.PaginateLi>
-        <S.PaginateLi onClick={prevPageHandler}>{'<'}</S.PaginateLi>
+        <S.PaginateLi onClick={handleFirstPageClick}>First</S.PaginateLi>
+        <S.PaginateLi onClick={handlePrevPageClick}>{'<'}</S.PaginateLi>
         {pages}
-        <S.PaginateLi onClick={nextPageHandler}>{'>'}</S.PaginateLi>
-        <S.PaginateLi onClick={lastPage}>Last</S.PaginateLi>
+        <S.PaginateLi onClick={handleNextPageClick}>{'>'}</S.PaginateLi>
+        <S.PaginateLi onClick={handleLastPageClick}>Last</S.PaginateLi>
       </S.PaginateUl>
     </S.PaginateDiv>
   );
 };
 
-export default memo(Paginate);
 Paginate.propTypes = {
   currentPage: PropTypes.number.isRequired,
   chunkArrayLength: PropTypes.number.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
 };
+
+export default memo(Paginate);

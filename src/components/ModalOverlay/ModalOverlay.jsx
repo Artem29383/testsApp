@@ -49,20 +49,27 @@ const ModalOverlay = ({
               </ButtonRipple>
             )}
             {negativeClickHandler && (
-              <ButtonRipple
-                onClickHandler={onClickHandler}
-                className="red"
-                isLoader
-              >
-                {/* eslint-disable-next-line no-nested-ternary */}
+              <>
                 {load && action === 'save' ? (
-                  <Loader height="35" width="35" color={colors.white} />
-                ) : error && action === 'save' ? (
-                  'Повторить'
+                  <ButtonRipple
+                    className="red"
+                    isLoader
+                    onClickHandler={onClickHandler}
+                  >
+                    <Loader height="35" width="35" color={colors.white} />
+                  </ButtonRipple>
                 ) : (
-                  negativeClickHandler
+                  <ButtonRipple
+                    onClickHandler={onClickHandler}
+                    className="red"
+                    isLoader
+                  >
+                    {error && action === 'save'
+                      ? 'Повторить'
+                      : negativeClickHandler}
+                  </ButtonRipple>
                 )}
-              </ButtonRipple>
+              </>
             )}
             {positiveBtn && (
               <ButtonRipple onClickHandler={toggle}>{positiveBtn}</ButtonRipple>

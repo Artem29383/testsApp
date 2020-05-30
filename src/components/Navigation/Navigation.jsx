@@ -18,22 +18,19 @@ const Navigation = () => {
   const logOut = useAction(logOutUser);
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
-  const logoutClick = () => {
+  const debouncedHandleResize = debounce(() => {
+    setWindowSize(window.innerWidth);
+  }, 1500);
+
+  const logoutClick = useCallback(() => {
     setLoad(true);
     logOut();
-  };
+  }, []);
 
   useEffect(() => {
-    const debouncedHandleResize = debounce(() => {
-      setWindowSize(window.innerWidth);
-    }, 1500);
-
     window.addEventListener('resize', debouncedHandleResize);
-
-    return () => {
-      window.removeEventListener('resize', debouncedHandleResize);
-    };
-  });
+    return () => window.removeEventListener('resize', debouncedHandleResize);
+  }, []);
 
   const checkScroll = useCallback(
     throttle(() => {
@@ -50,18 +47,18 @@ const Navigation = () => {
         setShowHeader(true);
         setScroll(window.pageYOffset);
       }
-    }, 300)
+    }, 300),
+    [scroll, showNav, showHeader]
   );
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (windowSize <= 550) {
+    if (windowSize < 550) {
       window.addEventListener('scroll', checkScroll);
-      return () => {
-        window.removeEventListener('scroll', checkScroll);
-      };
     }
-  }, [checkScroll]);
+    return () => {
+      window.removeEventListener('scroll', checkScroll);
+    };
+  }, [checkScroll, windowSize]);
 
   return (
     <S.Nav ref={headerHeight} isShow={showHeader}>
