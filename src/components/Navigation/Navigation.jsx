@@ -6,17 +6,20 @@ import routes from 'constants/routes';
 import useAction from 'hooks/useAction';
 import { logOutUser } from 'models/user/reducer';
 import { useToggle } from 'hooks/index';
+import { setLoading } from 'models/tests/reducer';
 import S from './Navigation.styled';
 
 const Navigation = () => {
   const [showHeader, setShowHeader] = useState(true);
   const [scroll, setScroll] = useState(0);
+  const setLoad = useAction(setLoading);
   const headerHeight = useRef();
   const [showNav, setShowNav] = useToggle(false);
   const logOut = useAction(logOutUser);
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
   const logoutClick = () => {
+    setLoad(true);
     logOut();
   };
 

@@ -9,7 +9,7 @@ import {
   logoutUser,
   logOutUser,
 } from 'models/user/reducer';
-import { setTests } from 'models/tests/reducer';
+import { setLoading, setTests } from 'models/tests/reducer';
 import { push } from 'connected-react-router';
 import routes from 'constants/routes';
 
@@ -37,7 +37,7 @@ function* logOut() {
     yield put({
       type: setTests.type,
       payload: {
-        entities: [],
+        entities: {},
         ids: [],
       },
     });
@@ -47,6 +47,10 @@ function* logOut() {
   } catch (e) {
     console.error(e);
   }
+  yield put({
+    type: setLoading.type,
+    payload: false,
+  });
 }
 
 function* getCurrentUser() {
