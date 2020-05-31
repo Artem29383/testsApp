@@ -115,8 +115,8 @@ const PassingTestPage = () => {
             <S.AllQuestList>
               <AllQuestions
                 questId={ids[questIndex]}
-                onQuestChange={setQuestIndex}
                 ids={ids}
+                onQuestChange={setQuestIndex}
               />
             </S.AllQuestList>
           </S.AllQuestions>

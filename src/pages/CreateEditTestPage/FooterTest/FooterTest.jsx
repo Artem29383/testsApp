@@ -21,7 +21,7 @@ import {
 import { useParams } from 'react-router-dom';
 import useToggle from 'hooks/useToggle';
 import useFetchingError from 'hooks/useFetchingError';
-import FooterButtons from 'pages/CreateEditTestPage/FooterTest/FooterButtons';
+import FooterButtonsContainer from 'pages/CreateEditTestPage/FooterTest/FooterButtonsContainer';
 import S from './FooterTest.styled';
 
 const FooterTest = ({ scrollPageToBottomTest }) => {
@@ -99,7 +99,6 @@ const FooterTest = ({ scrollPageToBottomTest }) => {
     <>
       <Portal id="modal">
         <ModalOverlay
-          toggle={setShowModalSave}
           isOpen={showModalSave}
           isFooter
           positiveBtn="Отмена"
@@ -108,11 +107,12 @@ const FooterTest = ({ scrollPageToBottomTest }) => {
           load={load}
           action={action}
           error={error}
+          toggle={setShowModalSave}
           onClickHandler={handleSaveAndCreateTestClick}
         />
       </Portal>
       <S.FooterTest editId={editId}>
-        <FooterButtons
+        <FooterButtonsContainer
           error={error}
           action={action}
           load={load}

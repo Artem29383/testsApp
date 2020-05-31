@@ -10,7 +10,7 @@ const QuestionFooter = ({ id, ids, errorMsg }) => {
   const answerAdd = useAction(pushAnswer);
   const resetErrorChange = useCheckChangeQuest(id, errorMsg);
 
-  const addAnswer = useCallback(() => {
+  const handleAddAnswerClick = useCallback(() => {
     const uniqId = nanoid();
     const answer = {
       id: uniqId,
@@ -21,7 +21,9 @@ const QuestionFooter = ({ id, ids, errorMsg }) => {
     resetErrorChange(ids.length + 1);
   }, [ids]);
 
-  return <S.AddAnswer onClick={addAnswer}>Добавить вариант</S.AddAnswer>;
+  return (
+    <S.AddAnswer onClick={handleAddAnswerClick}>Добавить вариант</S.AddAnswer>
+  );
 };
 
 QuestionFooter.propTypes = {

@@ -67,13 +67,13 @@ const NumberQuestion = ({ id, quest }) => {
       {edit ? (
         <InputEdit
           label="Правильный ответ"
-          onHandler={handleValueChange}
           value={value}
           focus
           type="number"
+          checkMark
+          onHandler={handleValueChange}
           onBlur={handleStopEditBlur}
           onKeyDown={handleStopEditKey}
-          checkMark
         />
       ) : (
         <S.Answer onClick={handleStartEditClick}>Ответ: {value}</S.Answer>

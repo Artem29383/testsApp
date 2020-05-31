@@ -9,7 +9,7 @@ const RadioAnswer = ({ questId, answers, ids, entities }) => {
   const setRadio = useAction(toggleChecked);
   const setValid = useAction(setStatusValid);
 
-  const handleChange = useCallback(
+  const handleRadioChange = useCallback(
     id => {
       setRadio({
         questId,
@@ -26,7 +26,7 @@ const RadioAnswer = ({ questId, answers, ids, entities }) => {
         id={entities[id].id}
         label={entities[id].value}
         isChecked={answers.answer[0] === id}
-        onChange={handleChange}
+        onChange={handleRadioChange}
       />
     </S.Radio>
   ));

@@ -116,7 +116,6 @@ const RadioButton = ({ id, radioObject, questionId, index, ids, errorMsg }) => {
   );
 };
 
-export default memo(RadioButton);
 RadioButton.propTypes = {
   id: PropTypes.string,
   radioObject: PropTypes.object,
@@ -125,3 +124,5 @@ RadioButton.propTypes = {
   ids: PropTypes.array,
   errorMsg: PropTypes.string,
 };
+
+export default memo(RadioButton);

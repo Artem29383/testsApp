@@ -15,7 +15,7 @@ const PassingTestFooter = ({ questions, ids, userAnswers }) => {
   const [result, setResult] = useState(0);
   const setInvalidQuest = useAction(setStatusInvalid);
 
-  const calculateResult = () => {
+  const handleCalculateResultClick = () => {
     const resultOfChecking = testResult(questions, ids, userAnswers);
     if (typeof resultOfChecking === 'object') {
       setInvalidQuest(resultOfChecking);
@@ -27,7 +27,10 @@ const PassingTestFooter = ({ questions, ids, userAnswers }) => {
   return (
     <>
       <S.QuestFooter>
-        <ButtonRipple className="red" onClickHandler={calculateResult}>
+        <ButtonRipple
+          className="red"
+          onClickHandler={handleCalculateResultClick}
+        >
           Завершить тест
         </ButtonRipple>
       </S.QuestFooter>

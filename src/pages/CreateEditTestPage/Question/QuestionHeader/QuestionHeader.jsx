@@ -14,10 +14,10 @@ const QuestionHeader = ({ id, value, questName, onChange }) => {
   const setQuestionName = useAction(setQuestName);
   const deleteQuest = useAction(removeQuest);
   const [showModal, setShowModal] = useToggle(false);
-  const handleQuestionRemoveClick = useCallback(() => {
+  const onQuestionRemove = useCallback(() => {
     deleteQuest(id);
   }, [deleteQuest]);
-  const setQuestionNameHandler = useCallback(
+  const onChangeQuestionName = useCallback(
     e => {
       setQuestionName({ id, questionName: e.currentTarget.value });
     },
@@ -34,7 +34,7 @@ const QuestionHeader = ({ id, value, questName, onChange }) => {
           positiveBtn="Отмена"
           negativeClickHandler="Удалить"
           headerText="Удалить вопрос?"
-          onClickHandler={handleQuestionRemoveClick}
+          onClickHandler={onQuestionRemove}
         />
       </Portal>
       <S.QuestFormHeader>
@@ -42,7 +42,7 @@ const QuestionHeader = ({ id, value, questName, onChange }) => {
           <S.WrapInput padding="0 20px 0 20px">
             <Input
               label="Вопрос"
-              onChange={setQuestionNameHandler}
+              onChange={onChangeQuestionName}
               value={questName}
             />
           </S.WrapInput>

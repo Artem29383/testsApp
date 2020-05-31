@@ -1,13 +1,11 @@
-import React, { useEffect, useState, memo, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import ButtonRipple from 'components/ButtonRipple/ButtonRipple';
-import Loader from 'components/Loader/Loader';
-import { colors } from 'styles/constants';
 import nanoid from 'nanoid';
 import useAction from 'hooks/useAction';
 import { pushQuestion, removeTestById } from 'models/test/reducer';
+import FooterButtons from 'pages/CreateEditTestPage/FooterTest/FooterButtonsContainer/FooterButtons';
 
-const FooterButtons = ({
+const FooterButtonsContainer = ({
   editId,
   load,
   action,
@@ -40,18 +38,18 @@ const FooterButtons = ({
     }
   }, []);
 
-  const handleRemoveTestClick = useCallback(() => {
+  const onRemoveTestClick = useCallback(() => {
     resetError('');
     setAction('remove');
     setIsLoading();
     deleteThisTest(editId);
   }, [deleteThisTest]);
 
-  const modalSaveHandler = useCallback(() => {
+  const onModalSaveHandler = useCallback(() => {
     setShowModalSave(true);
   }, [setShowModalSave]);
 
-  const addNewQuestion = useCallback(() => {
+  const onAddNewQuestion = useCallback(() => {
     pushQuest({
       id: uniqId,
       questName: 'Ваш вопрос',
@@ -61,39 +59,19 @@ const FooterButtons = ({
   }, [uniqId]);
 
   return (
-    <>
-      <ButtonRipple onClickHandler={addNewQuestion}>
-        Добавить вопрос
-      </ButtonRipple>
-      <ButtonRipple className="green" onClickHandler={modalSaveHandler}>
-        {editId ? 'Обновить тест' : 'Сохранить Тест'}
-      </ButtonRipple>
-      {editId && (
-        <>
-          {load && action === 'remove' ? (
-            <ButtonRipple
-              className="red"
-              onClickHandler={handleRemoveTestClick}
-              isLoader
-            >
-              <Loader width="35" height="35" color={colors.white} />
-            </ButtonRipple>
-          ) : (
-            <ButtonRipple
-              className="red"
-              onClickHandler={handleRemoveTestClick}
-              isLoader
-            >
-              {error && action === 'remove' ? 'Повторить' : 'Удалить тест'}
-            </ButtonRipple>
-          )}
-        </>
-      )}
-    </>
+    <FooterButtons
+      isLoad={load}
+      action={action}
+      editId={editId}
+      error={error}
+      onAddNewQuestion={onAddNewQuestion}
+      onModalSaveHandler={onModalSaveHandler}
+      onRemoveTestClick={onRemoveTestClick}
+    />
   );
 };
 
-FooterButtons.propTypes = {
+FooterButtonsContainer.propTypes = {
   editId: PropTypes.string,
   load: PropTypes.bool,
   action: PropTypes.string,
@@ -105,4 +83,4 @@ FooterButtons.propTypes = {
   scrollPageToBottomTest: PropTypes.any,
 };
 
-export default memo(FooterButtons);
+export default FooterButtonsContainer;
