@@ -1,22 +1,36 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, memo } from 'react';
 import throttle from 'lodash.throttle';
+import debounce from 'lodash.debounce';
 import ButtonRipple from 'components/ButtonRipple';
 import routes from 'constants/routes';
 import useAction from 'hooks/useAction';
 import { logOutUser } from 'models/user/reducer';
 import { useToggle } from 'hooks/index';
+import { setLoading } from 'models/tests/reducer';
 import S from './Navigation.styled';
 
 const Navigation = () => {
   const [showHeader, setShowHeader] = useState(true);
   const [scroll, setScroll] = useState(0);
+  const setLoad = useAction(setLoading);
   const headerHeight = useRef();
   const [showNav, setShowNav] = useToggle(false);
   const logOut = useAction(logOutUser);
+  const [windowSize, setWindowSize] = useState(window.innerWidth);
 
-  const logoutClick = () => {
+  const debouncedHandleResize = debounce(() => {
+    setWindowSize(window.innerWidth);
+  }, 1500);
+
+  const logoutClick = useCallback(() => {
+    setLoad(true);
     logOut();
-  };
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('resize', debouncedHandleResize);
+    return () => window.removeEventListener('resize', debouncedHandleResize);
+  }, []);
 
   const checkScroll = useCallback(
     throttle(() => {
@@ -33,15 +47,18 @@ const Navigation = () => {
         setShowHeader(true);
         setScroll(window.pageYOffset);
       }
-    }, 300)
+    }, 300),
+    [scroll, showNav, showHeader]
   );
 
   useEffect(() => {
-    window.addEventListener('scroll', checkScroll);
+    if (windowSize < 550) {
+      window.addEventListener('scroll', checkScroll);
+    }
     return () => {
       window.removeEventListener('scroll', checkScroll);
     };
-  }, [checkScroll]);
+  }, [checkScroll, windowSize]);
 
   return (
     <S.Nav ref={headerHeight} isShow={showHeader}>
@@ -49,7 +66,7 @@ const Navigation = () => {
         <S.NavUl>
           <S.NavItem className="padding">
             <S.Link to={routes.testPage}>
-              <ButtonRipple className="green" onClickHandler={setShowNav}>
+              <ButtonRipple className="green" onClick={setShowNav}>
                 Тесты
               </ButtonRipple>
             </S.Link>
@@ -62,7 +79,7 @@ const Navigation = () => {
         <S.Line3 isOpen={showNav} />
       </S.Burger>
       <S.NavItem className="right">
-        <ButtonRipple onClickHandler={logoutClick} className="red">
+        <ButtonRipple onClick={logoutClick} className="red">
           Выйти
         </ButtonRipple>
       </S.NavItem>
@@ -70,4 +87,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default memo(Navigation);

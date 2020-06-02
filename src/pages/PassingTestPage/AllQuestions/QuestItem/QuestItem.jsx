@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import useSelector from 'hooks/useSelector';
 import PropTypes from 'prop-types';
 import { entitiesQuestionsSelector } from 'models/passTest/selectors';
@@ -6,17 +6,16 @@ import S from './QuestItem.styled';
 
 const QuestItem = ({ answerId, questId, index, onQuestChange }) => {
   const questions = useSelector(entitiesQuestionsSelector);
-
-  const onQuestClick = () => {
+  const handleQuestionClick = useCallback(() => {
     onQuestChange(index);
-  };
+  }, [index]);
 
   return (
     <S.AllQuestItem
-      onClick={onQuestClick}
-      isComplete={!questions[answerId].isValid}
       className={questId === answerId && 'active'}
+      isComplete={!questions[answerId].isValid}
       type={questions[answerId].type}
+      onClick={handleQuestionClick}
     >
       {questions[answerId].questName}
     </S.AllQuestItem>

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ButtonRipple from 'components/ButtonRipple';
 import Cross from 'components/Cross';
@@ -25,7 +25,6 @@ const ModalOverlay = ({
   action,
 }) => {
   useModal(toggle, isOpen, isClosable);
-
   return (
     <S.OverlayM unmountOnExit in={isOpen} timeout={100}>
       {isClosable && <S.BackDrop onClick={toggle} />}
@@ -45,28 +44,35 @@ const ModalOverlay = ({
         {isFooter && (
           <S.ModalFooter>
             {negativeBtn && (
-              <ButtonRipple onClickHandler={toggle} className="red">
+              <ButtonRipple onClick={toggle} className="red">
                 {negativeBtn}
               </ButtonRipple>
             )}
             {negativeClickHandler && (
-              <ButtonRipple
-                onClickHandler={onClickHandler}
-                className="red"
-                isLoader
-              >
-                {/* eslint-disable-next-line no-nested-ternary */}
+              <>
                 {load && action === 'save' ? (
-                  <Loader height="35" width="35" color={colors.white} />
-                ) : error && action === 'save' ? (
-                  'Повторить'
+                  <ButtonRipple
+                    className="red"
+                    isLoader
+                    onClick={onClickHandler}
+                  >
+                    <Loader height="35" width="35" color={colors.white} />
+                  </ButtonRipple>
                 ) : (
-                  negativeClickHandler
+                  <ButtonRipple
+                    onClick={onClickHandler}
+                    className="red"
+                    isLoader
+                  >
+                    {error && action === 'save'
+                      ? 'Повторить'
+                      : negativeClickHandler}
+                  </ButtonRipple>
                 )}
-              </ButtonRipple>
+              </>
             )}
             {positiveBtn && (
-              <ButtonRipple onClickHandler={toggle}>{positiveBtn}</ButtonRipple>
+              <ButtonRipple onClick={toggle}>{positiveBtn}</ButtonRipple>
             )}
             {link && (
               <S.Link to={linkPath}>
@@ -106,4 +112,4 @@ ModalOverlay.defaultProps = {
   headerText: 'just modal window',
 };
 
-export default memo(ModalOverlay);
+export default ModalOverlay;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import InputEdit from 'components/InputEdit';
 import { setNumericAnswer } from 'models/test/reducer';
@@ -13,16 +13,18 @@ const NumberQuestion = ({ id, quest }) => {
   const [value, setValue] = useState(entities[numberId].value);
   const [edit, setEdit] = useState(false);
   const setNumeric = useAction(setNumericAnswer);
-  const setValueHandler = e => {
-    setValue(e.currentTarget.value);
-  };
-
-  const startEdit = () => {
+  const handleValueChange = useCallback(
+    e => {
+      setValue(e.currentTarget.value);
+    },
+    [value]
+  );
+  const handleStartEditClick = useCallback(() => {
     setEdit(true);
     setTemp(value);
-  };
+  }, [edit, temp]);
 
-  const endEditBlur = () => {
+  const handleStopEditBlur = useCallback(() => {
     if (value.trim()) {
       setEdit(false);
       setNumeric({
@@ -34,44 +36,47 @@ const NumberQuestion = ({ id, quest }) => {
         type: questionVariable.number,
       });
     }
-  };
+  }, [edit, value, setNumeric]);
 
-  const endEditKey = e => {
-    if (value.trim()) {
-      if (e.key === 'Escape') {
-        setEdit(false);
-        setValue(temp);
+  const handleStopEditKey = useCallback(
+    e => {
+      if (value.trim()) {
+        if (e.key === 'Escape') {
+          setEdit(false);
+          setValue(temp);
+        }
+        if (e.key === 'Enter') {
+          setEdit(false);
+          setNumeric({
+            id,
+            qId: numberId,
+            value,
+            isChecked: true,
+            type: questionVariable.number,
+            isValid: false,
+            errorMsg: null,
+          });
+        }
       }
-      if (e.key === 'Enter') {
-        setEdit(false);
-        setNumeric({
-          id,
-          qId: numberId,
-          value,
-          isChecked: true,
-          type: questionVariable.number,
-          isValid: false,
-          errorMsg: null,
-        });
-      }
-    }
-  };
+    },
+    [edit, temp, setNumeric, value]
+  );
 
   return (
     <S.Wrap>
       {edit ? (
         <InputEdit
           label="Правильный ответ"
-          onHandler={setValueHandler}
           value={value}
           focus
           type="number"
-          onBlur={endEditBlur}
-          onKeyDown={endEditKey}
           checkMark
+          onChange={handleValueChange}
+          onBlur={handleStopEditBlur}
+          onKeyDown={handleStopEditKey}
         />
       ) : (
-        <S.Answer onClick={startEdit}>Ответ: {value}</S.Answer>
+        <S.Answer onClick={handleStartEditClick}>Ответ: {value}</S.Answer>
       )}
     </S.Wrap>
   );

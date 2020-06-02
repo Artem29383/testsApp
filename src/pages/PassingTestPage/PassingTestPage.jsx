@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
 import { useParams } from 'react-router-dom';
@@ -43,11 +43,11 @@ const PassingTestPage = () => {
     }
   }, [currentQuest]);
 
-  const fetchTestDataPassing = () => {
+  const fetchTestDataPassing = useCallback(() => {
     setLoad(true);
     resetError();
     fetchTest(testId);
-  };
+  }, [isLoad, state]);
 
   useEffect(() => {
     fetchTestDataPassing();
@@ -58,9 +58,7 @@ const PassingTestPage = () => {
   if (error && idError === 'passingTest')
     return (
       <S.ErrorServer>
-        <ButtonRipple onClickHandler={fetchTestDataPassing}>
-          Повторить
-        </ButtonRipple>
+        <ButtonRipple onClick={fetchTestDataPassing}>Повторить</ButtonRipple>
         <S.ErrorServerMessage>{error}</S.ErrorServerMessage>
       </S.ErrorServer>
     );
@@ -115,8 +113,8 @@ const PassingTestPage = () => {
             <S.AllQuestList>
               <AllQuestions
                 questId={ids[questIndex]}
-                onQuestChange={setQuestIndex}
                 ids={ids}
+                onQuestChange={setQuestIndex}
               />
             </S.AllQuestList>
           </S.AllQuestions>

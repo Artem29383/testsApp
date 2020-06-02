@@ -1,14 +1,11 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import ButtonRipple from 'components/ButtonRipple';
 import ModalOverlay from 'components/ModalOverlay/ModalOverlay';
 import Portal from 'components/Portal';
 import nanoid from 'nanoid';
 import useAction from 'hooks/useAction';
 import {
   createTest,
-  pushQuestion,
-  removeTestById,
   setQuestError,
   setValidQuestion,
   updateTestById,
@@ -23,22 +20,18 @@ import {
 } from 'models/test/selectors';
 import { useParams } from 'react-router-dom';
 import useToggle from 'hooks/useToggle';
-import Loader from 'components/Loader';
-import { colors } from 'styles/constants';
 import useFetchingError from 'hooks/useFetchingError';
+import FooterButtonsContainer from 'pages/CreateEditTestPage/FooterTest/FooterButtonsContainer';
 import S from './FooterTest.styled';
 
 const FooterTest = ({ scrollPageToBottomTest }) => {
   const testName = useSelector(testNameSelector);
   const editId = useParams().id;
-  const pushQuest = useAction(pushQuestion);
   const setValidQuest = useAction(setValidQuestion);
   const setInvalidQuest = useAction(setQuestError);
   const deployTest = useAction(createTest);
   const updateThisTest = useAction(updateTestById);
   const created = useSelector(createdDataSelector);
-  const [uniqId, setUniqId] = useState(nanoid());
-  const deleteThisTest = useAction(removeTestById);
   const [isValidTest, setIsValidTest] = useState(false);
   const questionsIds = useSelector(questionsIdsSelector);
   const questionsEntities = useSelector(questionsSelector);
@@ -51,7 +44,7 @@ const FooterTest = ({ scrollPageToBottomTest }) => {
     action,
     setAction,
   } = useFetchingError();
-  const saveTestAndCreate = () => {
+  const handleSaveAndCreateTestClick = useCallback(() => {
     const isValid = checkValidationTest(
       questionsEntities,
       questionsIds,
@@ -64,31 +57,13 @@ const FooterTest = ({ scrollPageToBottomTest }) => {
       setIsLoading();
       setIsValidTest(true);
     }
-  };
-
-  useEffect(() => {
-    scrollPageToBottomTest.current.scrollIntoView({
-      block: 'end',
-      behavior: 'smooth',
-    });
-  }, [uniqId]);
+  }, [questionsIds, questionsEntities, setValidQuest, setInvalidQuest]);
 
   useEffect(() => {
     if (error && load) {
       setIsLoading();
     }
   }, [error]);
-
-  useEffect(() => {
-    if (!editId) {
-      pushQuest({
-        id: uniqId,
-        questName: 'Ваш вопрос',
-        answer: { entities: [], ids: [] },
-      });
-      setUniqId(nanoid());
-    }
-  }, []);
 
   useEffect(() => {
     if (isValidTest) {
@@ -120,31 +95,10 @@ const FooterTest = ({ scrollPageToBottomTest }) => {
     }
   }, [isValidTest]);
 
-  const removeThisTest = () => {
-    resetError('');
-    setAction('remove');
-    setIsLoading();
-    deleteThisTest(editId);
-  };
-
-  const modalSaveHandler = () => {
-    setShowModalSave(true);
-  };
-
-  const addNewQuestion = () => {
-    pushQuest({
-      id: uniqId,
-      questName: 'Ваш вопрос',
-      answer: { entities: [], ids: [] },
-    });
-    setUniqId(nanoid());
-  };
-
   return (
     <>
       <Portal id="modal">
         <ModalOverlay
-          toggle={setShowModalSave}
           isOpen={showModalSave}
           isFooter
           positiveBtn="Отмена"
@@ -153,32 +107,22 @@ const FooterTest = ({ scrollPageToBottomTest }) => {
           load={load}
           action={action}
           error={error}
-          onClickHandler={saveTestAndCreate}
+          toggle={setShowModalSave}
+          onClickHandler={handleSaveAndCreateTestClick}
         />
       </Portal>
       <S.FooterTest editId={editId}>
-        <ButtonRipple onClickHandler={addNewQuestion}>
-          Добавить вопрос
-        </ButtonRipple>
-        <ButtonRipple className="green" onClickHandler={modalSaveHandler}>
-          {editId ? 'Обновить тест' : 'Сохранить Тест'}
-        </ButtonRipple>
-        {editId && (
-          <ButtonRipple
-            className="red"
-            onClickHandler={removeThisTest}
-            isLoader
-          >
-            {/* eslint-disable-next-line no-nested-ternary */}
-            {load && action === 'remove' ? (
-              <Loader width="35" height="35" color={colors.white} />
-            ) : error && action === 'remove' ? (
-              'Повторить'
-            ) : (
-              'Удалить тест'
-            )}
-          </ButtonRipple>
-        )}
+        <FooterButtonsContainer
+          error={error}
+          action={action}
+          load={load}
+          editId={editId}
+          resetError={resetError}
+          scrollPageToBottomTest={scrollPageToBottomTest}
+          setAction={setAction}
+          setIsLoading={setIsLoading}
+          setShowModalSave={setShowModalSave}
+        />
       </S.FooterTest>
     </>
   );
@@ -188,4 +132,4 @@ FooterTest.propTypes = {
   scrollPageToBottomTest: PropTypes.any,
 };
 
-export default memo(FooterTest);
+export default FooterTest;

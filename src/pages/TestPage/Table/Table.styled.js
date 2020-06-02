@@ -36,6 +36,10 @@ export default {
     background-color: ${colors.havelockBlue};
     padding-top: 18px;
     padding-bottom: 18px;
+
+    &.pointer {
+      cursor: pointer;
+    }
   `,
   ThText: styled.th`
     font-size: 15px;

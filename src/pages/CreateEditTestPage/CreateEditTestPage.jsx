@@ -28,7 +28,7 @@ const CreateEditTestPage = () => {
     return () => removeTest();
   }, []);
 
-  const dragEnd = useCallback(
+  const handleDragEnd = useCallback(
     result => {
       const { destination, source, draggableId } = result;
       if (!destination) return;
@@ -65,7 +65,7 @@ const CreateEditTestPage = () => {
     <S.PageTest>
       <S.Content ref={scrollPageToBottomTest}>
         <TestTitle />
-        <DragDropContext onDragEnd={dragEnd}>
+        <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="questDrop" type="questItem">
             {provided => (
               <S.DragZone ref={provided.innerRef} {...provided.droppableProps}>

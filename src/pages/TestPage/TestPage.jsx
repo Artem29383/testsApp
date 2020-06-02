@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ButtonRipple from 'components/ButtonRipple';
 import Table from 'pages/TestPage/Table';
 import useAction from 'hooks/useAction';
 import { getAllTests, setLoading } from 'models/tests/reducer';
 import Loader from 'components/Loader';
 import useSelector from 'hooks/useSelector';
-import {
-  denormalizedDataSelector,
-  loadingSelector,
-} from 'models/tests/selectors';
+import { allTestsSelector } from 'models/tests/selectors';
 import { adminStatusSelector } from 'models/user/selectors';
 import useToggle from 'hooks/useToggle';
 import ModalOverlay from 'components/ModalOverlay';
@@ -22,19 +19,20 @@ const TestPage = () => {
   const { error, resetError, idError } = useFetchingError();
   const setLoad = useAction(setLoading);
   const getTests = useAction(getAllTests);
-  const isLoading = useSelector(loadingSelector);
-  const { tests } = useSelector(denormalizedDataSelector)('tests');
+  const state = useSelector(allTestsSelector);
+  const { ids } = state.tests;
+  const { isLoading } = state;
   const isAdmin = useSelector(adminStatusSelector);
   const [showModal, setShowModal] = useToggle(false);
 
-  const fetchAllTests = () => {
+  const fetchAllTests = useCallback(() => {
     setLoad(true);
     resetError();
     getTests();
-  };
+  }, [isLoading, state]);
 
   useEffect(() => {
-    if (!tests.length) {
+    if (!ids.length) {
       fetchAllTests();
     }
   }, []);
@@ -43,16 +41,15 @@ const TestPage = () => {
   if (error && idError === 'getTests')
     return (
       <S.Error>
-        <ButtonRipple onClickHandler={fetchAllTests}>Повторить</ButtonRipple>
+        <ButtonRipple onClick={fetchAllTests}>Повторить</ButtonRipple>
       </S.Error>
     );
-
   return (
     <S.Content>
-      <Table tests={tests} />
+      <Table testIds={ids} isAdmin={isAdmin} tests={state.tests.entities} />
       {isAdmin && (
         <S.BtnPos>
-          <ButtonRipple onClickHandler={setShowModal} className="circle">
+          <ButtonRipple onClick={setShowModal} className="circle">
             <Cross top="50%" left="50%" position="absolute" />
           </ButtonRipple>
         </S.BtnPos>

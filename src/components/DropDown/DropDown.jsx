@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import useClickAway from 'hooks/useClickAway';
 import S from './DropDown.styled';
 
-const DropDown = ({ options, value, setValue, className, label }) => {
+const DropDown = ({ options, value, onChange, className, label }) => {
   const { ref, active, toggle } = useClickAway();
   const [temp, setTemp] = useState(value);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
-
   const setCoords = e => {
     const x = e.clientX - e.currentTarget.getBoundingClientRect().left;
     const y = e.clientY - e.currentTarget.getBoundingClientRect().top;
@@ -24,7 +23,7 @@ const DropDown = ({ options, value, setValue, className, label }) => {
       setTimeout(() => {
         toggle();
         setTimeout(() => {
-          setValue(temp);
+          onChange(temp);
         }, 100);
       }, 100);
     }
@@ -66,7 +65,7 @@ const DropDown = ({ options, value, setValue, className, label }) => {
 DropDown.propTypes = {
   options: PropTypes.array.isRequired,
   value: PropTypes.string.isRequired,
-  setValue: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   className: PropTypes.string,
   label: PropTypes.string,
 };

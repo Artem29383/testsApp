@@ -151,6 +151,7 @@
     "hpp": "^0.2.2",
     "http-proxy-middleware": "^0.20.0",
     "json-server": "^0.16.1",
+    "lodash.debounce": "^4.0.8",
     "lodash.memoize": "^4.1.2",
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",

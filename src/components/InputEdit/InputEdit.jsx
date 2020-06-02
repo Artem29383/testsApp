@@ -10,7 +10,7 @@ const InputEdit = ({
   type,
   checkMark,
   error,
-  onHandler,
+  onChange,
   onBlur,
   onKeyDown,
 }) => (
@@ -18,7 +18,7 @@ const InputEdit = ({
     <S.Group>
       <S.InputField
         value={value}
-        onChange={onHandler}
+        onChange={onChange}
         onKeyDown={onKeyDown}
         onBlur={onBlur}
         placeholder=" "
@@ -42,7 +42,7 @@ InputEdit.propTypes = {
   checkMark: PropTypes.bool,
   error: PropTypes.string,
   onKeyDown: PropTypes.func,
-  onHandler: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
 };
 

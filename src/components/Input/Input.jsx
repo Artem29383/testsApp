@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import S, { InputField, Label } from './Input.styled';
 
@@ -53,4 +53,4 @@ Input.defaultProps = {
   focus: false,
 };
 
-export default Input;
+export default memo(Input);
