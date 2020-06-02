@@ -15,28 +15,18 @@ const FooterButtons = ({
 }) => {
   return (
     <>
-      <ButtonRipple onClickHandler={onAddNewQuestion}>
-        Добавить вопрос
-      </ButtonRipple>
-      <ButtonRipple className="green" onClickHandler={onModalSaveHandler}>
+      <ButtonRipple onClick={onAddNewQuestion}>Добавить вопрос</ButtonRipple>
+      <ButtonRipple className="green" onClick={onModalSaveHandler}>
         {editId ? 'Обновить тест' : 'Сохранить Тест'}
       </ButtonRipple>
       {editId && (
         <>
           {isLoad && action === 'remove' ? (
-            <ButtonRipple
-              className="red"
-              onClickHandler={onRemoveTestClick}
-              isLoader
-            >
+            <ButtonRipple className="red" isLoader onClick={onRemoveTestClick}>
               <Loader width="35" height="35" color={colors.white} />
             </ButtonRipple>
           ) : (
-            <ButtonRipple
-              className="red"
-              onClickHandler={onRemoveTestClick}
-              isLoader
-            >
+            <ButtonRipple className="red" isLoader onClick={onRemoveTestClick}>
               {error && action === 'remove' ? 'Повторить' : 'Удалить тест'}
             </ButtonRipple>
           )}

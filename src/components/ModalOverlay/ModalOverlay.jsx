@@ -44,7 +44,7 @@ const ModalOverlay = ({
         {isFooter && (
           <S.ModalFooter>
             {negativeBtn && (
-              <ButtonRipple onClickHandler={toggle} className="red">
+              <ButtonRipple onClick={toggle} className="red">
                 {negativeBtn}
               </ButtonRipple>
             )}
@@ -54,13 +54,13 @@ const ModalOverlay = ({
                   <ButtonRipple
                     className="red"
                     isLoader
-                    onClickHandler={onClickHandler}
+                    onClick={onClickHandler}
                   >
                     <Loader height="35" width="35" color={colors.white} />
                   </ButtonRipple>
                 ) : (
                   <ButtonRipple
-                    onClickHandler={onClickHandler}
+                    onClick={onClickHandler}
                     className="red"
                     isLoader
                   >
@@ -72,7 +72,7 @@ const ModalOverlay = ({
               </>
             )}
             {positiveBtn && (
-              <ButtonRipple onClickHandler={toggle}>{positiveBtn}</ButtonRipple>
+              <ButtonRipple onClick={toggle}>{positiveBtn}</ButtonRipple>
             )}
             {link && (
               <S.Link to={linkPath}>

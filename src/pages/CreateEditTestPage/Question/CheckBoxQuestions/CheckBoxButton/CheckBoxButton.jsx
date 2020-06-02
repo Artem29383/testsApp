@@ -90,7 +90,7 @@ const CheckBoxButton = ({
               focus
               value={checkBoxLabel}
               checkMark
-              onHandler={handleInputChange}
+              onChange={handleInputChange}
               onBlur={handleInputBlur}
               onKeyDown={handleInputKey}
             />

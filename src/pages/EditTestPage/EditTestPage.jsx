@@ -30,7 +30,7 @@ const EditTestPage = () => {
   if (error && idError === 'fetchTest')
     return (
       <S.Error>
-        <ButtonRipple onClickHandler={fetchTestById}>Повторить</ButtonRipple>
+        <ButtonRipple onClick={fetchTestById}>Повторить</ButtonRipple>
       </S.Error>
     );
   return <CreateEditTestPage />;

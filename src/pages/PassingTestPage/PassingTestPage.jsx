@@ -58,9 +58,7 @@ const PassingTestPage = () => {
   if (error && idError === 'passingTest')
     return (
       <S.ErrorServer>
-        <ButtonRipple onClickHandler={fetchTestDataPassing}>
-          Повторить
-        </ButtonRipple>
+        <ButtonRipple onClick={fetchTestDataPassing}>Повторить</ButtonRipple>
         <S.ErrorServerMessage>{error}</S.ErrorServerMessage>
       </S.ErrorServer>
     );

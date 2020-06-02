@@ -27,10 +27,7 @@ const PassingTestFooter = ({ questions, ids, userAnswers }) => {
   return (
     <>
       <S.QuestFooter>
-        <ButtonRipple
-          className="red"
-          onClickHandler={handleCalculateResultClick}
-        >
+        <ButtonRipple className="red" onClick={handleCalculateResultClick}>
           Завершить тест
         </ButtonRipple>
       </S.QuestFooter>
