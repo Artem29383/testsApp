@@ -66,7 +66,7 @@ const Navigation = () => {
         <S.NavUl>
           <S.NavItem className="padding">
             <S.Link to={routes.testPage}>
-              <ButtonRipple className="green" onClickHandler={setShowNav}>
+              <ButtonRipple className="green" onClick={setShowNav}>
                 Тесты
               </ButtonRipple>
             </S.Link>
@@ -79,7 +79,7 @@ const Navigation = () => {
         <S.Line3 isOpen={showNav} />
       </S.Burger>
       <S.NavItem className="right">
-        <ButtonRipple onClickHandler={logoutClick} className="red">
+        <ButtonRipple onClick={logoutClick} className="red">
           Выйти
         </ButtonRipple>
       </S.NavItem>

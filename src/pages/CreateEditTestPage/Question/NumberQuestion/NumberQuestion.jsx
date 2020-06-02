@@ -71,7 +71,7 @@ const NumberQuestion = ({ id, quest }) => {
           focus
           type="number"
           checkMark
-          onHandler={handleValueChange}
+          onChange={handleValueChange}
           onBlur={handleStopEditBlur}
           onKeyDown={handleStopEditKey}
         />

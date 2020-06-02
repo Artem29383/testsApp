@@ -41,7 +41,7 @@ const TestPage = () => {
   if (error && idError === 'getTests')
     return (
       <S.Error>
-        <ButtonRipple onClickHandler={fetchAllTests}>Повторить</ButtonRipple>
+        <ButtonRipple onClick={fetchAllTests}>Повторить</ButtonRipple>
       </S.Error>
     );
   return (
@@ -49,7 +49,7 @@ const TestPage = () => {
       <Table testIds={ids} isAdmin={isAdmin} tests={state.tests.entities} />
       {isAdmin && (
         <S.BtnPos>
-          <ButtonRipple onClickHandler={setShowModal} className="circle">
+          <ButtonRipple onClick={setShowModal} className="circle">
             <Cross top="50%" left="50%" position="absolute" />
           </ButtonRipple>
         </S.BtnPos>

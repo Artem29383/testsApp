@@ -84,7 +84,7 @@ const RadioButton = ({ id, radioObject, questionId, index, ids, errorMsg }) => {
               checkMark
               onBlur={handleStopEditBlur}
               onKeyDown={handleStopEditKeyDown}
-              onHandler={handleRadioLabelChange}
+              onChange={handleRadioLabelChange}
             />
           ) : (
             <>

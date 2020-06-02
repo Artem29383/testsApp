@@ -60,7 +60,7 @@ const NumberAnswer = ({ questId, numberId, answers }) => {
           focus
           type="number"
           value={value}
-          onHandler={handleInputChange}
+          onChange={handleInputChange}
           onKeyDown={handleStopEditKey}
           onBlur={handleStopEditBlur}
         />
