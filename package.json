@@ -171,7 +171,7 @@
     "redux": "^4.0.4",
     "redux-saga": "^1.1.1",
     "reselect": "^4.0.0",
-    "serialize-javascript": "^3.0.0",
+    "serialize-javascript": "^3.1.0",
     "serve-favicon": "^2.5.0",
     "styled-components": "^4.4.0",
     "styled-normalize": "^8.0.6",
